@@ -5,7 +5,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/4IceG/luci-app-sms-tool-js?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/4IceG/luci-app-sms-tool-js/total)
 
-#### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24">Luci-app-sms-tool-js is a conversion of the https://github.com/4IceG/luci-app-sms-tool package (Conversion is not one-to-one and not everything works as in the previous package). The LuCI JS interface supports SMS/USSD Codes/AT Commands.
+#### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Luci-app-sms-tool-js is a conversion of the https://github.com/4IceG/luci-app-sms-tool package (Conversion is not one-to-one and not everything works as in the previous package). The LuCI JS interface supports SMS/USSD Codes/AT Commands.
 
 #### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Luci-app-sms-tool-js jest konwersją pakietu https://github.com/4IceG/luci-app-sms-tool (Konwersja nie jest jeden do jednego i nie wszystko działa tak jak w poprzednim pakiecie). Interfejs LuCI JS wspiera obsługę wiadomości SMS/kodów USSD/poleceń AT.
 
