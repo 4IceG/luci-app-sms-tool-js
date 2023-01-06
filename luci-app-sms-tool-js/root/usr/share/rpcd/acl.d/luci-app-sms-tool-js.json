@@ -1,0 +1,26 @@
+{
+	"luci-app-sms-tool-js": {
+		"description": "Grant access to sms-tool executables",
+		"read": {
+   			"cgi-io": [ "exec" ],
+    			"file": {
+    				"/sys/class/leds": [ "list" ],
+				"/usr/bin/sms_tool": [ "exec" ],
+				"/etc/sms_tool_js": [ "read" ],
+				"/etc/modem/atcmmds.user": [ "read" ],
+				"/etc/modem/phonebook.user": [ "read" ],
+				"/etc/modem/ussdcodes.user": [ "read" ]
+			},
+			"uci": [ "sms_tool_js", "luci-app-sms-tool-js" ]
+		},
+		"write": {
+			"file": {
+				"/etc/sms_tool_js": [ "write" ],
+				"/etc/modem/atcmmds.user": [ "write" ],
+				"/etc/modem/phonebook.user": [ "write" ],
+				"/etc/modem/ussdcodes.user": [ "write" ]
+			},
+			"uci": [ "sms_tool_js", "luci-app-sms-tool-js" ]
+		}
+	}
+}

@@ -1,0 +1,43 @@
+#smsTable {
+  width: 100%;
+  border: 1px solid var(--border-color-medium);
+}
+
+th, td {
+  padding: 10px;
+  text-align: justify;
+  vertical-align: top;
+}
+
+td input[type="checkbox"] {
+    float: left;
+    margin: 0 auto;
+    width: 17px;
+}
+
+#smsTable tr:nth-child(odd) td{
+  background: var(--background-color-medium);
+  border-bottom: 1px solid var(--border-color-medium);
+  border-top: 1px solid var(--border-color-medium);
+}
+
+#smsTable tr:nth-child(even) td{
+  border-bottom: 1px solid var(--border-color-medium);
+  border-top: 1px solid var(--border-color-medium);
+}
+
+#smsTable .checker {
+  width: 7%;
+}
+
+#smsTable .from {
+  width: 11%;
+}
+
+#smsTable .received {
+  width: 15%;
+}
+
+#smsTable .message {
+  width: 88%;
+}
