@@ -131,7 +131,7 @@ return view.extend({
 										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);					
 										}		
 									count_sms();
-									}, 1000 * i);
+									}, 1500 * i);
 								})(i);				
 								}
 								var table = document.getElementById("smsTable"); 
