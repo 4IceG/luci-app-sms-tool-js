@@ -10,9 +10,11 @@
 #### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Luci-app-sms-tool-js jest konwersją pakietu https://github.com/4IceG/luci-app-sms-tool (Konwersja nie jest jeden do jednego i nie wszystko działa tak jak w poprzednim pakiecie). Interfejs LuCI JS wspiera obsługę wiadomości SMS/kodów USSD/poleceń AT.
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> What You Should Know / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Co powinieneś wiedzieć
-> The new message notification option is not available yet. At the moment, I have moved only basic functionality from Lua to LuCI JS.
+> The new message notification option is not available yet. At the moment, I have moved only basic functionality from Lua to LuCI JS.   
+> This is a development version of the package, not recommended for normal use.
 
-> Opcja powiadomień o nowej wiadomości nie jest jeszcze dostępna. Na ten moment z Lua do LuCI JS przeniosłem tylko podstawową funkcjonalność.
+> Opcja powiadomień o nowej wiadomości nie jest jeszcze dostępna. Na ten moment z Lua do LuCI JS przeniosłem tylko podstawową funkcjonalność.   
+> Jest to wersja rozwojowa pakietu, nie zalecana do normalnego użytkowania.
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Installation / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Instalacja
 
