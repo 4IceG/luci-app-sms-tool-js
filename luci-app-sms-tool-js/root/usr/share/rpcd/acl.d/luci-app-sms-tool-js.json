@@ -6,6 +6,15 @@
     			"file": {
     				"/sys/class/leds": [ "list" ],
 				"/usr/bin/sms_tool": [ "exec" ],
+				"/etc/init.d/my_new_sms start" : [ "exec" ],
+				"/etc/init.d/my_new_sms stop" : [ "exec" ],
+				"/etc/init.d/my_new_sms enable" : [ "exec" ],
+				"/etc/init.d/my_new_sms disable" : [ "exec" ],
+				"/etc/init.d/my_new_sms restart" : [ "exec" ],
+				"/etc/init.d/led restart" : [ "exec" ],
+				"/sbin/smstool_led.sh": [ "exec" ],
+				"/sbin/sms_led.sh": [ "exec" ],
+				"/sbin/new_cron_sync.sh": [ "exec" ],
 				"/etc/sms_tool_js": [ "read" ],
 				"/etc/modem/atcmmds.user": [ "read" ],
 				"/etc/modem/phonebook.user": [ "read" ],
@@ -16,6 +25,7 @@
 		"write": {
 			"file": {
 				"/etc/sms_tool_js": [ "write" ],
+				"/sys/class/leds/*/brightness": [ "write" ],
 				"/etc/modem/atcmmds.user": [ "write" ],
 				"/etc/modem/phonebook.user": [ "write" ],
 				"/etc/modem/ussdcodes.user": [ "write" ]
@@ -24,3 +34,4 @@
 		}
 	}
 }
+

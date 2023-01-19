@@ -25,7 +25,61 @@ return view.extend({
 			out.style.display = '';
 
 			res.stdout = res.stdout.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "")
-
+			
+			var cut = res.stdout;
+			if (cut.includes('error: 0')) {
+        		res.stdout = _('Phone/Modem failure.');
+			}
+			if (cut.includes('error: 1')) {
+        		res.stdout = _('No connection to phone.');
+			}
+			if (cut.includes('error: 2')) {
+        		res.stdout = _('Phone/Modem adapter link reserved.');
+			}
+			if (cut.includes('error: 3')) {
+        		res.stdout = _('Operation not allowed.');
+			}
+			if (cut.includes('error: 4')) {
+        		res.stdout = _('Operation not supported.');
+			}
+			if (cut.includes('error: 5')) {
+        		res.stdout = _('PH_SIM PIN required.');
+			}
+			if (cut.includes('error: 6')) {
+        		res.stdout = _('PH_FSIM PIN required.');
+			}
+			if (cut.includes('error: 7')) {
+        		res.stdout = _('PH_FSIM PUK required.');
+			}
+			if (cut.includes('error: 10')) {
+        		res.stdout = _('SIM not inserted.');
+			}
+			if (cut.includes('error: 11')) {
+        		res.stdout = _('SIM PIN required.');
+			}
+			if (cut.includes('error: 12')) {
+        		res.stdout = _('SIM PUK required.');
+			}
+			if (cut.includes('error: 13')) {
+        		res.stdout = _('SIM failure.');
+			}
+			if (cut.includes('error: 14')) {
+        		res.stdout = _('SIM busy.');
+			}
+			if (cut.includes('error: 15')) {
+        		res.stdout = _('SIM wrong.');
+			}
+			if (cut.includes('error: 16')) {
+        		res.stdout = _('Incorrect password.');
+			}
+			if (cut.includes('error: 17')) {
+        		res.stdout = _('SIM PIN2 required.');
+			}
+			if (cut.includes('error: 18')) {
+        		res.stdout = _('SIM PUK2 required.');
+			}
+			
+						
 			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
 			
 		}).catch(function(err) {

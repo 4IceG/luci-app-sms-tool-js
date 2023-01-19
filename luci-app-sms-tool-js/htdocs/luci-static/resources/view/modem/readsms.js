@@ -35,6 +35,7 @@ pg.setAttribute('title', '%s'.format(v) + ' / ' + '%s'.format(m) + ' ('+ pc + '%
 
 function count_sms() {
 	uci.load('sms_tool_js').then(function() {
+
 		var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
 		var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 
@@ -51,10 +52,32 @@ function count_sms() {
 	});
 }
 
+
+function save_count() {
+	uci.load('sms_tool_js').then(function() {
+
+		var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
+		var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+
+			L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+					.then(function(res) {
+							if (res) {
+								var total = res.substring(res.indexOf("total"));
+								var t = total.replace ( /[^\d.]/g, '' );
+								var used = res.substring(17, res.indexOf("total"));
+								var u = used.replace ( /[^\d.]/g, '' );
+								uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
+								uci.save();
+								uci.apply();
+							}
+			});
+	});
+}
+
+
 return view.extend({
 	load: function() {
 		uci.load('sms_tool_js');
-
 	},
 
 
@@ -88,6 +111,7 @@ return view.extend({
 
 											var u = "0";
 											msg_bar(Math.floor(u), t);
+											save_count();
 										}
 								});
 							}, 2000);
@@ -119,7 +143,7 @@ return view.extend({
 
 							var smsnr = ax.split(" ");
 
-								for (var i=0; i < smsnr.length; i++)
+								for (var i=0; i < smsnr.length + 1; i++)
 									{
 									(function(i) {
     									setTimeout(function() { 
@@ -127,14 +151,16 @@ return view.extend({
 
 									if (!Number.isNaN(smsnr[i]))
 										{
-										count_sms();
-										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);					
-										}		
+										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
+										count_sms();				
+										}
 									count_sms();
+									save_count();
 									}, 1500 * i);
-								})(i);				
+								})(i);
+								count_sms();		
 								}
-								var table = document.getElementById("smsTable"); 
+								var table = document.getElementById("smsTable");
   								var index = 1;
   									while (index < table.rows.length) {
    										var input = table.rows[index].cells[0].children[0];
@@ -153,9 +179,7 @@ return view.extend({
 	},
 
 	handleRefresh: function(ev) {
-
 		window.location.reload();
-
 	},
 
 	handleSelect: function(ev) {
@@ -186,14 +210,37 @@ return view.extend({
 		var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
 		var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 		var smsM = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'mergesms'));
+		var algo = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'algorithm'));
+		var hide = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'bnumber'));
+		var ledn = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'lednotify'));
+		var ledt = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
+
 		var view = document.getElementById("smssarea");
 		view.innerHTML = '-';
+		
+		var sections = uci.sections('sms_tool_js');
+		var led = sections[0].smsled;
 
 		if (storeL == "SM")
       			view.innerHTML = _('SIM card');
 
 		if (storeL == "ME")
       			view.innerHTML = _('Modem memory');
+
+		if (ledn == "1")
+			{
+				switch (ledt) {
+  					case 'S':
+    						fs.exec_direct('/etc/init.d/led', [ 'restart' ]);
+    						break;
+  					case 'D':
+    						fs.write('/sys/class/leds/'+led+'/brightness', '0');
+    						break;
+  					default:
+					}
+			}
+
+
 
 		L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 				.then(function(res) {
@@ -221,12 +268,17 @@ return view.extend({
 
 									var sortedData = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
 
+									var aidx = [];
+
 									/* Merging messages */
 									if (smsM == "1") {
 
 										var MergeMySMS = sortedData;
 
 											var result = [];
+
+											if (algo == "A")
+											{
 
 											MergeMySMS.forEach(function (o) {
 												if (!this[o.sender]) {
@@ -254,6 +306,26 @@ return view.extend({
                     															o.content = o.contentparts.join('');
                 														}
 												});
+											}
+
+											if (algo == "S")
+											{
+												MergeMySMS.forEach(function (o) {
+    													if (!this[o.sender]) {
+        													this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content };
+        													result.push(this[o.sender]);
+        													return;
+    														}
+														if (this[o.sender].total == o.total && this[o.sender].timestamp == o.timestamp && this[o.sender].sender == o.sender && this[o.sender].part > 0) {
+    														this[o.sender].index += '-' + o.index;    			
+														this[o.sender].content += o.content;}
+														else {
+															this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content };
+        														result.push(this[o.sender]);
+        														return;
+															}
+												}, Object.create(null));
+											}
 													if (u){
 
 															var Lres = L.resource('icons/newdelsms.png');
@@ -266,17 +338,31 @@ return view.extend({
   																var cell3 = row.insertCell(0);
   																var cell4 = row.insertCell(0);
 																cell4.innerHTML = "<input type='checkbox' name='smsn' id="+result[i].index+","+" />"+iconz;
- 				 												cell3.innerHTML = result[i].sender;
+																	if (result[i].sender.includes(hide)) {
+																		var removeLast5 = result[i].sender.slice(0, -5);
+																		cell3.innerHTML = removeLast5 + '#####';
+																	} else {
+ 				 													cell3.innerHTML = result[i].sender;
+																	}
   																cell2.innerHTML = result[i].timestamp;
     																cell1.innerHTML = result[i].content;
+																aidx.push(result[i].index+'-');
 										
 															}
+
+
+															var axx = aidx.toString();
+															axx = axx.replace(/,/g, ' ');
+															axx = axx.replace(/-/g, ' ');
+
+															uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', L.toArray(axx).join(' '));
+															uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
+															uci.save();
+															uci.apply();
+					
 											}
 
-
-
 										}
-
 									}
 
 									/* No merging messages */
@@ -295,16 +381,29 @@ return view.extend({
   											var cell3 = row.insertCell(0);
   											var cell4 = row.insertCell(0);
 											cell4.innerHTML = "<input type='checkbox' name='smsn' id="+sortedData[i].index+","+" />"+iconz;
- 				 							cell3.innerHTML = sortedData[i].sender;
+												if (sortedData[i].sender.includes(hide)) {
+													var removeLast5 = sortedData[i].sender.slice(0, -5);
+													cell3.innerHTML = removeLast5 + '#####';
+												} else {
+ 				 									cell3.innerHTML = sortedData[i].sender;
+												}
   											cell2.innerHTML = sortedData[i].timestamp;
     											cell1.innerHTML = sortedData[i].content;
+											aidx.push(sortedData[i].index+'-');
 										
 											}
+											
+											var axx = aidx.toString();
+											axx = axx.replace(/,/g, ' ');
+											axx = axx.replace(/-/g, ' ');
+
+											uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', L.toArray(axx).join(' '));
+											uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
+											uci.save();
+											uci.apply();
 									}
 
-
 								}
-
 						});
 
 
@@ -313,7 +412,6 @@ return view.extend({
 						{
 						msg_bar(Math.floor(u), t);
 						}
-
 					ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
 				}
 
@@ -357,10 +455,10 @@ return view.extend({
 					}, [ _('Delete message(s)') ]),
 					'\xa0\xa0\xa0',
 					E('button', {
-						'class': 'cbi-button cbi-button-action important',
+						'class': 'cbi-button cbi-button-add',
 						'id': 'clr',
 						'click': ui.createHandlerFn(this, 'handleRefresh')
-					}, [ _('Refresh SMS') ]),
+					}, [ _('Refresh messages') ]),
 
 			]),
 

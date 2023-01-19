@@ -53,6 +53,18 @@ return view.extend({
 		);
 		o.rmempty = false;
 
+		o = s.taboption('smstab' , form.ListValue, "algorithm", _("Merge algorithm"),
+			_(""));
+		o.value("S", _("Simple (merge without sorting)"));
+		o.value("A", _("Advanced (merges with sorting)"));
+		o.default = "A";
+		o.depends("mergesms", "1");
+
+		o = s.taboption('smstab', form.Value, 'bnumber', _('Phone number to be blurred'),
+		_('The last 5 digits of this number will be blurred.')
+		);
+		o.password = true;
+
 		o = s.taboption('smstab', form.Value, 'sendport', _('SMS sending port'), 
 			_("Select one of the available ttyUSBX ports."));
 		devs.sort((a, b) => a.name > b.name);
@@ -64,6 +76,13 @@ return view.extend({
 		o = s.taboption('smstab', form.Value, "pnumber", _("Prefix number"),
 			_("The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."));
 		o.default = "48";
+		o.validate = function(section_id, value) {
+
+			if (value.match(/^[0-9]+(?:\.[0-9]+)?$/))
+				return true;
+
+			return _('Expect a decimal value');
+		};
 
 		o = s.taboption('smstab', form.Flag, 'prefix', _('Add prefix to phone number'),
 		_('Automatically add prefix to the phone number field.')
@@ -86,7 +105,7 @@ return view.extend({
 			if (value.match(/^[0-9]+(?:\.[0-9]+)?$/) && +value >= 3 && +value < 60)
 				return true;
 
-			return _('Expect a decimal value between one and fifty-nine');
+			return _('Expect a decimal value between three and fifty-nine');
 		};
 		o.depends("sendingroup", "1");
 
@@ -167,17 +186,102 @@ return view.extend({
 		s.tab('notifytab', _('Notification Settings'));
 		s.anonymous = true;
 
-		o = s.taboption('notifytab', form.DummyValue, '_dummy');
-			o.rawhtml = true;
-			o.default = '<div class="cbi-section-descr">' +
-				_('Work in progress..') +
-				'</div>';
+		o = s.taboption('notifytab', form.Flag, 'lednotify', _('Notify new messages'),
+		_('The LED informs about a new message. Before activating this function, please config and save the SMS reading port, time to check SMS inbox and select the notification LED.')
+		);
+		o.rmempty = false;
+		o.default = true;
+		o.write = function(section_id, value) {
 
-		o = s.taboption('notifytab', form.DummyValue, '_dummy');
-		o.rawhtml = true;
-		o.default = '<div class="cbi-value-field"><em>' +
-				_('Option will be back as soon as I write new procd script.') +
-				'</em></div>';
+			uci.load('sms_tool_js').then(function() {
+				var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
+				var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+				var dsled = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
+
+					L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+						.then(function(res) {
+							if (res) {
+								var total = res.substring(res.indexOf("total"));
+								var t = total.replace ( /[^\d.]/g, '' );
+								var used = res.substring(17, res.indexOf("total"));
+								var u = used.replace ( /[^\d.]/g, '' );
+
+								var sections = uci.sections('sms_tool_js');
+								var led = sections[0].smsled;
+
+								if (value == '1')
+								{
+									uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
+									uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "1");
+									uci.save();
+									fs.exec_direct('/sbin/new_cron_sync.sh');
+									fs.exec_direct('/etc/init.d/my_new_sms', [ 'enable' ]);
+									fs.exec('sleep 2');
+									fs.exec_direct('/etc/init.d/my_new_sms', [ 'start' ]);
+								}
+
+								if (value == '0')
+								{
+									uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "0");
+									uci.save();
+									fs.exec_direct('/sbin/new_cron_sync.sh');
+									fs.exec_direct('/etc/init.d/my_new_sms', [ 'stop' ]);
+									fs.exec('sleep 2');
+									fs.exec_direct('/etc/init.d/my_new_sms', [ 'disable' ]);
+									fs.exec_direct('/etc/init.d/my_new_sms', [ 'disable' ]);
+
+									if (dsled == 'D')
+									{
+									fs.write('/sys/class/leds/'+led+'/brightness', '0');
+									}
+								}
+							}
+					});
+			});
+
+		return form.Flag.prototype.write.apply(this, [section_id, value]);
+		};
+
+		o = s.taboption('notifytab', form.Value, "checktime", _("Check inbox every minute(s)"),
+			_("Specify how many minutes you want your inbox to be checked."));
+		o.default = "10";
+		o.rmempty = false;
+		o.validate = function(section_id, value) {
+
+			if (value.match(/^[0-9]+(?:\.[0-9]+)?$/) && +value >= 5 && +value < 60)
+				return true;
+
+			return _('Expect a decimal value between five and fifty-nine');
+		};
+
+		o = s.taboption('notifytab' , form.ListValue, "prestart", _("Restart the inbox checking process every"),
+			_("The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."));
+		o.value("4", _("4h"));
+		o.value("6", _("6h"));
+		o.value("8", _("8h"));
+		o.value("12", _("12h"));
+		o.default = "6";
+		o.rmempty = false;
+
+		o = s.taboption('notifytab' , form.ListValue, "ledtype", _("The diode is dedicated only to these notifications"),
+			_("Select 'No' in case the router has only one LED or if the LED is multi-tasking."));
+		o.value("S", _("No"));
+		o.value("D", _("Yes"));
+		o.default = "D";
+		o.rmempty = false;
+
+		o = s.taboption('notifytab', form.ListValue, 'smsled',_('<abbr title="Light Emitting Diode">LED</abbr> Name'),
+			_("Select the notification LED."));
+		o.load = function(section_id) {
+			return L.resolveDefault(fs.list('/sys/class/leds'), []).then(L.bind(function(leds) {
+				if(leds.length > 0) {
+				leds.sort((a, b) => a.name > b.name);
+				leds.forEach(e => o.value(e.name));
+				}
+				return this.super('load', [section_id]);
+			}, this));
+		};
+		o.rmempty = false;
 
 		return m.render();
 	}

@@ -1,6 +1,8 @@
 #smsTable {
   width: 100%;
+  border-collapse: separate;
   border: 1px solid var(--border-color-medium);
+  border-radius: 5px;
 }
 
 th, td {
@@ -10,9 +12,9 @@ th, td {
 }
 
 td input[type="checkbox"] {
-    float: left;
-    margin: 0 auto;
-    width: 17px;
+  float: left;
+  margin: 0 auto;
+  width: 17px;
 }
 
 #smsTable tr:nth-child(odd) td{
