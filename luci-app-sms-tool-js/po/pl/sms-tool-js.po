@@ -238,9 +238,6 @@ msgstr "Opcja umożliwia wysłanie jednej wiadomości do wszystkich kontaktów z
 msgid "Message sending delay"
 msgstr "Opóźnienie przy wysyłaniu wiadomości"
 
-msgid "[3 - 59] second(s)"
-msgstr "[3 - 59] sekund(-y)"
-
 msgid "[Bot] Message sent to number:"
 msgstr "[Bot] Wiadomość wysłano na numer:"
 
@@ -310,8 +307,19 @@ msgstr "12 godz."
 msgid "The diode is dedicated only to these notifications"
 msgstr "Dioda jest dedykowana tylko tym powiadomieniom"
 
-msgid "Select 'No' in case the router has only one LED or if the LED is multi-tasking."
-msgstr "Wybierz 'Nie' w przypadku, kiedy router ma tylko jedną diodę lub gdy dioda obsługuje wiele zadań."
+msgid ""
+"Select 'No' in case the router has only one LED or if the LED is multi-tasking. <br /><br /><b>Important</b> <br />This "
+"option requires LED to be defined in the system (if possible) to work properly. This requirement applies when the diode supports multiple tasks."
+msgstr ""
+"Wybierz 'Nie' w przypadku, kiedy router ma tylko jedną diodę lub gdy dioda obsługuje wiele zadań. <br /><br /><b>Ważne</b> <br />Opcja "
+"do poprawnego działania wymaga zdefiniowania diody LED w systemie (o ile to możliwe). Wymóg ten dotyczy przypadku, kiedy dioda obsługuje wiele zadań."
+
+msgid ""
+"[3 - 59] second(s) <br /><br /><b>Important</b> <br />Messages "
+"are sent without verification and confirmation delivery of the message. Therefore, there is a risk of non-delivery of the message."
+msgstr ""
+"[3 - 59] sekund(y) <br /><br /><b>Ważne</b> <br />Wiadomości "
+"wysyłane są bez weryfikacji i potwierdzenia doręczenia wiadomości. W związku z tym istnieje ryzyko, że wiadomość nie zostanie doręczona."
 
 msgid "No"
 msgstr "Nie"

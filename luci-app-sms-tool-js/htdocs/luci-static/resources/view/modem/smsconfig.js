@@ -95,9 +95,11 @@ return view.extend({
 		o.rmempty = false;
 		o.default = false;
 
-		o = s.taboption('smstab', form.Value, 'delay', _('Message sending delay'),
-		_('[3 - 59] second(s)')
-		);
+		o = s.taboption('smstab', form.Value, 'delay', _('Message sending delay,'), 
+			_("[3 - 59] second(s) \
+			<br /><br /><b>Important</b> \
+				<br />Messages are sent without verification and confirmation delivery of the message. \
+				Therefore, there is a risk of non-delivery of the message."));
 		o.default = "3";
 		o.rmempty = false;
 		o.validate = function(section_id, value) {
@@ -263,8 +265,12 @@ return view.extend({
 		o.default = "6";
 		o.rmempty = false;
 
-		o = s.taboption('notifytab' , form.ListValue, "ledtype", _("The diode is dedicated only to these notifications"),
-			_("Select 'No' in case the router has only one LED or if the LED is multi-tasking."));
+		o = s.taboption('notifytab' , form.ListValue, "ledtype",
+			_('The diode is dedicated only to these notifications'), 
+			_("Select 'No' in case the router has only one LED or if the LED is multi-tasking. \
+				<br /><br /><b>Important</b> \
+				<br />This option requires LED to be defined in the system (if possible) to work properly. \
+				This requirement applies when the diode supports multiple tasks."));
 		o.value("S", _("No"));
 		o.value("D", _("Yes"));
 		o.default = "D";

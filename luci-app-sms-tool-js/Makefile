@@ -10,7 +10,7 @@ LUCI_TITLE:=LuCI JS Support for sms-tool
 LUCI_DESCRIPTION:=LuCI JS interface for the sms-tool. The user interface supports SMS/USSD Codes/AT Commands.
 LUCI_PKGARCH:=all
 LUCI_DEPENDS:=+sms-tool +kmod-usb-serial +kmod-usb-serial-option +comgt
-PKG_VERSION:=2.0.4-20230119
+PKG_VERSION:=2.0.5-20230125
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
