@@ -10,9 +10,11 @@
 #### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Luci-app-sms-tool-js jest konwersją pakietu https://github.com/4IceG/luci-app-sms-tool (Konwersja nie jest jeden do jednego i nie wszystko działa tak jak w poprzednim pakiecie). Interfejs LuCI JS wspiera obsługę wiadomości SMS/kodów USSD/poleceń AT.
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> What You Should Know / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Co powinieneś wiedzieć
-> My package will not work if you are using ModemManager.
+> My package will not work if you are using ModemManager.   
+> Preferred version OpenWrt >= 21.02.
 
-> Mój pakiet nie będzie działać jeżeli uzywasz ModemManager-a.
+> Mój pakiet nie będzie działać jeżeli uzywasz ModemManager-a.   
+> Preferowana wersja OpenWrt >= 21.02.
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Installation / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Instalacja
 
@@ -35,6 +37,11 @@ An example link to the package.
 In the link below, replace ```*architecture*``` with the architecture of your router, e.g. arm_cortex-a7_neon-vfpv4, mipsel_24kc.
 ``` bash
 https://downloads.openwrt.org/snapshots/packages/*architecture*/packages/sms-tool_2022-03-21-f07699ab-1_*architecture*.ipk
+```
+Example of package installation (file downloaded with wget-ssl).
+``` bash
+wget https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/packages/sms-tool_2022-03-21-f07699ab-1_aarch64_cortex-a72.ipk -O /tmp/sms-tool_2022-03-21.ipk
+opkg install /tmp/sms-tool_2022-03-21.ipk
 ```
 
 #### Step 2. Add my repository (https://github.com/4IceG/Modem-extras) to the image and follow the commands.
