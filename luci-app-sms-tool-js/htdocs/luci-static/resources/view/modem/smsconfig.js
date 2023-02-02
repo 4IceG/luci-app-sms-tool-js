@@ -95,7 +95,7 @@ return view.extend({
 		o.rmempty = false;
 		o.default = false;
 
-		o = s.taboption('smstab', form.Value, 'delay', _('Message sending delay,'), 
+		o = s.taboption('smstab', form.Value, 'delay', _('Message sending delay'), 
 			_("[3 - 59] second(s) \
 			<br /><br /><b>Important</b> \
 				<br />Messages are sent without verification and confirmation delivery of the message. \
