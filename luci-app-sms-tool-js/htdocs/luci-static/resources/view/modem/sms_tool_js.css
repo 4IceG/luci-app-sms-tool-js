@@ -1,8 +1,6 @@
 #smsTable {
   width: 100%;
-  border-collapse: separate;
   border: 1px solid var(--border-color-medium);
-  border-radius: 5px;
 }
 
 th, td {
