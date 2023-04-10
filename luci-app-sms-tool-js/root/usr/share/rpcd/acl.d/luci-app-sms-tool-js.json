@@ -1,6 +1,6 @@
 {
 	"luci-app-sms-tool-js": {
-		"description": "Grant access to sms-tool executables",
+		"description": "Grant access to LuCI app sms-tool",
 		"read": {
    			"cgi-io": [ "exec" ],
     			"file": {

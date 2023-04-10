@@ -143,7 +143,7 @@ return view.extend({
 
 							var smsnr = ax.split(" ");
 
-								for (var i=0; i < smsnr.length + 1; i++)
+								for (var i=0; i < smsnr.length + 2; i++)
 									{
 									(function(i) {
     									setTimeout(function() { 

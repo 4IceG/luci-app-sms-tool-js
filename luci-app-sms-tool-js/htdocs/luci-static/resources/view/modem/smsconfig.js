@@ -110,6 +110,7 @@ return view.extend({
 			return _('Expect a decimal value between three and fifty-nine');
 		};
 		o.depends("sendingroup", "1");
+		o.datatype = 'range(3, 59)';
 
 		o = s.taboption('smstab', form.Flag, 'information', _('Explanation of number and prefix'),
 		_('In the tab for sending SMSes, show an explanation of the prefix and the correct phone number.')
@@ -118,7 +119,7 @@ return view.extend({
 		//o.default = true;
 
 		o = s.taboption('smstab', form.TextValue, '_tmp2', _('User contacts'),
-			_("Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location '/etc/modem/phonebook.user'."));
+			_("Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>."));
 		o.rows = 7;
 		o.cfgvalue = function(section_id) {
 			return fs.trimmed('/etc/modem/phonebook.user');
@@ -151,7 +152,7 @@ return view.extend({
 		o.rmempty = false;
 
 		o = s.taboption('ussd', form.TextValue, '_tmp4', _('User USSD codes'),
-			_("Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location '/etc/modem/ussdcodes.user'."));
+			_("Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."));
 		o.rows = 7;
 		o.cfgvalue = function(section_id) {
 			return fs.trimmed('/etc/modem/ussdcodes.user');
@@ -174,7 +175,7 @@ return view.extend({
 		o.rmempty = false;
 
 		o = s.taboption('attab' , form.TextValue, '_tmp6', _('User AT commands'),
-			_("Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location '/etc/modem/atcmmds.user'."));
+			_("Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds.user</code>."));
 		o.rows = 20;
 		o.cfgvalue = function(section_id) {
 			return fs.trimmed('/etc/modem/atcmmds.user');
@@ -255,6 +256,7 @@ return view.extend({
 
 			return _('Expect a decimal value between five and fifty-nine');
 		};
+		o.datatype = 'range(5, 59)';
 
 		o = s.taboption('notifytab' , form.ListValue, "prestart", _("Restart the inbox checking process every"),
 			_("The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."));

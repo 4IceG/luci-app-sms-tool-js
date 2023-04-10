@@ -244,14 +244,14 @@ msgstr "[Bot] Wiadomość wysłano na numer:"
 msgid "User USSD codes"
 msgstr "Kody USSD użytkownika"
 
-msgid "Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location '/etc/modem/phonebook.user'."
-msgstr "Każda linijka powinna mieć następujący format: 'Nazwa kontaktu;numer telefonu'. Dla wygody użytkownika kontakty zapisywane są w pliku '/etc/modem/phonebook.user'."
+msgid "Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>."
+msgstr "Każda linijka powinna mieć następujący format: 'Nazwa kontaktu;numer telefonu'. Dla wygody użytkownika kontakty zapisywane są w pliku <code>/etc/modem/phonebook.user</code>."
 
-msgid "Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location '/etc/modem/atcmmds.user'."
-msgstr "Każda linijka powinna mieć następujący format: 'Opis polecenia AT;polecenie AT'. Dla wygody użytkownika polecenia zapisywane są w pliku '/etc/modem/atcmmds.user'."
+msgid "Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds.user</code>."
+msgstr "Każda linijka powinna mieć następujący format: 'Opis polecenia AT;polecenie AT'. Dla wygody użytkownika polecenia zapisywane są w pliku <code>/etc/modem/atcmmds.user</code>."
 
-msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location '/etc/modem/ussdcodes.user'."
-msgstr "Każda linijka powinna mieć następujący format: 'Opis kodu;kod'. Dla wygody użytkownika kody zapisywane są w pliku '/etc/modem/ussdcodes.user'."
+msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."
+msgstr "Każda linijka powinna mieć następujący format: 'Opis kodu;kod'. Dla wygody użytkownika kody zapisywane są w pliku <code>/etc/modem/ussdcodes.user</code>."
 
 msgid "Press [Enter] to send the command, press [Delete] to delete the command"
 msgstr "Wciśnij [Enter] aby wysłać polecenie, wciśnij [Delete] aby usunąć"

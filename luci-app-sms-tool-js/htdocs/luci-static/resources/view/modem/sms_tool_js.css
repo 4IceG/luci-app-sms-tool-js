@@ -1,29 +1,29 @@
 #smsTable {
   width: 100%;
-  border: 1px solid var(--border-color-medium);
+  border: 1px solid var(--border-color-medium) !important;
 }
 
 th, td {
   padding: 10px;
-  text-align: justify;
-  vertical-align: top;
+  text-align: justify !important;
+  vertical-align: top !important;
 }
 
 td input[type="checkbox"] {
-  float: left;
-  margin: 0 auto;
-  width: 17px;
+  float: left !important;
+  margin: 0 auto  !important;
+  width: 17px  !important;
 }
 
 #smsTable tr:nth-child(odd) td{
-  background: var(--background-color-medium);
-  border-bottom: 1px solid var(--border-color-medium);
-  border-top: 1px solid var(--border-color-medium);
+  background: var(--background-color-medium) !important;
+  border-bottom: 1px solid var(--border-color-medium) !important;
+  border-top: 1px solid var(--border-color-medium) !important;
 }
 
 #smsTable tr:nth-child(even) td{
-  border-bottom: 1px solid var(--border-color-medium);
-  border-top: 1px solid var(--border-color-medium);
+  border-bottom: 1px solid var(--border-color-medium) !important;
+  border-top: 1px solid var(--border-color-medium) !important;
 }
 
 #smsTable .checker {
