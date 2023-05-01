@@ -356,3 +356,12 @@ msgstr "Oczekiwana jest wartość dziesiętna z przedziału od trzech do pięćd
 
 msgid "Expect a decimal value"
 msgstr "Oczekiwana jest wartość dziesiętna"
+
+msgid "Direction of message merging"
+msgstr "Kierunek łączenia wiadomości"
+
+msgid "From beginning to end"
+msgstr "Od początku do końca"
+
+msgid "From end to beginning"
+msgstr "Od końca do początku"

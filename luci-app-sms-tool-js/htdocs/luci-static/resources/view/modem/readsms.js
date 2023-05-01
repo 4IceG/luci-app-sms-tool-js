@@ -14,13 +14,11 @@
 */
 
 
-
 document.querySelector('head').appendChild(E('link', {
 	'rel': 'stylesheet',
 	'type': 'text/css',
 	'href': L.resource('view/modem/sms_tool_js.css')
 }));
-
 
 function msg_bar(v, m) {
 var pg = document.querySelector('#msg')
@@ -31,7 +29,6 @@ var pc = Math.floor((100 / mn) * vn);
 pg.firstElementChild.style.width = pc + '%';
 pg.setAttribute('title', '%s'.format(v) + ' / ' + '%s'.format(m) + ' ('+ pc + '%)');
 }
-
 
 function count_sms() {
 	uci.load('sms_tool_js').then(function() {
@@ -51,7 +48,6 @@ function count_sms() {
 			});
 	});
 }
-
 
 function save_count() {
 	uci.load('sms_tool_js').then(function() {
@@ -74,12 +70,10 @@ function save_count() {
 	});
 }
 
-
 return view.extend({
 	load: function() {
 		uci.load('sms_tool_js');
 	},
-
 
 	handleDelete: function(ev) {
 
@@ -172,7 +166,6 @@ return view.extend({
    										}
   									}
 							}
-
 						}
 			}
 		}
@@ -196,9 +189,7 @@ return view.extend({
 			for (var i = 0; i < checkBoxes.length; i++)
 				checkBoxes[i].removeAttribute('checked');
   		}
-
 	},
-
 
 	render: function(data) {
 
@@ -214,6 +205,7 @@ return view.extend({
 		var hide = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'bnumber'));
 		var ledn = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'lednotify'));
 		var ledt = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
+		var direct = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'direction'));
 
 		var view = document.getElementById("smssarea");
 		view.innerHTML = '-';
@@ -240,8 +232,6 @@ return view.extend({
 					}
 			}
 
-
-
 		L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 				.then(function(res) {
 					if (res) {
@@ -249,10 +239,8 @@ return view.extend({
 							var total = res.substring(res.indexOf("total"));
 							var t = total.replace ( /[^\d.]/g, '' );
 
-
 							var used = res.substring(17, res.indexOf("total"));
 							var u = used.replace ( /[^\d.]/g, '' );
-
 
 						L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , '-f' , '%Y-%m-%d %H:%M' , '-j' , 'recv' , '2>/dev/null' ]))
 							.then(function(res2) {
@@ -266,51 +254,63 @@ return view.extend({
 
 									var json = JSON.parse(end);
 
-									var sortedData = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
-
 									var aidx = [];
 
 									/* Merging messages */
 									if (smsM == "1") {
 
-										var MergeMySMS = sortedData;
-
 											var result = [];
 
-											if (algo == "A")
+											if (algo == "Advanced")
 											{
+												switch (direct) {
+  														case 'Start':
+    															var Data = json.sort((a, b) => {
+  																if (a.timestamp === b.timestamp && a.sender === b.sender) {
+    																	return a.part - b.part;
+  																} else if (a.timestamp === b.timestamp) {
+    																	return a.sender - b.sender;
+  																} else {
+    																	return a.timestamp.localeCompare(b.timestamp);
+  																}
+															});
+    															break;
+  														case 'End':
+    															var Data = json.sort((a, b) => {
+  																if (a.timestamp === b.timestamp && a.sender === b.sender) {
+    																	return b.part - a.part;
+  																} else if (a.timestamp === b.timestamp) {
+    																	return a.sender - b.sender;
+  																} else {
+    																	return a.timestamp.localeCompare(b.timestamp);
+  																}
+															});
+    															break;
+  														default:
+												}
 
-											MergeMySMS.forEach(function (o) {
-												if (!this[o.sender]) {
-    														if(o.part > 0){
-        														this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content, contentparts: [] };
-        														this[o.sender].contentparts[o.part] = o.content;
-        													}else{
-        														this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content};
-        													}
-        												result.push(this[o.sender]);
-        												return;
-    												}
-												if (this[o.sender].total == o.total && this[o.sender].timestamp == o.timestamp && this[o.sender].sender == o.sender && this[o.sender].part > 0) {
-    															this[o.sender].index += '-' + o.index;
-            														this[o.sender].contentparts[o.part] = o.content;}
-														else {
-															this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content };
-        														result.push(this[o.sender]);
-        												return;
-													}
-														}, Object.create(null));
-															result.forEach(function(o) {
-                														if(o.contentparts){
-                    															o.contentparts.shift();
-                    															o.content = o.contentparts.join('');
-                														}
-												});
+												var SortedSMS = Data.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
+
+												var combinedjson = {};
+
+												for (const parts of SortedSMS) {
+  													const { sender, timestamp, total, content, index } = parts;
+  													const key = `${sender}-${timestamp}-${total}`;
+  														if (combinedjson[key]) {
+  															combinedjson[key].content += content;
+  															combinedjson[key].index += '-'+index;
+  														} else {
+    															combinedjson[key] = { sender, timestamp, total, content, index };
+  															}
+														}
+												var result = Object.values(combinedjson);
 											}
 
-											if (algo == "S")
+											if (algo == "Simple")
 											{
-												MergeMySMS.forEach(function (o) {
+												var SortedSMS = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
+
+												SortedSMS.forEach(function (o) {
     													if (!this[o.sender]) {
         													this[o.sender] = { index: o.index, sender: o.sender, timestamp: o.timestamp, part: o.part, total: o.total, content: o.content };
         													result.push(this[o.sender]);
@@ -344,12 +344,11 @@ return view.extend({
 																	} else {
  				 													cell3.innerHTML = result[i].sender;
 																	}
+																	
   																cell2.innerHTML = result[i].timestamp;
     																cell1.innerHTML = result[i].content;
 																aidx.push(result[i].index+'-');
-										
 															}
-
 
 															var axx = aidx.toString();
 															axx = axx.replace(/,/g, ' ');
@@ -359,7 +358,6 @@ return view.extend({
 															uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
 															uci.save();
 															uci.apply();
-					
 											}
 
 										}
@@ -406,7 +404,6 @@ return view.extend({
 								}
 						});
 
-
 				} else {
 					if ( t.lenght < 1 )
 						{
@@ -415,14 +412,12 @@ return view.extend({
 					ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
 				}
 
-
 			if (document.getElementById('msg')) {
 
 				msg_bar(Math.floor(u), t);
 			}
 
     			});
-
 		});
 
 		var v = E([], [
@@ -476,9 +471,9 @@ return view.extend({
 						'click': ui.createHandlerFn(this, 'handleSelect')
 					}), '',
 					),
-					E('th', { 'class': 'th from' }, _("From")),
-					E('th', { 'class': 'th received' }, _("Received")),
-					E('th', { 'class': 'th center message' }, _("Message"))
+					E('th', { 'class': 'th from' }, _('From')),
+					E('th', { 'class': 'th received' }, _('Received')),
+					E('th', { 'class': 'th center message' }, _('Message'))
 				])
 			]),
 
@@ -492,3 +487,4 @@ return view.extend({
 	handleSave: null,
 	handleReset: null
 });
+

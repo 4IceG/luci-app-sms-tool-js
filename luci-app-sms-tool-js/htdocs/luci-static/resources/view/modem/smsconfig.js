@@ -35,30 +35,37 @@ return view.extend({
 		s.anonymous = true;
 
 		o = s.taboption('smstab' , form.Value, 'readport', _('SMS reading port'), 
-			_("Select one of the available ttyUSBX ports."));
+			_('Select one of the available ttyUSBX ports.'));
 		devs.sort((a, b) => a.name > b.name);
 		devs.forEach(dev => o.value('/dev/' + dev.name));
 		
 		o.placeholder = _('Please select a port');
 		o.rmempty = false;
 
-		o = s.taboption('smstab', form.ListValue, "storage", _("Message storage area"),
-			_("Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device."));
-		o.value("SM", _("SIM card"));
-		o.value("ME", _("Modem memory"));
-		o.default = "SM";
+		o = s.taboption('smstab', form.ListValue, 'storage', _('Message storage area'),
+			_('Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device.'));
+		o.value('SM', _('SIM card'));
+		o.value('ME', _('Modem memory'));
+		o.default = 'SM';
 
 		o = s.taboption('smstab', form.Flag, 'mergesms', _('Merge split messages'),
 		_('Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received.')
 		);
 		o.rmempty = false;
 
-		o = s.taboption('smstab' , form.ListValue, "algorithm", _("Merge algorithm"),
-			_(""));
-		o.value("S", _("Simple (merge without sorting)"));
-		o.value("A", _("Advanced (merges with sorting)"));
-		o.default = "A";
-		o.depends("mergesms", "1");
+		o = s.taboption('smstab' , form.ListValue, 'algorithm', _('Merge algorithm'),
+			_(''));
+		o.value('Simple', _('Simple (merge without sorting)'));
+		o.value('Advanced', _('Advanced (merges with sorting)'));
+		o.default = 'Simple';
+		o.depends('mergesms', '1');
+
+		o = s.taboption('smstab' , form.ListValue, 'direction', _('Direction of message merging'),
+			_(''));
+		o.value('Start', _('From beginning to end'));
+		o.value('End', _('From end to beginning'));
+		o.default = 'Start';
+		o.depends('algorithm', 'Advanced');
 
 		o = s.taboption('smstab', form.Value, 'bnumber', _('Phone number to be blurred'),
 		_('The last 5 digits of this number will be blurred.')
@@ -73,9 +80,9 @@ return view.extend({
 		o.placeholder = _('Please select a port');
 		o.rmempty = false;
 
-		o = s.taboption('smstab', form.Value, "pnumber", _("Prefix number"),
+		o = s.taboption('smstab', form.Value, 'pnumber', _('Prefix number'),
 			_("The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."));
-		o.default = "48";
+		o.default = '48';
 		o.validate = function(section_id, value) {
 
 			if (value.match(/^[0-9]+(?:\.[0-9]+)?$/))
@@ -134,7 +141,7 @@ return view.extend({
 		s.anonymous = true;
 
 		o = s.taboption('ussd', form.Value, 'ussdport', _('USSD sending port'), 
-			_("Select one of the available ttyUSBX ports."));
+			_('Select one of the available ttyUSBX ports.'));
 		devs.sort((a, b) => a.name > b.name);
 		devs.forEach(dev => o.value('/dev/' + dev.name));
 		
@@ -167,7 +174,7 @@ return view.extend({
 		s.anonymous = true;
 
 		o = s.taboption('attab' , form.Value, 'atport', _('AT commands sending port'), 
-			_("Select one of the available ttyUSBX ports."));
+			_('Select one of the available ttyUSBX ports.'));
 		devs.sort((a, b) => a.name > b.name);
 		devs.forEach(dev => o.value('/dev/' + dev.name));
 		
@@ -204,9 +211,9 @@ return view.extend({
 					L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 						.then(function(res) {
 							if (res) {
-								var total = res.substring(res.indexOf("total"));
+								var total = res.substring(res.indexOf('total'));
 								var t = total.replace ( /[^\d.]/g, '' );
-								var used = res.substring(17, res.indexOf("total"));
+								var used = res.substring(17, res.indexOf('total'));
 								var u = used.replace ( /[^\d.]/g, '' );
 
 								var sections = uci.sections('sms_tool_js');
@@ -245,9 +252,9 @@ return view.extend({
 		return form.Flag.prototype.write.apply(this, [section_id, value]);
 		};
 
-		o = s.taboption('notifytab', form.Value, "checktime", _("Check inbox every minute(s)"),
-			_("Specify how many minutes you want your inbox to be checked."));
-		o.default = "10";
+		o = s.taboption('notifytab', form.Value, 'checktime', _('Check inbox every minute(s)'),
+			_('Specify how many minutes you want your inbox to be checked.'));
+		o.default = '10';
 		o.rmempty = false;
 		o.validate = function(section_id, value) {
 
@@ -258,28 +265,28 @@ return view.extend({
 		};
 		o.datatype = 'range(5, 59)';
 
-		o = s.taboption('notifytab' , form.ListValue, "prestart", _("Restart the inbox checking process every"),
-			_("The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."));
-		o.value("4", _("4h"));
-		o.value("6", _("6h"));
-		o.value("8", _("8h"));
-		o.value("12", _("12h"));
-		o.default = "6";
+		o = s.taboption('notifytab' , form.ListValue, 'prestart', _('Restart the inbox checking process every'),
+			_('The process will restart at the selected time interval. This will eliminate the delay in checking your inbox.'));
+		o.value('4', _('4h'));
+		o.value('6', _('6h'));
+		o.value('8', _('8h'));
+		o.value('12', _('12h'));
+		o.default = '6';
 		o.rmempty = false;
 
-		o = s.taboption('notifytab' , form.ListValue, "ledtype",
+		o = s.taboption('notifytab' , form.ListValue, 'ledtype',
 			_('The diode is dedicated only to these notifications'), 
 			_("Select 'No' in case the router has only one LED or if the LED is multi-tasking. \
 				<br /><br /><b>Important</b> \
 				<br />This option requires LED to be defined in the system (if possible) to work properly. \
 				This requirement applies when the diode supports multiple tasks."));
-		o.value("S", _("No"));
-		o.value("D", _("Yes"));
-		o.default = "D";
+		o.value('S', _('No'));
+		o.value('D', _('Yes'));
+		o.default = 'D';
 		o.rmempty = false;
 
 		o = s.taboption('notifytab', form.ListValue, 'smsled',_('<abbr title="Light Emitting Diode">LED</abbr> Name'),
-			_("Select the notification LED."));
+			_('Select the notification LED.'));
 		o.load = function(section_id) {
 			return L.resolveDefault(fs.list('/sys/class/leds'), []).then(L.bind(function(leds) {
 				if(leds.length > 0) {
@@ -294,3 +301,4 @@ return view.extend({
 		return m.render();
 	}
 });
+
