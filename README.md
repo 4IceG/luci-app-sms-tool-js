@@ -125,26 +125,26 @@ make V=s -j1 feeds/luci/applications/luci-app-sms-tool-js/compile
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/01b.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-1.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/02.png?raw=true?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-2.PNG?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/03.png?raw=true?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-3.png?raw=true)
 
 > "AT Commands" window / Okno poleceń AT:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/04.png?raw=true?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-4.png?raw=true)
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/c01b.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/c02.png?raw=true?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/c03.png?raw=true?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms_tool_js/c04.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-5.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-6.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-7.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-8.png?raw=true)
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Thanks to / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Podziękowania dla
 - [obsy (Cezary Jackiewicz)](https://github.com/obsy)
