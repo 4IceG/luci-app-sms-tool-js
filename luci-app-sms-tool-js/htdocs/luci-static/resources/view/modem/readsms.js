@@ -346,7 +346,7 @@ return view.extend({
 																	}
 																	
   																cell2.innerHTML = result[i].timestamp;
-    																cell1.innerHTML = result[i].content;
+    																cell1.innerHTML = result[i].content.replace(/\s+/g, ' ').trim();
 																aidx.push(result[i].index+'-');
 															}
 
@@ -365,6 +365,8 @@ return view.extend({
 
 									/* No merging messages */
 									if (smsM == "0") {
+
+									var sortedData = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
 
 										if (u){
 
@@ -386,7 +388,7 @@ return view.extend({
  				 									cell3.innerHTML = sortedData[i].sender;
 												}
   											cell2.innerHTML = sortedData[i].timestamp;
-    											cell1.innerHTML = sortedData[i].content;
+    											cell1.innerHTML = sortedData[i].content.replace(/\s+/g, ' ').trim();
 											aidx.push(sortedData[i].index+'-');
 										
 											}
@@ -487,4 +489,3 @@ return view.extend({
 	handleSave: null,
 	handleReset: null
 });
-
