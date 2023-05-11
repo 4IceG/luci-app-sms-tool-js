@@ -129,7 +129,7 @@ make V=s -j1 feeds/luci/applications/luci-app-sms-tool-js/compile
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-2.PNG?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-2b.PNG?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
