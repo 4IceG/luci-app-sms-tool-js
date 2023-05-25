@@ -78,7 +78,144 @@ return view.extend({
 			if (cut.includes('error: 18')) {
         		res.stdout = _('SIM PUK2 required.');
 			}
-			
+			if (cut.includes('error: 20')) {
+        		res.stdout = _('Memory full.');
+			}
+			if (cut.includes('error: 21')) {
+        		res.stdout = _('Invalid index.');
+			}
+			if (cut.includes('error: 22')) {
+        		res.stdout = _('Not found.');
+			}
+			if (cut.includes('error: 23')) {
+        		res.stdout = _('Memory failure.');
+			}
+			if (cut.includes('error: 24')) {
+        		res.stdout = _('Text string too long.');
+			}
+			if (cut.includes('error: 25')) {
+        		res.stdout = _('Invalid characters in text string.');
+			}
+			if (cut.includes('error: 26')) {
+        		res.stdout = _('Dial string too long.');
+			}
+			if (cut.includes('error: 27')) {
+        		res.stdout = _('Invalid characters in dial string.');
+			}
+			if (cut.includes('error: 30')) {
+        		res.stdout = _('No network service.');
+			}
+			if (cut.includes('error: 31')) {
+        		res.stdout = _('Network timeout.');
+			}
+			if (cut.includes('error: 32')) {
+        		res.stdout = _('Network not allowed, emergency calls only.');
+			}
+			if (cut.includes('error: 40')) {
+        		res.stdout = _('Network personalization PIN required.');
+			}
+			if (cut.includes('error: 41')) {
+        		res.stdout = _('Network personalization PUK required.');
+			}
+			if (cut.includes('error: 42')) {
+        		res.stdout = _('Network subset personalization PIN required.');
+			}
+			if (cut.includes('error: 43')) {
+        		res.stdout = _('Network subset personalization PUK required.');
+        		}
+			if (cut.includes('error: 44')) {
+        		res.stdout = _('Service provider personalization PIN required.');
+        		}
+			if (cut.includes('error: 45')) {
+        		res.stdout = _('Service provider personalization PUK required.');
+        		}
+			if (cut.includes('error: 46')) {
+        		res.stdout = _('Corporate personalization PIN required.');
+        		}
+			if (cut.includes('error: 47')) {
+        		res.stdout = _('Corporate personalization PUK required.');
+        		}
+			if (cut.includes('error: 48')) {
+        		res.stdout = _('PH-SIM PUK required.');
+        		}
+			if (cut.includes('error: 100')) {
+        		res.stdout = _('Unknown error.');
+        		}
+			if (cut.includes('error: 103')) {
+        		res.stdout = _('Illegal MS.');
+        		}
+			if (cut.includes('error: 106')) {
+        		res.stdout = _('Illegal ME.');
+        		}
+			if (cut.includes('error: 107')) {
+        		res.stdout = _('GPRS services not allowed.');
+        		}
+			if (cut.includes('error: 111')) {
+        		res.stdout = _('PLMN not allowed.');
+        		}
+			if (cut.includes('error: 112')) {
+        		res.stdout = _('Location area not allowed.');
+        		}
+			if (cut.includes('error: 113')) {
+        		res.stdout = _('Roaming not allowed in this location area.');
+        		}
+			if (cut.includes('error: 126')) {
+        		res.stdout = _('Operation temporary not allowed.');
+        		}
+			if (cut.includes('error: 132')) {
+        		res.stdout = _('Service operation not supported.');
+        		}
+			if (cut.includes('error: 133')) {
+        		res.stdout = _('Requested service option not subscribed.');
+        		}
+			if (cut.includes('error: 134')) {
+        		res.stdout = _('Service option temporary out of order.');
+        		}
+			if (cut.includes('error: 148')) {
+        		res.stdout = _('Unspecified GPRS error.');
+        		}
+			if (cut.includes('error: 149')) {
+        		res.stdout = _('PDP authentication failure.');
+        		}
+			if (cut.includes('error: 150')) {
+        		res.stdout = _('Invalid mobile class.');
+        		}
+			if (cut.includes('error: 256')) {
+        		res.stdout = _('Operation temporarily not allowed.');
+        		}
+			if (cut.includes('error: 257')) {
+        		res.stdout = _('Call barred.');
+        		}
+			if (cut.includes('error: 258')) {
+        		res.stdout = _('Phone/Modem is busy.');
+        		}
+			if (cut.includes('error: 259')) {
+        		res.stdout = _('User abort.');
+        		}
+			if (cut.includes('error: 260')) {
+        		res.stdout = _('Invalid dial string.');
+        		}
+			if (cut.includes('error: 261')) {
+        		res.stdout = _('SS not executed.');
+        		}
+			if (cut.includes('error: 262')) {
+        		res.stdout = _('SIM Blocked.');
+        		}
+			if (cut.includes('error: 263')) {
+        		res.stdout = _('Invalid block.');
+        		}
+			if (cut.includes('error: 527')) {
+        		res.stdout = _('Please wait, and retry your selection later (Specific Modem Sierra).');
+        		}
+			if (cut.includes('error: 528')) {
+        		res.stdout = _('Location update failure – emergency calls only (Specific Modem Sierra).');
+        		}
+			if (cut.includes('error: 529')) {
+        		res.stdout = _('Selection failure – emergency calls only (Specific Modem Sierra).');
+        		}
+			if (cut.includes('error: 772')) {
+        		res.stdout = _('SIM powered down.');
+        		}
 						
 			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
 			
