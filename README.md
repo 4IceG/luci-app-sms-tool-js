@@ -18,6 +18,9 @@
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Installation / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Instalacja
 
+<details>
+   <summary>Pokaż | Show me</summary>
+
 #### Package dependencies for conventional modems.
 Modem drivers are required for proper operation.
 ``` bash
@@ -93,8 +96,14 @@ opkg install luci-app-sms-tool-js
 
 For images downloaded from eko.one.pl.
 Installation procedure is similar, only there is no need to manually download the sms-tool package.
+   
+</details>
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> User compilation / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Kompilacja przez użytkownika
+
+<details>
+   <summary>Pokaż | Show me</summary>
+   
 ``` bash
 #The package can be added to Openwrt sources in two ways:
 
@@ -120,7 +129,8 @@ packages/luci-app-sms-tool-js/Makefile
 #Then you can compile the packages one by one, an example command:
 make V=s -j1 feeds/luci/applications/luci-app-sms-tool-js/compile
 ```
-
+</details>
+   
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Screenshots / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Zrzuty ekranu
 
 > "Received Messages" window / Okno odebranych wiadomości:
