@@ -327,12 +327,6 @@ msgstr "Nie"
 msgid "Yes"
 msgstr "Tak"
 
-msgid "Work in progress.."
-msgstr "Prace są w toku.."
-
-msgid "Option will be back as soon as I write new procd script."
-msgstr "Opcja wróci, gdy tylko napiszę nowy skrypt procd."
-
 msgid "Merge algorithm"
 msgstr "Algorytm scalania"
 

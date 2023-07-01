@@ -479,7 +479,7 @@ return view.extend({
 				])
 			]),
 
-			E('hr'),
+			//E('hr'),
 		]);
 
 		return v;

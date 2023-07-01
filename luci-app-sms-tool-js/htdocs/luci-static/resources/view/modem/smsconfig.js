@@ -26,7 +26,7 @@ return view.extend({
 		var m, s, o;
 		m = new form.Map('sms_tool_js', _('Configuration sms-tool'), _('Configuration panel for sms-tool and gui application.'));
 
-		s = m.section(form.TypedSection, 'sms_tool_js', '', _(''));
+		s = m.section(form.TypedSection, 'sms_tool_js', '', null);
 		s.anonymous = true;
 
 		//TAB SMS
