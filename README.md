@@ -26,7 +26,7 @@ Modem drivers are required for proper operation.
 ``` bash
 opkg install kmod-usb-serial kmod-usb-serial-option sms-tool
 ```
-The sms-tool package is available in the OpenWrt Master repository.
+The sms-tool package is available in the OpenWrt repository since v23.05.
 
 #### Step 1a. Install sms-tool from Master (Only the current snapshot image).
 ``` bash
