@@ -365,8 +365,18 @@ return view.extend({
 
 									/* No merging messages */
 									if (smsM == "0") {
+									
+										/* Sort messages by delivery time */
+										var sortbyTime = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
 
-									var sortedData = json.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
+										/* Sorting messages by parts */
+										var sortedData = sortbyTime.sort((a, b) => {
+    										if (a.timestamp === b.timestamp && a.sender === b.sender && a.total === b.total) {
+        											return a.part - b.part;
+    										} else {
+        											return 0;
+    										}
+									});
 
 										if (u){
 
