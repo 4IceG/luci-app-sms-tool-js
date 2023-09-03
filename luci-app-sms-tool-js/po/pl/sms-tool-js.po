@@ -359,3 +359,27 @@ msgstr "Od początku do końca"
 
 msgid "From end to beginning"
 msgstr "Od końca do początku"
+
+msgid "Save messages to a text file"
+msgstr "Zapisz wiadomości do pliku tekstowego"
+
+msgid "Save sms to txt file?"
+msgstr "Zapisać wiadomości SMS do pliku txt?"
+
+msgid "Save as .txt file"
+msgstr "Zapisz jako plik .txt"
+
+msgid "Saving..."
+msgstr "Zapisywanie..."
+
+msgid "Please wait.. Process of saving SMS message to a text file is in progress."
+msgstr "Proszę czekać.. Trwa proces zapisu wiadomości SMS do pliku tekstowego."
+
+msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
+msgstr "Opcja umożliwia wykonanie kopii zapasowej SMS-ów lub np. zapisanie wiadomości nieobsługiwanych przez sms-tool."
+
+msgid "Delete all messages"
+msgstr "Usuń wszystkie wiadomości"
+
+msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
+msgstr "Opcja umożliwia usunięcie wszystkich wiadmości SMS w przypadku kiedy nie są one widoczne w zakładce 'Odebrane wiadomości'."
