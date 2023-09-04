@@ -170,7 +170,7 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.13-1.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
@@ -186,7 +186,7 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-5.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.13-5.png?raw=true)
 ![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-6.png?raw=true)
 ![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-7.png?raw=true)
 ![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-8.png?raw=true)
