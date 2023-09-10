@@ -15,7 +15,9 @@
 				"/sbin/smstool_led.sh": [ "exec" ],
 				"/sbin/sms_led.sh": [ "exec" ],
 				"/sbin/new_cron_sync.sh": [ "exec" ],
+				"/usr/bin/usr_script1.sh": [ "read" ],
 				"/etc/sms_tool_js": [ "read" ],
+				"/tmp/mysms.txt": [ "read" ],
 				"/etc/modem/atcmmds.user": [ "read" ],
 				"/etc/modem/phonebook.user": [ "read" ],
 				"/etc/modem/ussdcodes.user": [ "read" ]
@@ -26,6 +28,8 @@
 			"file": {
 				"/etc/sms_tool_js": [ "write" ],
 				"/sys/class/leds/*/brightness": [ "write" ],
+				"/tmp/mysms.txt": [ "write" ],
+				"/usr/bin/usr_script1.sh": [ "write" ],
 				"/etc/modem/atcmmds.user": [ "write" ],
 				"/etc/modem/phonebook.user": [ "write" ],
 				"/etc/modem/ussdcodes.user": [ "write" ]
@@ -34,4 +38,3 @@
 		}
 	}
 }
-

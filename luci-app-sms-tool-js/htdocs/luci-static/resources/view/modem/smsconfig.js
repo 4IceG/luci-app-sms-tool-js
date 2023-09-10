@@ -41,6 +41,12 @@ return view.extend({
 		
 		o.placeholder = _('Please select a port');
 		o.rmempty = false;
+		
+		o = s.taboption('smstab', form.ListValue, 'storage', _('Message storage area'),
+		_('Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device.'));
+		o.value('SM', _('SIM card'));
+		o.value('ME', _('Modem memory'));
+		o.default = 'SM';
 
 		o = s.taboption('smstab', form.Flag, 'mergesms', _('Merge split messages'),
 		_('Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received.')
@@ -65,12 +71,6 @@ return view.extend({
 		_('The last 5 digits of this number will be blurred.')
 		);
 		o.password = true;
-		
-		o = s.taboption('smstab', form.ListValue, 'storage', _('Message storage area'),
-		_('Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device.'));
-		o.value('SM', _('SIM card'));
-		o.value('ME', _('Modem memory'));
-		o.default = 'SM';
 
 		o = s.taboption('smstab', form.Button, '_fsave');
 		o.title      = _('Save messages to a text file');
@@ -82,14 +82,17 @@ return view.extend({
 			{
 				return uci.load('sms_tool_js').then(function() {
 					var portES = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
-
 						L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portES , '-f' , '%Y-%m-%d %H:%M' , 'recv' , '2>/dev/null']))
 							.then(function(res) {
 								if (res) {
+								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
+								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
+    								fs.exec('sleep 1');
+								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
+								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
 								L.ui.showModal(_('Saving...'), [
 									E('p', { 'class': 'spinning' }, _('Please wait.. Process of saving SMS message to a text file is in progress.'))
 								]);
-									fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
 									L.resolveDefault(fs.read_direct('/tmp/mysms.txt'), null).then(function (restxt) {
 										if (restxt) {
 											var link = E('a', {
@@ -101,7 +104,7 @@ return view.extend({
 										link.click();
 										URL.revokeObjectURL(link.href);
 										L.hideModal();
-									}, 3000).finally();
+									}, 5000).finally();
 								}
 								}).catch(() => {
 								ui.addNotification(null, E('p', {}, _('Download error') + ': ' + err.message));
