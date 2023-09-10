@@ -170,11 +170,11 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.13-1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.14-1.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-2b.PNG?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.14-5.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
