@@ -383,3 +383,6 @@ msgstr "Usuń wszystkie wiadomości"
 
 msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
 msgstr "Opcja umożliwia usunięcie wszystkich wiadmości SMS w przypadku kiedy nie są one widoczne w zakładce 'Odebrane wiadomości'."
+
+msgid "Saving SMS messages to a file failed. Please try again."
+msgstr "Zapis wiadomości SMS do pliku zakończony niepowodzeniem. Proszę spróbować ponownie."

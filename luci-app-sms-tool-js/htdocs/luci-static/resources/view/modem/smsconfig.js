@@ -17,7 +17,7 @@ return view.extend({
 	load: function() {
 		return fs.list('/dev').then(function(devs) {
 			return devs.filter(function(dev) {
-				return dev.name.match(/^ttyUSB/) || dev.name.match(/^cdc-wdm/) || dev.name.match(/^ttyACM/);
+				return dev.name.match(/^ttyUSB/) || dev.name.match(/^cdc-wdm/) || dev.name.match(/^ttyACM/) || dev.name.match(/^mhi_/);
 			});
 		});
 	},
@@ -77,43 +77,49 @@ return view.extend({
 		o.description      = _('This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool.');
 		o.inputtitle = _('Save as .txt file');
 		o.onclick = function() {
-
-		if (confirm(_('Save sms to txt file?')))
-			{
-				return uci.load('sms_tool_js').then(function() {
+			return uci.load('sms_tool_js').then(function() {
 					var portES = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 						L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portES , '-f' , '%Y-%m-%d %H:%M' , 'recv' , '2>/dev/null']))
 							.then(function(res) {
 								if (res) {
-								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
-								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
-    								fs.exec('sleep 1');
-								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
-								fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
-								L.ui.showModal(_('Saving...'), [
-									E('p', { 'class': 'spinning' }, _('Please wait.. Process of saving SMS message to a text file is in progress.'))
-								]);
-									L.resolveDefault(fs.read_direct('/tmp/mysms.txt'), null).then(function (restxt) {
-										if (restxt) {
+									fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
+  									var fileName = 'mysms.txt';
+  									var filePath = '/tmp/' + fileName;
+
+  									fs.stat(filePath)
+    									.then(function () {
+
+									if (confirm(_('Save sms to txt file?')))
+									{
+										L.resolveDefault(fs.read_direct('/tmp/mysms.txt'), null).then(function (restxt) {
+											if (restxt) {
+												L.ui.showModal(_('Saving...'), [
+													E('p', { 'class': 'spinning' }, _('Please wait.. Process of saving SMS message to a text file is in progress.'))
+												]);
 											var link = E('a', {
 												'download': 'mysms.txt',
 												'href': URL.createObjectURL(
-											new Blob([ restxt ], { type: 'text/plain' })),
+												new Blob([ restxt ], { type: 'text/plain' })),
+											});
+												window.setTimeout(function() {
+													link.click();
+													URL.revokeObjectURL(link.href);
+													L.hideModal();
+												}, 2000).finally();
+											} else {
+												ui.addNotification(null, E('p', {}, _('Saving SMS messages to a file failed. Please try again.')));
+											}
+											
+										}).catch(() => {
+											ui.addNotification(null, E('p', {}, _('Download error') + ': ' + err.message));
 										});
-									window.setTimeout(function() {
-										link.click();
-										URL.revokeObjectURL(link.href);
-										L.hideModal();
-									}, 5000).finally();
+									}
+									});
 								}
-								}).catch(() => {
-								ui.addNotification(null, E('p', {}, _('Download error') + ': ' + err.message));
-						});
-					}
 				});
 
     			});
-			}
+			
 		};
 
 		o = s.taboption('smstab', form.Button, '_fdelete');
@@ -333,7 +339,7 @@ return view.extend({
 		o.rmempty = false;
 
 		o = s.taboption('notifytab' , form.ListValue, 'ledtype',
-			_('The diode is dedicated only to these notifications'), 
+			_('The diode is dedicated only to these notifications'),
 			_("Select 'No' in case the router has only one LED or if the LED is multi-tasking. \
 				<br /><br /><b>Important</b> \
 				<br />This option requires LED to be defined in the system (if possible) to work properly. \
@@ -359,3 +365,4 @@ return view.extend({
 		return m.render();
 	}
 });
+
