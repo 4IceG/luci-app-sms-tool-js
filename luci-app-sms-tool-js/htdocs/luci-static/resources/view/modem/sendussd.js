@@ -24,7 +24,7 @@ return view.extend({
 			var out = document.querySelector('.atcommand-output');
 			out.style.display = '';
 
-			res.stdout = res.stdout.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "")
+			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 			
 			var cut = res.stdout;
 			if (cut.includes('error: 0')) {
