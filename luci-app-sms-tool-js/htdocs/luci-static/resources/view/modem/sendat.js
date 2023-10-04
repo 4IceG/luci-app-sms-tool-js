@@ -25,6 +25,7 @@ return view.extend({
 			out.style.display = '';
 
 			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
+			res.stderr = res.stderr?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 
 			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
 			

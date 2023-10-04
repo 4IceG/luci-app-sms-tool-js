@@ -23,10 +23,8 @@ return view.extend({
 		return fs.exec(exec, args).then(function(res) {
 			var out = document.querySelector('.atcommand-output');
 			out.style.display = '';
-
-			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 			
-			var cut = res.stdout;
+			var cut = res.stderr;
 			if (cut.includes('error: 0')) {
         		res.stdout = _('Phone/Modem failure.');
 			}
@@ -216,8 +214,11 @@ return view.extend({
 			if (cut.includes('error: 772')) {
         		res.stdout = _('SIM powered down.');
         		}
+
+			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
+			res.stderr = res.stderr?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 						
-			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
+			dom.content(out, [ res.stderr || '', ' > '+res.stdout || '' ]);
 			
 		}).catch(function(err) {
 			ui.addNotification(null, E('p', [ err ]))
@@ -377,3 +378,4 @@ return view.extend({
 	handleSave: null,
 	handleReset: null
 })
+
