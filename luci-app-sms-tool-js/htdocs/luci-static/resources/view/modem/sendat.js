@@ -26,11 +26,21 @@ return view.extend({
 
 			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 			res.stderr = res.stderr?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
-
-			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
+			
+			if (res.stdout === undefined || res.stderr === undefined || res.stderr.includes('undefined') || res.stdout.includes('undefined')) {
+				return;
+			}
+			else {
+				dom.content(out, [ res.stdout || '', res.stderr || '' ]);
+			}
 			
 		}).catch(function(err) {
-			ui.addNotification(null, E('p', [ err ]))
+			if (res.stdout === undefined || res.stderr === undefined || res.stderr.includes('undefined') || res.stdout.includes('undefined')) {
+				return;
+			}
+			else {
+				ui.addNotification(null, E('p', [ err ]));
+			}
 		}).finally(function() {
 			for (var i = 0; i < buttons.length; i++)
 			buttons[i].removeAttribute('disabled');
