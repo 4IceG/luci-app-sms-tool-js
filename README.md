@@ -135,6 +135,8 @@ make V=s -j1 feeds/luci/applications/luci-app-sms-tool-js/compile
 4x4/2x2 MIMO ON/OFF ➜ AT+QCFG="lte4x4mimo/disable",0;AT+QCFG="lte4x4mimo/disable",0
 4x4/2x2 MIMO OFF/ON ➜ AT+QCFG="lte4x4mimo/disable",1;AT+QCFG="lte4x4mimo/disable",1
 Disable Cell Lock ➜ AT+QNWLOCK="COMMON/4G",0;AT+QNWLOCK="COMMON/4G",0
+Disable roaming immediately ➜ AT+QCFG="roamservice",1,1;AT+QCFG="roamservice",1,1
+Enable roaming immediately ➜ AT+QCFG="roamservice",2,1;AT+QCFG="roamservice",2,1
 Query ➜ AT+QNWLOCK="COMMON/4G";AT+QNWLOCK="COMMON/4G"
 CellLock ➜ AT+QNWLOCK="COMMON/4G",NUM OF CELLS,FREQ,PCI;AT+QNWLOCK="COMMON/4G",1,
 Check the signal info on each antenna port ➜ AT+QRSRP;AT+QRSRP
@@ -146,7 +148,12 @@ Carrier Agregation Info ➜ AT+QCAINFO;AT+QCAINFO
 Query the serving cell information ➜ AT+QENG="servingcell";AT+QENG="servingcell"
 Query the information of neighbour cells ➜ AT+QENG="neighbourcell";AT+QENG="neighbourcell"
 Query network information ➜ AT+QNWINFO;AT+QNWINFO
-Band 1/3/7/8/20/38 ➜ AT+QNWPREFCFG="lte_band",1:3:7:8:20:38;AT+QNWPREFCFG="lte_band",1:3:7:8:20:38
+LTE Bands 1/3/7/8/20/38 ➜ AT+QNWPREFCFG="lte_band",1:3:7:8:20:38;AT+QNWPREFCFG="lte_band",1:3:7:8:20:38
+5G SA Bands ➜ AT+QNWPREFCFG="nr5g_band",1:3:5:7:8:20:28:38:40:41:77:78:79;AT+QNWPREFCFG="nr5g_band",1:3:5:7:8:20:28:38:40:41:77:78:79
+5G NSA Bands ➜ AT+QNWPREFCFG="nsa_nr5g_band",1:3:5:7:8:20:28:38:40:41:77:78:79;AT+QNWPREFCFG="nsa_nr5g_band",1:3:5:7:8:20:28:38:40:41:77:78:79
+Disable 5G NR SA ➜ AT+QNWPREFCFG="nr5g_disable_mode",1;AT+QNWPREFCFG="nr5g_disable_mode",1
+Disable 5G NR NSA ➜ AT+QNWPREFCFG="nr5g_disable_mode",2;AT+QNWPREFCFG="nr5g_disable_mode",2
+Neither NSA & SA is disabled ➜ AT+QNWPREFCFG="nr5g_disable_mode",0;AT+QNWPREFCFG="nr5g_disable_mode",0
 SIM Preferred Message Storage ➜ AT+CPMS="SM","SM","SM";AT+CPMS="SM","SM","SM"
 Modem memory preferred Message Storage ➜ AT+CPMS="ME","ME","ME";AT+CPMS="ME","ME","ME"
 Save SMS Settings ➜ AT+CSAS;AT+CSAS
