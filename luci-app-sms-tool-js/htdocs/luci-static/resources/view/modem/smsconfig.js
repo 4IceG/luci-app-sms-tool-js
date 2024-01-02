@@ -7,7 +7,7 @@
 'require tools.widgets as widgets'
 
 /*
-	Copyright 2022-2023 Rafał Wabik - IceG - From eko.one.pl forum
+	Copyright 2022-2024 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
@@ -17,7 +17,7 @@ return view.extend({
 	load: function() {
 		return fs.list('/dev').then(function(devs) {
 			return devs.filter(function(dev) {
-				return dev.name.match(/^ttyUSB/) || dev.name.match(/^cdc-wdm/) || dev.name.match(/^ttyACM/) || dev.name.match(/^mhi_/);
+				return dev.name.match(/^ttyUSB/) || dev.name.match(/^cdc-wdm/) || dev.name.match(/^ttyACM/) || dev.name.match(/^mhi_/) || dev.name.match(/^wwan/);
 			});
 		});
 	},
