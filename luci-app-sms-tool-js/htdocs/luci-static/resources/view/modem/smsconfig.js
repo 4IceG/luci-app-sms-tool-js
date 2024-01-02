@@ -360,9 +360,11 @@ return view.extend({
 				return this.super('load', [section_id]);
 			}, this));
 		};
-		o.rmempty = false;
+		o.exclude = s.section;
+		o.nocreate = true;
+		o.optional = true;
+		o.rmempty = true;
 
 		return m.render();
 	}
 });
-
