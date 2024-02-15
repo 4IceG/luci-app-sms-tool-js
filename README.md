@@ -177,26 +177,26 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.14-1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms1.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-2.PNG?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms2.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-3.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms3.png?raw=true)
 
 > "AT Commands" window / Okno poleceń AT:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-4.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms4.png?raw=true)
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.14-5.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-6.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-7.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.8-8.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5a.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5b.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5c.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5d.png?raw=true)
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Thanks to / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Podziękowania dla
 - [obsy (Cezary Jackiewicz)](https://github.com/obsy)
