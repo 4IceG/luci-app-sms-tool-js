@@ -281,8 +281,12 @@ return view.extend({
 				return this.handleCommand('sms_tool', [ '-d' , port , '-r' , 'ussd' , ussd ]);
 				}
 			}
-		}
-
+			if ( get_ussd == '0' && get_pdu == '0')
+				{
+				//without ussd & pdu
+				return this.handleCommand('sms_tool', [ '-d' , port , 'ussd' , ussd ]);
+				}
+			}
 		if ( !port )
 		{
 			ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
@@ -393,4 +397,3 @@ return view.extend({
 	handleSave: null,
 	handleReset: null
 })
-
