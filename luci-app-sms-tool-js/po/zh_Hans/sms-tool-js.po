@@ -128,7 +128,7 @@ msgid "The phone number should be preceded by the country prefix (for Poland it 
 msgstr "电话号码前面应带有国家/地区前缀(波兰为48，不带“+”)。如果号码为5,4或3个字符，则被视为“短”，并且前面不应带有国家/地区前缀。"
 
 msgid "Add prefix to phone number"
-msgstr "为电话号码添加前缀"
+msgstr "为号码添加前缀"
 
 msgid "Automatically add prefix to the phone number field."
 msgstr "自动将前缀添加到电话号码字段"
@@ -149,7 +149,7 @@ msgid "User AT commands"
 msgstr "用户AT指令库"
 
 msgid "Command to send"
-msgstr "发送命令"
+msgstr "发送的命令"
 
 msgid "Clear form"
 msgstr "清除表格"
@@ -179,7 +179,7 @@ msgid "Messages store in"
 msgstr "短信存储在"
 
 msgid "Messages (inbox / maximum)"
-msgstr "短信(收件箱/最多)"
+msgstr "短信条数(收件箱/最多)"
 
 msgid "Delete selected"
 msgstr "删除所选"
@@ -215,7 +215,7 @@ msgid "User interface for sending USSD codes using sms-tool. More information ab
 msgstr "使用短信工具发送USSD码的用户界面。有关短信工具的更多信息，请访问%sforum eko.one.pl%s。"
 
 msgid "Configuration sms-tool"
-msgstr "配置SMS工具"
+msgstr "SMS工具配置"
 
 msgid "Configuration panel for sms-tool and gui application."
 msgstr "SMS工具和GUI的配置面板"
@@ -272,28 +272,28 @@ msgid "Notification Settings"
 msgstr "通知设置"
 
 msgid "The LED informs about a new message. Before activating this function, please config and save the SMS reading port, time to check SMS inbox and select the notification LED."
-msgstr "LED通知有新消息。在激活此功能之前，请配置并保存短信读取端口、查看短信收件箱的时间以及选择通知LED"
+msgstr "LED通知有新消息。在激活此功能之前，请配置并保存短信读取端口、查看短信收件箱的时间以及选择通知LED。"
 
 msgid "Check inbox every minute(s)"
-msgstr "每分钟检查收件箱"
+msgstr "每隔多少分钟检查收件箱"
 
 msgid "Specify how many minutes you want your inbox to be checked."
-msgstr "指定您希望检查收件箱的分钟数"
+msgstr "这将将按照选定的时间间隔检查收件箱有无新短信。"
 
 msgid "Notification LED"
 msgstr "通知LED"
 
 msgid "Select the notification LED."
-msgstr "选择通知LED"
+msgstr "选择通知LED。"
 
 msgid "Notify new messages"
 msgstr "新消息通知"
 
 msgid "Restart the inbox checking process every"
-msgstr "每隔一段时间重新启动收件箱进程"
+msgstr "每隔多少小时重启收件箱进程"
 
 msgid "The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."
-msgstr "该过程将按照选定的时间间隔重新启动。这将消除检查收件箱的延迟。"
+msgstr "这将将按照选定的时间间隔重新启动，这将消除检查收件箱的延迟。"
 
 msgid "4h"
 msgstr "4小时"
@@ -314,7 +314,7 @@ msgid ""
 "Select 'No' in case the router has only one LED or if the LED is multi-tasking. <br /><br /><b>Important</b> <br />This "
 "option requires LED to be defined in the system (if possible) to work properly. This requirement applies when the diode supports multiple tasks."
 msgstr ""
-"如果路由器只有一个 LED 或 LED 处于多任务状态，请选择“否”。这 <br /><br /><b>很重要</b> <br /> "
+"如果路由器只有一个 LED 或 LED 处于多任务状态，请选择“否”。<br /><br /><b>这很重要</b> <br />"
 "选项需要在系统中定义 LED（如果可以）才能正常工作。当二极管支持多个任务时，此要求适用。"
 
 msgid ""
@@ -379,7 +379,7 @@ msgid "Please wait.. Process of saving SMS message to a text file is in progress
 msgstr "请稍候.. 正在将短信保存到文本文件"
 
 msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
-msgstr "此选项允许备份SMS短信，列如，保存SMS工具不支持的短信"
+msgstr "此选项允许备份SMS短信。列如，保存SMS工具不支持的短信"
 
 msgid "Delete all messages"
 msgstr "删除所有短信"
