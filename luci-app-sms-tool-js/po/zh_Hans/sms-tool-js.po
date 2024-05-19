@@ -17,7 +17,7 @@ msgid "USSD"
 msgstr "USSD"
 
 msgid "From"
-msgstr "发件人"
+msgstr "来自"
 
 msgid "Received"
 msgstr "收件时间"
