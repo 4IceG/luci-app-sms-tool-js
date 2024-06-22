@@ -334,7 +334,12 @@ return view.extend({
 						E('div', { 'class': 'cbi-value' }, [
 							E('label', { 'class': 'cbi-value-title' }, [ _('User USSD codes') ]),
 							E('div', { 'class': 'cbi-value-field' }, [
-								E('select', { 'class': 'cbi-input-select', 'id': 'tk', 'style': 'margin:5px 0; width:100%;', 'mousedown': ui.createHandlerFn(this, 'handleCopy')},
+									E('select', { 'class': 'cbi-input-select',
+										'id': 'tk',
+										'style': 'margin:5px 0; width:100%;',
+										'change': ui.createHandlerFn(this, 'handleCopy'),
+										'mousedown': ui.createHandlerFn(this, 'handleCopy')
+									    },
 									(loadResults[0] || "").trim().split("\n").map(function(cmd) {
 										var fields = cmd.split(/;/);
 										var name = fields[0];
