@@ -288,10 +288,11 @@ return view.extend({
 									}
 									if (ev.keyCode === 46) {
 										var del = document.getElementById('cmdvalue');
-										if (del)
+										if (del) {
 											var ov = document.getElementById('cmdvalue');
 											ov.value = '';
 											document.getElementById('cmdvalue').focus();
+										}
 									}
 								}
 								}),
