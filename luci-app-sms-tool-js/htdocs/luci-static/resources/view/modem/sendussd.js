@@ -184,38 +184,26 @@ return view.extend({
 		var port = sections[0].ussdport;
 		var get_ussd = sections[0].ussd;
 		var get_pdu = sections[0].pdu;
+		let tool_args = [];
 
 		if ( ussd.length < 2 ) {
 			ui.addNotification(null, E('p', _('Please specify the code to send')), 'info');
 			return false;
-		} else {
-
-			if ( !port ) {
-				ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
-				return false;
-			} else {
-				if ( get_ussd == '1' && get_pdu == '1') {
-					//ussd + pdu
-					return this.handleCommand('sms_tool', [ '-d' , port , '-R' , '-r' , 'ussd' , ussd ]);
-				}
-				if ( get_ussd == '1' && get_pdu == '0') {
-					//ussd
-					return this.handleCommand('sms_tool', [ '-d' , port , '-R' , 'ussd' , ussd ]);
-				}
-				if ( get_ussd == '0' && get_pdu == '1') {
-					//pdu
-					return this.handleCommand('sms_tool', [ '-d' , port , '-r' , 'ussd' , ussd ]);
-				}
-			}
-			if ( get_ussd == '0' && get_pdu == '0') {
-				//without ussd & pdu
-				return this.handleCommand('sms_tool', [ '-d' , port , 'ussd' , ussd ]);
-			}
 		}
+
 		if ( !port ) {
 			ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
 			return false;
 		}
+
+		tool_args.push('-d', port);
+		if (get_ussd == '1')
+			tool_args.push('-R');
+		if (get_pdu == '1')
+			tool_args.push('-r');
+		tool_args.push('ussd', ussd);
+
+		return this.handleCommand('sms_tool', tool_args);
 	},
 
 	handleClear: function(ev) {
