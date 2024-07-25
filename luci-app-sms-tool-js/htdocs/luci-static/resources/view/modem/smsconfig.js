@@ -220,6 +220,12 @@ return view.extend({
 		);
 		o.rmempty = false;
 
+		o = s.taboption('ussd', form.ListValue, 'coding', _('PDU decoding scheme'));
+		o.value('auto', _('Autodetect'));
+		o.value('0', _('7Bit'));
+		o.value('2', _('UCS2'));
+		o.default = 'auto';
+
 		o = s.taboption('ussd', form.TextValue, '_tmp4', _('User USSD codes'),
 			_("Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."));
 		o.rows = 7;

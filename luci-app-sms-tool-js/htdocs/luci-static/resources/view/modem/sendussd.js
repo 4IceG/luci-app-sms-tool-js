@@ -184,6 +184,7 @@ return view.extend({
 		var port = sections[0].ussdport;
 		var get_ussd = sections[0].ussd;
 		var get_pdu = sections[0].pdu;
+		let get_coding = sections[0].coding;
 		let tool_args = [];
 
 		if ( ussd.length < 2 ) {
@@ -201,6 +202,8 @@ return view.extend({
 			tool_args.push('-R');
 		if (get_pdu == '1')
 			tool_args.push('-r');
+		if (get_coding && get_coding != 'auto')
+			tool_args.push('-c', get_coding);
 		tool_args.push('ussd', ussd);
 
 		return this.handleCommand('sms_tool', tool_args);
