@@ -7,7 +7,7 @@
 'require view';
 
 /*
-	Copyright 2022-2024 Rafał Wabik - IceG - From eko.one.pl forum
+	Copyright 2022-2025 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
@@ -107,12 +107,12 @@ return view.extend({
 				   		var xs = document.getElementById('pb');
 
     						var phone, i;
-						res.stdout = '';
+						    res.stdout = '';
 
 							for (var i = 0; i < xs.length; i++) {
   								(function(i) {
-    									setTimeout(function() { 
-		    							phone = xs.options[i].value;
+    								setTimeout(function() { 
+		    						phone = xs.options[i].value;
 
 									var out = document.querySelector('.smscommand-output');
 									out.style.display = '';
@@ -218,10 +218,11 @@ return view.extend({
 										'mousedown': ui.createHandlerFn(this, 'handleCopy')
 									    },
 									(loadResults[0] || "").trim().split("\n").map(function(cmd) {
-										var fields = cmd.split(/;/);
-										var name = fields[0];
-										var code = fields[1];
-									return E('option', { 'value': code }, name ) })
+                                        var fields = cmd.split(/;/);
+                                        var name = fields[0];
+                                        var code = fields[1] || fields[0];
+                                    return E('option', { 'value': code }, name );
+                                    })
 								)
 							]) 
 						]),
@@ -283,7 +284,7 @@ return view.extend({
 										{
 										document.getElementById('counter').innerHTML = (160 - document.getElementById('smstext').value.length);
 
-											this.value = this.value.replace(/ą/g, 'a').replace(/Ą/g, 'A');
+											    this.value = this.value.replace(/ą/g, 'a').replace(/Ą/g, 'A');
         										this.value = this.value.replace(/ć/g, 'c').replace(/Ć/g, 'C');
         										this.value = this.value.replace(/ę/g, 'e').replace(/Ę/g, 'E');
         										this.value = this.value.replace(/ł/g, 'l').replace(/Ł/g, 'L');

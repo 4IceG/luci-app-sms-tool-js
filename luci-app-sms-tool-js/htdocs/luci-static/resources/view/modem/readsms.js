@@ -8,7 +8,7 @@
 
 
 /*
-	Copyright 2022-2024 Rafał Wabik - IceG - From eko.one.pl forum
+	Copyright 2022-2025 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
@@ -74,6 +74,7 @@ return view.extend({
 	load: function() {
 		uci.load('sms_tool_js');
 	},
+
 
 	handleDelete: function(ev) {
 
@@ -170,6 +171,8 @@ return view.extend({
 			}
 		}
 	},
+
+                                                                                                                                                                                                                                                                                                                                          
 
 	handleRefresh: function(ev) {
 		window.location.reload();

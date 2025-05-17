@@ -7,7 +7,7 @@
 'require view';
 
 /*
-	Copyright 2022-2024 Rafał Wabik - IceG - From eko.one.pl forum
+	Copyright 2022-2025 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
@@ -127,10 +127,11 @@ return view.extend({
 										'mousedown': ui.createHandlerFn(this, 'handleCopy')
 									    },
 									(loadResults[0] || "").trim().split("\n").map(function(cmd) {
-										var fields = cmd.split(/;/);
-										var name = fields[0];
-										var code = fields[1];
-									return E('option', { 'value': code }, name ) })
+                                        var fields = cmd.split(/;/);
+                                        var name = fields[0];
+                                        var code = fields[1] || fields[0];
+                                        return E('option', { 'value': code }, name );
+                                    })
 								)
 							]) 
 						]),
