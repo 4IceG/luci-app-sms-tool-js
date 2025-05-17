@@ -5,14 +5,17 @@
 ![GitHub forks](https://img.shields.io/github/forks/4IceG/luci-app-sms-tool-js?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/4IceG/luci-app-sms-tool-js/total)
 
-#### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Luci-app-sms-tool-js is a conversion of the https://github.com/4IceG/luci-app-sms-tool package (Conversion is not one-to-one and not everything works as in the previous package). The LuCI JS interface supports SMS/USSD Codes/AT Commands.
-
-#### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Luci-app-sms-tool-js jest konwersją pakietu https://github.com/4IceG/luci-app-sms-tool (Konwersja nie jest jeden do jednego i nie wszystko działa tak jak w poprzednim pakiecie). Interfejs LuCI JS wspiera obsługę wiadomości SMS/kodów USSD/poleceń AT.
+> [!NOTE]
+> <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> 
+Luci-app-sms-tool-js is a conversion of the https://github.com/4IceG/luci-app-sms-tool package (Conversion is not one-to-one and not everything works as in the previous package). The LuCI JS interface supports SMS/USSD Codes/AT Commands.
+>
+> <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Luci-app-sms-tool-js jest konwersją pakietu https://github.com/4IceG/luci-app-sms-tool (Konwersja nie jest jeden do jednego i nie wszystko działa tak jak w poprzednim pakiecie). Interfejs LuCI JS wspiera obsługę wiadomości SMS/kodów USSD/poleceń AT.
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> What You Should Know / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Co powinieneś wiedzieć
+> [!IMPORTANT]
 > My package will not work if you are using ModemManager.   
 > Preferred version OpenWrt >= 21.02.
-
+>
 > Mój pakiet nie będzie działać jeżeli uzywasz ModemManager-a.   
 > Preferowana wersja OpenWrt >= 21.02.
 
@@ -177,26 +180,26 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/readsms.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms2.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendsms.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms3.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendussd.png?raw=true)
 
 > "AT Commands" window / Okno poleceń AT:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms4.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendat.png?raw=true)
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5a.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5b.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5c.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms5d.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configsms.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configussd.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configat.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configled.png?raw=true)
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Thanks to / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Podziękowania dla
 - [obsy (Cezary Jackiewicz)](https://github.com/obsy)
