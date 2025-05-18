@@ -14,11 +14,52 @@
 */
 
 
-document.querySelector('head').appendChild(E('link', {
-	'rel': 'stylesheet',
-	'type': 'text/css',
-	'href': L.resource('view/modem/sms_tool_js.css')
-}));
+document.head.append(E('style', {'type': 'text/css'},
+`
+#smsTable {
+  width: 100%;
+  border: 1px solid var(--border-color-medium) !important;
+}
+
+th, td {
+  padding: 10px;
+  text-align: justify !important;
+  vertical-align: top !important;
+}
+
+td input[type="checkbox"] {
+  float: left !important;
+  margin: 0 auto  !important;
+  width: 17px  !important;
+}
+
+#smsTable tr:nth-child(odd) td{
+  background: var(--background-color-medium) !important;
+  border-bottom: 1px solid var(--border-color-medium) !important;
+  border-top: 1px solid var(--border-color-medium) !important;
+}
+
+#smsTable tr:nth-child(even) td{
+  border-bottom: 1px solid var(--border-color-medium) !important;
+  border-top: 1px solid var(--border-color-medium) !important;
+}
+
+#smsTable .checker {
+  width: 7%;
+}
+
+#smsTable .from {
+  width: 11%;
+}
+
+#smsTable .received {
+  width: 15%;
+}
+
+#smsTable .message {
+  width: 88%;
+}
+`));
 
 function msg_bar(v, m) {
 var pg = document.querySelector('#msg')
@@ -30,24 +71,6 @@ pg.firstElementChild.style.width = pc + '%';
 pg.setAttribute('title', '%s'.format(v) + ' / ' + '%s'.format(m) + ' ('+ pc + '%)');
 }
 
-function count_sms() {
-	uci.load('sms_tool_js').then(function() {
-
-		var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
-		var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
-
-			L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
-					.then(function(res) {
-							if (res) {
-								var total = res.substring(res.indexOf("total"));
-								var t = total.replace ( /[^\d.]/g, '' );
-								var used = res.substring(17, res.indexOf("total"));
-								var u = used.replace ( /[^\d.]/g, '' );
-								msg_bar(Math.floor(u), t);
-							}
-			});
-	});
-}
 
 function save_count() {
 	uci.load('sms_tool_js').then(function() {
@@ -116,6 +139,11 @@ return view.extend({
 
 					if (confirm(_('Delete selected message(s)?')))
 						{
+						uci.load('sms_tool_js').then(function() {
+
+							var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
+							var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+
 							var array = [];
 							var checkb = document.querySelectorAll('input[type=checkbox]:checked');
 
@@ -123,6 +151,7 @@ return view.extend({
 								if (checkb[i] != source)
   								array.push(checkb[i].id)
 							}
+
 							if (array) {
 
 							var args = [];
@@ -138,6 +167,30 @@ return view.extend({
 
 							var smsnr = ax.split(" ");
 
+							var smsallchars = smsnr.toString();
+							var smsdelcount = 0;
+							var smsdeleted = 0;
+
+							var inumber = false;
+
+							for (var i = 0; i < smsallchars.length; i++) {
+    							var ch = smsallchars[i];
+
+    							if (ch >= '0' && ch <= '9') {
+        							if (!inumber) {
+            								smsdelcount++;
+            								inumber = true;
+        							}
+    								} else if (ch === ',') {
+        								inumber = false;
+    								} else {
+        								inumber = false;
+    								}
+							}
+	
+							var deletelabel = document.getElementById("deleteinfo");
+							deletelabel.style.display = 'block';
+
 								for (var i=0; i < smsnr.length + 2; i++)
 									{
 									(function(i) {
@@ -147,14 +200,55 @@ return view.extend({
 									if (!Number.isNaN(smsnr[i]))
 										{
 										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
-										count_sms();				
+                								smsdeleted++;
+										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										.then(function(res) {
+										if (res) {
+											var total = res.substring(res.indexOf("total"));
+											var t = total.replace ( /[^\d.]/g, '' );
+											var used = res.substring(17, res.indexOf("total"));
+											var u = used.replace ( /[^\d.]/g, '' );
+											msg_bar(Math.floor(u), t);
+											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
 										}
-									count_sms();
-									save_count();
-									}, 1500 * i);
+										});
+				
+										}
+										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										.then(function(res) {
+										if (res) {
+											var total = res.substring(res.indexOf("total"));
+											var t = total.replace ( /[^\d.]/g, '' );
+											var used = res.substring(17, res.indexOf("total"));
+											var u = used.replace ( /[^\d.]/g, '' );
+											msg_bar(Math.floor(u), t);
+											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
+										}
+										});
+
+										if (smsdelcount == smsdeleted) {
+											setTimeout(function() {
+											var hidecount = document.getElementById('deleteinfo');
+    											hidecount.style.display = 'none';
+											    save_count();
+											}, 10000);
+										}
+									}, 1600 * i);
 								})(i);
-								count_sms();		
+										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										.then(function(res) {
+										if (res) {
+											var total = res.substring(res.indexOf("total"));
+											var t = total.replace ( /[^\d.]/g, '' );
+											var used = res.substring(17, res.indexOf("total"));
+											var u = used.replace ( /[^\d.]/g, '' );
+											msg_bar(Math.floor(u), t);
+											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
+										}
+										});
+		
 								}
+
 								var table = document.getElementById("smsTable");
   								var index = 1;
   									while (index < table.rows.length) {
@@ -166,7 +260,9 @@ return view.extend({
       											index++;
    										}
   									}
-							}
+								}
+
+							});
 						}
 			}
 		}
@@ -440,22 +536,31 @@ return view.extend({
 			E('div', { 'class': 'cbi-map-descr' }, _('User interface for reading messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s.').format('<a href="https://eko.one.pl/?p=openwrt-sms_tool" target="_blank">', '</a>')),
 
 			E('h3', _('Received Messages')),
-				E('table', { 'class': 'table' }, [
-						E('tr', { 'class': 'tr' }, [
-						E('td', { 'class': 'td left', 'width': '33%' }, [ _('Messages store in')]),
-						E('td', { 'class': 'td left', 'id': 'smssarea' }, [ store ]),
-					]),	
-						E('tr', { 'class': 'tr' }, [
-						E('td', { 'class': 'td left', 'width': '33%' }, [_('Messages (inbox / maximum)'),]),
-						E('td', { 'class': 'td' }, 
-						E('div', {
-							'id': 'msg',
-							'class': 'cbi-progressbar',
-							'title': '-'
-							}, E('div')
-						))
-					])
-				]),
+			E('table', { 'class': 'table' }, [
+    					E('tr', { 'class': 'tr' }, [
+        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Messages store in') ]),
+        					E('td', { 'class': 'td left', 'id': 'smssarea' }, [ store ])
+    					]),
+    					E('tr', { 'class': 'tr' }, [
+        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Messages (inbox / maximum)') ]),
+        					E('td', { 'class': 'td' }, [
+            				E('div', { 'class': 'right' }, [
+ 
+		                	E('div', {
+                    				'id': 'msg',
+                    				'class': 'cbi-progressbar',
+                    				'title': '-'
+                			}, E('div')),
+                
+                			E('div', {
+                    				'style': 'text-align:center',
+                    				'id': 'deleteinfo'
+                			}, [ '' ]),
+            				]),
+        			]),
+    			]),
+		]),
+
 				E('div', { 'class': 'right' }, [
 					E('button', {
 						//'class': 'cbi-button cbi-button-negative important',

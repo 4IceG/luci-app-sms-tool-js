@@ -326,13 +326,13 @@ return view.extend({
 					E('input', {
 						'id': 'history-full',
 						'click': ui.createHandlerFn(this, 'handleClearOut'),
-						'data-tooltip': _('Select this option if you need to use the extensive menu built on USSD codes.'),
+						'data-tooltip': _('Select this option if you need to use the menu built on USSD codes.'),
 						'type': 'checkbox',
 						'name': 'showhistory',
 						'disabled': null
 					}), ' ',
 					E('label', { 'for': 'history-full' }), ' ',
-					_('Keep your previous response when sending a new USSD code.')
+					_('Keep the previous reply when sending a new USSD code.')
 				])
 			]),
 				E('hr'),

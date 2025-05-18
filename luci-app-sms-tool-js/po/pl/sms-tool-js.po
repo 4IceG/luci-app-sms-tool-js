@@ -393,8 +393,17 @@ msgstr "Schemat dekodowania PDU"
 msgid "Autodetect"
 msgstr "Autodetekcja"
 
-msgid "Keep your previous response when sending a new USSD code."
+msgid "Keep the previous reply when sending a new USSD code."
 msgstr "Zachowaj wcześniejszą odpowiedź przy wysyłaniu nowego kodu USSD."
 
-msgid "Select this option if you need to use the extensive menu built on USSD codes."
-msgstr "Zaznacz tą opcję jeśli potrzebujesz skorzystać z rozbudowanego menu zbudowanego na kodach USSD."
+msgid "Select this option if you need to use the menu built on USSD codes."
+msgstr "Zaznacz tą opcję jeśli potrzebujesz skorzystać z menu zbudowanego na kodach USSD."
+
+msgid "Please wait... deleted"
+msgstr "Proszę czekać... usunięto"
+
+msgid "of"
+msgstr "z"
+
+msgid "selected messages"
+msgstr "wybranych wiadomości"
