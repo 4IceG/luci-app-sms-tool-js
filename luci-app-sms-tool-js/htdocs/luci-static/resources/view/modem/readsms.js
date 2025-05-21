@@ -209,7 +209,7 @@ return view.extend({
 									if (!Number.isNaN(smsnr[i]))
 										{
 										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
-                						smsdeleted++;
+                								smsdeleted++;
 										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
@@ -439,7 +439,7 @@ return view.extend({
 															var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 															for (var i = 0; i < result.length; i++) {
-            													var row = table.insertRow(-1);
+            															var row = table.insertRow(-1);
   																var cell1 = row.insertCell(0);
   																var cell2 = row.insertCell(0);
   																var cell3 = row.insertCell(0);
@@ -491,7 +491,7 @@ return view.extend({
 											var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 											for (var i = 0; i < sortedData.length; i++) {
-            								var row = table.insertRow(-1);
+            										var row = table.insertRow(-1);
   											var cell1 = row.insertCell(0);
   											var cell2 = row.insertCell(0);
   											var cell3 = row.insertCell(0);
