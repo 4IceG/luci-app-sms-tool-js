@@ -12,8 +12,8 @@ PKG_MAINTAINER:=Rafał Wabik <4Rafal@gmail.com>
 LUCI_DESCRIPTION:=LuCI JS interface for the sms-tool. The user interface supports SMS / USSD Codes / AT Commands.
 LUCI_PKGARCH:=all
 LUCI_DEPENDS:=+sms-tool +kmod-usb-serial +kmod-usb-serial-option +comgt
-PKG_VERSION:=2.0.26
-PKG_RELEASE:=20250518
+PKG_VERSION:=2.0.27
+PKG_RELEASE:=20250521
 
 define Package/luci-app-sms-tool-js/conffiles
 /etc/config/sms_tool_js

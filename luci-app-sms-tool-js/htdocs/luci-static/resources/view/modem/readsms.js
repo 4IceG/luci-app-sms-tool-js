@@ -29,8 +29,8 @@ th, td {
 
 td input[type="checkbox"] {
   float: left !important;
-  margin: 0 auto  !important;
-  width: 17px  !important;
+  margin: 0 auto !important;
+  width: 17px !important;
 }
 
 #smsTable tr:nth-child(odd) td{
@@ -45,19 +45,19 @@ td input[type="checkbox"] {
 }
 
 #smsTable .checker {
-  width: 7%;
+  width: 7% !important;
 }
 
 #smsTable .from {
-  width: 11%;
+  width: 11% !important;
 }
 
 #smsTable .received {
-  width: 15%;
+  width: 15% !important;
 }
 
 #smsTable .message {
-  width: 88%;
+  width: 88% !important;
 }
 `));
 
@@ -98,9 +98,22 @@ return view.extend({
 		uci.load('sms_tool_js');
 	},
 
+	handleSWarea: function(ev) {
+		switch (document.querySelector('input[name="filter_area"]:checked').value) {
+		case 'sim':
+			uci.set('sms_tool_js', '@sms_tool_js[0]', 'storage', "SM");
+			uci.save();
+			uci.apply();
+			break;
+		case 'memory':
+			uci.set('sms_tool_js', '@sms_tool_js[0]', 'storage', "ME");
+			uci.save();
+			uci.apply();
+			break;
+		}
+	},
 
 	handleDelete: function(ev) {
-
 		if (document.querySelectorAll('input[name="smsn"]:checked').length == 0){
 		ui.addNotification(null, E('p', _('Please select the message(s) to be deleted')), 'info');   
 		}
@@ -117,16 +130,13 @@ return view.extend({
 
 							var rowCount = smsTable.rows.length;
 							for (var i = rowCount - 1; i > 0; i--) {
-            						smsTable.deleteRow(i);}
-
+            					smsTable.deleteRow(i);}
     							setTimeout(function() {
 								L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeDA , '-d' , portDA , 'status' ]))
 									.then(function(res) {
 										if (res) {
-
 											var total = res.substring(res.indexOf("total"));
 											var t = total.replace ( /[^\d.]/g, '' );
-
 											var u = "0";
 											msg_bar(Math.floor(u), t);
 											save_count();
@@ -155,7 +165,6 @@ return view.extend({
 							if (array) {
 
 							var args = [];
-
 							var sections = uci.sections('sms_tool_js');
 							var portDEL = sections[0].readport;
 							var storeDS = sections[0].storage;
@@ -200,7 +209,7 @@ return view.extend({
 									if (!Number.isNaN(smsnr[i]))
 										{
 										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
-                								smsdeleted++;
+                						smsdeleted++;
 										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
@@ -231,9 +240,9 @@ return view.extend({
 											var hidecount = document.getElementById('deleteinfo');
     											hidecount.style.display = 'none';
 											    save_count();
-											}, 10000);
+											}, 7000);
 										}
-									}, 1600 * i);
+									}, 1500 * i);
 								})(i);
 										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
@@ -246,9 +255,7 @@ return view.extend({
 											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
 										}
 										});
-		
 								}
-
 								var table = document.getElementById("smsTable");
   								var index = 1;
   									while (index < table.rows.length) {
@@ -261,7 +268,6 @@ return view.extend({
    										}
   									}
 								}
-
 							});
 						}
 			}
@@ -274,17 +280,15 @@ return view.extend({
 		window.location.reload();
 	},
 
-	handleSelect: function(ev) {
 
+	handleSelect: function(ev) {
 		var checkBox = document.getElementById("ch-all");
 		var checkBoxes = document.querySelectorAll('input[type="checkbox"]');
 
   		if (checkBox.checked == true){
-
 			for (var i = 0; i < checkBoxes.length; i++)
 				checkBoxes[i].setAttribute('checked', 'true');
   		} else {
-
 			for (var i = 0; i < checkBoxes.length; i++)
 				checkBoxes[i].removeAttribute('checked');
   		}
@@ -306,18 +310,20 @@ return view.extend({
 		var ledt = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
 		var direct = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'direction'));
 
-		var view = document.getElementById("smssarea");
-		view.innerHTML = '-';
+		if (!portR) {
+ 			ui.addNotification(null, E('p', _('The package requires user configuration. \
+					<br /><br /><b>The following need to be set:</b> \
+					<ul><li>1. All ports for communication with the modem.</li><li>2. Additional options specific to the given modem (for handling USSD codes).</li><li> \
+					3. Notification LED (optional).</li><li><ul>')), 'info');
+		}
 		
 		var sections = uci.sections('sms_tool_js');
 		var led = sections[0].smsled;
 
 		if (storeL == "SM")
-      			view.innerHTML = _('SIM card');
-
+      			document.querySelector('input[name="filter_area"][value="sim"]').checked = true;
 		if (storeL == "ME")
-      			view.innerHTML = _('Modem memory');
-
+      			document.querySelector('input[name="filter_area"][value="memory"]').checked = true;
 		if (ledn == "1")
 			{
 				switch (ledt) {
@@ -334,7 +340,6 @@ return view.extend({
 		L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 				.then(function(res) {
 					if (res) {
-
 							var total = res.substring(res.indexOf("total"));
 							var t = total.replace ( /[^\d.]/g, '' );
 
@@ -389,21 +394,25 @@ return view.extend({
 												}
 
 												var SortedSMS = Data.sort((function (a, b) { return new Date(b.timestamp) - new Date(a.timestamp) }));
-
 												var combinedjson = {};
 
 												for (const parts of SortedSMS) {
-  													const { sender, timestamp, total, content, index } = parts;
-  													const key = `${sender}-${timestamp}-${total}`;
-  														if (combinedjson[key]) {
-  															combinedjson[key].content += content;
-  															combinedjson[key].index += '-'+index;
-  														} else {
-    															combinedjson[key] = { sender, timestamp, total, content, index };
-  															}
-														}
-												var result = Object.values(combinedjson);
-											}
+  												const { sender, timestamp, total, content, index } = parts;
+
+  												if (total) {
+    													const key = `${sender}-${timestamp}-${total}`;
+    														if (combinedjson[key]) {
+      															combinedjson[key].content += content;
+      															combinedjson[key].index += '-' + index;
+   														} else {
+      															combinedjson[key] = { sender, timestamp, total, content, index };
+    														}
+  												} else {
+    													const newkey = `${sender}-${timestamp}-${index}`;
+    													combinedjson[newkey] = { sender, timestamp, total, content, index };
+  													}
+												}
+												var result = Object.values(combinedjson);											}
 
 											if (algo == "Simple")
 											{
@@ -426,12 +435,11 @@ return view.extend({
 												}, Object.create(null));
 											}
 													if (u){
-
 															var Lres = L.resource('icons/newdelsms.png');
 															var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 															for (var i = 0; i < result.length; i++) {
-            															var row = table.insertRow(-1);
+            													var row = table.insertRow(-1);
   																var cell1 = row.insertCell(0);
   																var cell2 = row.insertCell(0);
   																var cell3 = row.insertCell(0);
@@ -474,7 +482,7 @@ return view.extend({
         											return a.part - b.part;
     										} else {
         											return 0;
-    											}
+    										}
 										});
 
 										if (u){
@@ -483,8 +491,7 @@ return view.extend({
 											var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 											for (var i = 0; i < sortedData.length; i++) {
-
-            										var row = table.insertRow(-1);
+            								var row = table.insertRow(-1);
   											var cell1 = row.insertCell(0);
   											var cell2 = row.insertCell(0);
   											var cell3 = row.insertCell(0);
@@ -524,11 +531,9 @@ return view.extend({
 				}
 
 			if (document.getElementById('msg')) {
-
 				msg_bar(Math.floor(u), t);
-			}
-
-    			});
+			    }
+    		});
 		});
 
 		var v = E([], [
@@ -538,27 +543,56 @@ return view.extend({
 			E('h3', _('Received Messages')),
 			E('table', { 'class': 'table' }, [
     					E('tr', { 'class': 'tr' }, [
-        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Messages store in') ]),
-        					E('td', { 'class': 'td left', 'id': 'smssarea' }, [ store ])
+        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Message storage area') ]),
+        					E('td', { 'class': 'td' }, [
+							E('div', [
+							E('label', {
+								'data-tooltip': _('Any change in the area from which SMS messages will be read requires refreshing the messages')
+							}, [
+							E('input', {
+								'type': 'radio',
+								'name': 'filter_area',
+								'value': 'sim',
+								'change': ui.createHandlerFn(this, 'handleSWarea'),
+								'checked': true
+							}),
+							' ',
+							_('SIM card')
+						]),
+						' \u00a0 ',
+							E('label', {
+								'data-tooltip': _('Any change in the area from which SMS messages will be read requires refreshing the messages')
+							}, [
+							E('input', {
+								'type': 'radio',
+								'name': 'filter_area',
+								'value': 'memory',
+								'change': ui.createHandlerFn(this, 'handleSWarea')
+							}),
+							' ',
+							_('Modem memory')
+							])
+						])
+						])
     					]),
     					E('tr', { 'class': 'tr' }, [
-        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Messages (inbox / maximum)') ]),
+        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Storage used / Total capacity') ]),
         					E('td', { 'class': 'td' }, [
             				E('div', { 'class': 'right' }, [
- 
 		                	E('div', {
                     				'id': 'msg',
                     				'class': 'cbi-progressbar',
                     				'title': '-'
                 			}, E('div')),
-                
+				            E('div', { 'class': 'right' }, [
                 			E('div', {
-                    				'style': 'text-align:center',
+                    				'style': 'text-align:center;font-size:90%',
                     				'id': 'deleteinfo'
                 			}, [ '' ]),
-            				]),
-        			]),
-    			]),
+				        ]),
+            		]),
+        		]),
+    		]),
 		]),
 
 				E('div', { 'class': 'right' }, [
@@ -596,10 +630,7 @@ return view.extend({
 					E('th', { 'class': 'th center message' }, _('Message'))
 				])
 			]),
-
-			//E('hr'),
 		]);
-
 		return v;
 	},
 
