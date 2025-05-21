@@ -180,7 +180,7 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/readsms.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/readsms_upd.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
