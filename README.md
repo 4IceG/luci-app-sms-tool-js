@@ -180,19 +180,19 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/readsms_upd.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/read_sms.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendsms.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_sms.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendussd.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_ussd.png?raw=true)
 
 > "AT Commands" window / Okno poleceń AT:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/sendat.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_at.png?raw=true)
 
 > "Configuration" window / Okno konfiguracji:
 
