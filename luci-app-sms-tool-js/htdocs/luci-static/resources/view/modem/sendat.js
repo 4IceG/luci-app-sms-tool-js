@@ -12,16 +12,14 @@
 	Licensed to the GNU General Public License v3.0.
 */
 
-
 return view.extend({
 	handleCommand: function(exec, args) {
-		var buttons = document.querySelectorAll('.cbi-button');
+		let buttons = document.querySelectorAll('.cbi-button');
 
-		for (var i = 0; i < buttons.length; i++)
+		for (let i = 0; i < buttons.length; i++)
 			buttons[i].setAttribute('disabled', 'true');
-
 		return fs.exec(exec, args).then(function(res) {
-			var out = document.querySelector('.atcommand-output');
+			let out = document.querySelector('.atcommand-output');
 			out.style.display = '';
 
 			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
@@ -42,17 +40,16 @@ return view.extend({
 				ui.addNotification(null, E('p', [ err ]));
 			}
 		}).finally(function() {
-			for (var i = 0; i < buttons.length; i++)
+			for (let i = 0; i < buttons.length; i++)
 			buttons[i].removeAttribute('disabled');
 
 		});
 	},
 
 	handleGo: function(ev) {
-
-		var port, atcmd = document.getElementById('cmdvalue').value;
-		var sections = uci.sections('sms_tool_js');
-		var port = sections[0].atport;
+		let atcmd = document.getElementById('cmdvalue').value;
+		let sections = uci.sections('sms_tool_js');
+		let port = sections[0].atport;
 
 		if ( atcmd.length < 2 )
 		{
@@ -60,7 +57,6 @@ return view.extend({
 			return false;
 		}
 		else {
-
 		if ( !port )
 			{
 			ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
@@ -71,32 +67,30 @@ return view.extend({
 			return this.handleCommand('sms_tool', [ '-d' , port , 'at' , atcmd ]);
 			}
 		}
-
 		if ( !port )
 		{
 			ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
 			return false;
 		}
-
 	},
 
 	handleClear: function(ev) {
-		var out = document.querySelector('.atcommand-output');
+		let out = document.querySelector('.atcommand-output');
 		out.style.display = 'none';
 
-		var ov = document.getElementById('cmdvalue');
+		let ov = document.getElementById('cmdvalue');
 		ov.value = '';
 
 		document.getElementById('cmdvalue').focus();
 	},
 
 	handleCopy: function(ev) {
-		var out = document.querySelector('.atcommand-output');
+		let out = document.querySelector('.atcommand-output');
 		out.style.display = 'none';
 
-		var ov = document.getElementById('cmdvalue');
+		let ov = document.getElementById('cmdvalue');
 		ov.value = '';
-		var x = document.getElementById('tk').value;
+		let x = document.getElementById('tk').value;
 		ov.value = x;
 	},
 
@@ -109,7 +103,7 @@ return view.extend({
 
 	render: function (loadResults) {
 	
-	var info = _('User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s.').format('<a href="https://eko.one.pl/?p=openwrt-sms_tool" target="_blank">', '</a>');
+	let info = _('User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s.').format('<a href="https://eko.one.pl/?p=openwrt-sms_tool" target="_blank">', '</a>');
 	
 		return E('div', { 'class': 'cbi-map', 'id': 'map' }, [
 				E('h2', {}, [ _('AT Commands') ]),
@@ -127,9 +121,9 @@ return view.extend({
 										'mousedown': ui.createHandlerFn(this, 'handleCopy')
 									    },
 									(loadResults[0] || "").trim().split("\n").map(function(cmd) {
-                                        var fields = cmd.split(/;/);
-                                        var name = fields[0];
-                                        var code = fields[1] || fields[0];
+                                        let fields = cmd.split(/;/);
+                                        let name = fields[0];
+                                        let code = fields[1] || fields[0];
                                         return E('option', { 'value': code }, name );
                                     })
 								)
@@ -146,23 +140,24 @@ return view.extend({
 								'keydown': function(ev) {
 									 if (ev.keyCode === 13)  
 										{
-										var execBtn = document.getElementById('execute');
-											if (execBtn)
+										let execBtn = document.getElementById('execute');
+											if (execBtn) {
 												execBtn.click();
+											}
 										}
 									 if (ev.keyCode === 46)  
 										{
-										var del = document.getElementById('cmdvalue');
-											if (del)
-												var ov = document.getElementById('cmdvalue');
+										let del = document.getElementById('cmdvalue');
+											if (del) {
+												let ov = document.getElementById('cmdvalue');
 												ov.value = '';
 												document.getElementById('cmdvalue').focus();
+											}
 										}
-								}																														
+								    }																														
 								}),
 							])
 						]),
-
 					])
 				]),
 				E('hr'),

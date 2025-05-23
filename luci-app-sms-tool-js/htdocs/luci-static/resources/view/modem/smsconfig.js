@@ -12,7 +12,6 @@
 	Licensed to the GNU General Public License v3.0.
 */
 
-
 return view.extend({
 	load: function() {
 		return fs.list('/dev').then(function(devs) {
@@ -23,7 +22,7 @@ return view.extend({
 	},
 
 	render: function(devs) {
-		var m, s, o;
+		let m, s, o;
 		m = new form.Map('sms_tool_js', _('Configuration sms-tool'), _('Configuration panel for sms-tool and gui application.'));
 
 		s = m.section(form.TypedSection, 'sms_tool_js', '', null);
@@ -78,13 +77,13 @@ return view.extend({
 		o.inputtitle = _('Save as .txt file');
 		o.onclick = function() {
 			return uci.load('sms_tool_js').then(function() {
-					var portES = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+					let portES = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 						L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portES , '-f' , '%Y-%m-%d %H:%M' , 'recv' , '2>/dev/null']))
 							.then(function(res) {
 								if (res) {
 									fs.write('/tmp/mysms.txt', res.trim().replace(/\r\n/g, '\n') + '\n');
-									var fileName = 'mysms.txt';
-									var filePath = '/tmp/' + fileName;
+									let fileName = 'mysms.txt';
+									let filePath = '/tmp/' + fileName;
 
 									fs.stat(filePath)
 									.then(function () {
@@ -95,7 +94,7 @@ return view.extend({
 												L.ui.showModal(_('Saving...'), [
 													E('p', { 'class': 'spinning' }, _('Please wait.. Process of saving SMS message to a text file is in progress.'))
 												]);
-												var link = E('a', {
+												let link = E('a', {
 													'download': 'mysms.txt',
 													'href': URL.createObjectURL(
 													new Blob([ restxt ], { type: 'text/plain' })),
@@ -108,14 +107,13 @@ return view.extend({
 											} else {
 												ui.addNotification(null, E('p', {}, _('Saving SMS messages to a file failed. Please try again.')));
 											}
-
 										}).catch(() => {
 											ui.addNotification(null, E('p', {}, _('Download error') + ': ' + err.message));
 										});
 									}
 									});
-								}
-				});
+							}
+				    });
 
 			});
 
@@ -128,7 +126,7 @@ return view.extend({
 		o.onclick = function() {
 			if (confirm(_('Delete all the messages?'))) {
 				return uci.load('sms_tool_js').then(function() {
-					var portFD = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+					let portFD = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 					fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portFD , 'delete' , 'all' ]);
 				});
 			}
@@ -272,20 +270,20 @@ return view.extend({
 		o.write = function(section_id, value) {
 
 			uci.load('sms_tool_js').then(function() {
-				var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
-				var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
-				var dsled = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
+				let storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
+				let portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
+				let dsled = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
 
 					L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 						.then(function(res) {
 							if (res) {
-								var total = res.substring(res.indexOf('total'));
-								var t = total.replace ( /[^\d.]/g, '' );
-								var used = res.substring(17, res.indexOf('total'));
-								var u = used.replace ( /[^\d.]/g, '' );
+								let total = res.substring(res.indexOf('total'));
+								let t = total.replace ( /[^\d.]/g, '' );
+								let used = res.substring(17, res.indexOf('total'));
+								let u = used.replace ( /[^\d.]/g, '' );
 
-								var sections = uci.sections('sms_tool_js');
-								var led = sections[0].smsled;
+								let sections = uci.sections('sms_tool_js');
+								let led = sections[0].smsled;
 
 								if (value == '1') {
 									uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
@@ -313,7 +311,7 @@ return view.extend({
 							}
 					});
 			});
-
+			
 			return form.Flag.prototype.write.apply(this, [section_id, value]);
 		};
 
@@ -369,4 +367,3 @@ return view.extend({
 		return m.render();
 	}
 });
-

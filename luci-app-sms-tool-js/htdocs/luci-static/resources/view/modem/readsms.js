@@ -6,13 +6,11 @@
 'require uci';
 'require view';
 
-
 /*
 	Copyright 2022-2025 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
-
 
 document.head.append(E('style', {'type': 'text/css'},
 `
@@ -209,7 +207,7 @@ return view.extend({
 									if (!Number.isNaN(smsnr[i]))
 										{
 										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
-                								smsdeleted++;
+                						smsdeleted++;
 										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
@@ -270,12 +268,11 @@ return view.extend({
 								}
 							});
 						}
-			}
+			    }
 		}
 	},
 
-                                                                                                                                                                                                                                                                                                                                          
-
+                                                                                                                                                       
 	handleRefresh: function(ev) {
 		window.location.reload();
 	},
@@ -439,7 +436,7 @@ return view.extend({
 															var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 															for (var i = 0; i < result.length; i++) {
-            															var row = table.insertRow(-1);
+            													var row = table.insertRow(-1);
   																var cell1 = row.insertCell(0);
   																var cell2 = row.insertCell(0);
   																var cell3 = row.insertCell(0);
@@ -453,7 +450,7 @@ return view.extend({
 																	}
 																	
   																cell2.innerHTML = result[i].timestamp;
-    																cell1.innerHTML = result[i].content.replace(/\s+/g, ' ').trim();
+    															cell1.innerHTML = result[i].content.replace(/\s+/g, ' ').trim();
 																aidx.push(result[i].index+'-');
 															}
 
@@ -491,7 +488,7 @@ return view.extend({
 											var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 											for (var i = 0; i < sortedData.length; i++) {
-            										var row = table.insertRow(-1);
+            								var row = table.insertRow(-1);
   											var cell1 = row.insertCell(0);
   											var cell2 = row.insertCell(0);
   											var cell3 = row.insertCell(0);
@@ -504,7 +501,7 @@ return view.extend({
  				 									cell3.innerHTML = sortedData[i].sender;
 												}
   											cell2.innerHTML = sortedData[i].timestamp;
-    											cell1.innerHTML = sortedData[i].content.replace(/\s+/g, ' ').trim();
+    										cell1.innerHTML = sortedData[i].content.replace(/\s+/g, ' ').trim();
 											aidx.push(sortedData[i].index+'-');
 										
 											}

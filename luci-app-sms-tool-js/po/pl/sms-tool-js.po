@@ -393,8 +393,14 @@ msgstr "Autodetekcja"
 msgid "Keep the previous reply when sending a new USSD code."
 msgstr "Zachowaj wcześniejszą odpowiedź przy wysyłaniu nowego kodu USSD."
 
-msgid "Select this option if you need to use the menu built on USSD codes."
-msgstr "Zaznacz tą opcję jeśli potrzebujesz skorzystać z menu zbudowanego na kodach USSD."
+msgid "Check this option if you need to use the menu built on USSD codes"
+msgstr "Zaznacz tą opcję jeśli potrzebujesz skorzystać z menu zbudowanego na kodach USSD"
+
+msgid "Turn over the replies."
+msgstr "Odwróć odpowiedzi."
+
+msgid "View new reply from top"
+msgstr "Wyświetl nową odpowiedź od góry"
 
 msgid "Please wait... deleted"
 msgstr "Proszę czekać... usunięto"
