@@ -109,7 +109,7 @@ For images downloaded from https://eko.one.pl/, installation procedure is simila
 cd feeds/luci/applications/
 git clone https://github.com/4IceG/luci-app-sms-tool-js.git
 cd ../../..
-./scripts feeds update -a; ./scripts/feeds install -a
+./scripts/feeds update -a; ./scripts/feeds install -a
 make menuconfig
 
 or e.g.
