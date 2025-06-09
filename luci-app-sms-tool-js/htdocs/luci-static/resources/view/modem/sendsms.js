@@ -76,13 +76,12 @@ return view.extend({
 						    return this.handleCommand('sms_tool', [ '-d' , port , 'send' , phn , get_smstxt ]);
 						}
 					}
-		}
+		        }
 				if ( !port )
 				{
 					ui.addNotification(null, E('p', _('Please set the port for communication with the modem')), 'info');
 					return false;
 				}
-
 		}
 		else {
 
@@ -270,19 +269,17 @@ return view.extend({
 										}
 								},
 								'keyup': function(ev) {  
-										{
 										document.getElementById('counter').innerHTML = (160 - document.getElementById('smstext').value.length);
 
-											    this.value = this.value.replace(/š/g, 'a').replace(/Ľ/g, 'A');
+											    this.value = this.value.replace(/ą/g, 'a').replace(/Ą/g, 'A');
         										this.value = this.value.replace(/ć/g, 'c').replace(/Ć/g, 'C');
         										this.value = this.value.replace(/ę/g, 'e').replace(/Ę/g, 'E');
         										this.value = this.value.replace(/ł/g, 'l').replace(/Ł/g, 'L');
         										this.value = this.value.replace(/ń/g, 'n').replace(/Ń/g, 'N');
         										this.value = this.value.replace(/ó/g, 'o').replace(/Ó/g, 'O');
-        										this.value = this.value.replace(//g, 's').replace(//g, 'S');
+        										this.value = this.value.replace(/ś/g, 's').replace(/Ś/g, 'S');
         										this.value = this.value.replace(/ż/g, 'z').replace(/Ż/g, 'Z');
-        										this.value = this.value.replace(//g, 'z').replace(//g, 'Z');
-										}
+        										this.value = this.value.replace(/ź/g, 'z').replace(/Ź/g, 'Z');
 									}																														
 								}),
 								E('div', { 'class': 'left' }, [

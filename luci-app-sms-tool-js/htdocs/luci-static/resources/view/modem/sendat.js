@@ -18,6 +18,7 @@ return view.extend({
 
 		for (let i = 0; i < buttons.length; i++)
 			buttons[i].setAttribute('disabled', 'true');
+			
 		return fs.exec(exec, args).then(function(res) {
 			let out = document.querySelector('.atcommand-output');
 			out.style.display = '';

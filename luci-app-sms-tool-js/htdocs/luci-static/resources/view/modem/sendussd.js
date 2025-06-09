@@ -154,12 +154,12 @@ return view.extend({
 					if (cut.includes('error: 527'))
 						res.stdout = _('Please wait, and retry your selection later (Specific Modem Sierra).');
 					if (cut.includes('error: 528'))
-						res.stdout = _('Location update failure  emergency calls only (Specific Modem Sierra).');
+						res.stdout = _('Location update failure – emergency calls only (Specific Modem Sierra).');
 					if (cut.includes('error: 529'))
-						res.stdout = _('Selection failure  emergency calls only (Specific Modem Sierra).');
+						res.stdout = _('Selection failure – emergency calls only (Specific Modem Sierra).');
 					if (cut.includes('error: 772'))
 						res.stdout = _('SIM powered down.');
-					    dom.content(out, [ res.stderr || '', ' > '+res.stdout || '' ]);
+					    dom.content(out, [ res.stderr || '', res.stdout ? ' > ' + res.stdout : '' ]);
 				    } else {
 						if ( fullhistory ) {
     						    const ussdreply = (res.stdout + res.stderr).replace(/^\s*\n+/g, '');
@@ -169,14 +169,14 @@ return view.extend({
     							if (reversereplies) {
         							out.innerText = ussdreply + (out.innerText.trim() ? '\n\n' + out.innerText : '');
     							} else {
-        							out.innerText += '\n\n' + ussdreply;
+        							out.innerText += '\n\n' + res.stdout + res.stderr;
+				            		out.innerText = out.innerText.replace(/^\s*\n+/g, '');
 						        }
 				        } else {
 				            	dom.content(out, [ res.stdout || '', res.stderr || '' ]);
 				        }
 				    }
 			}
-
 		}).catch(function(err) {
 			if (res.stdout === undefined || res.stderr === undefined || res.stderr.includes('undefined') || res.stdout.includes('undefined')) {
 				return;
