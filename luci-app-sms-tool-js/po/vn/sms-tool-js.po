@@ -1,0 +1,479 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+msgid "SMS Messages"
+msgstr "Tin nhắn SMS"
+
+msgid "Received Messages"
+msgstr "Tin nhắn đã nhận"
+
+msgid "Send Messages"
+msgstr "Gửi tin nhắn"
+
+msgid "USSD"
+msgstr "USSD"
+
+msgid "Sender"
+msgstr "Người gửi"
+
+msgid "Received"
+msgstr "Đã nhận"
+
+msgid "Message"
+msgstr "Tin nhắn"
+
+msgid "Configuration"
+msgstr "Cài đặt"
+
+msgid "AT Commands"
+msgstr "Lệnh AT"
+
+msgid "Configuration"
+msgstr "Cấu hình"
+
+msgid "Please enter phone number"
+msgstr "Vui lòng nhập số điện thoại"
+
+msgid "Please enter a message text"
+msgstr "Vui lòng nhập nội dung tin nhắn"
+
+msgid "Reply"
+msgstr "Trả lời"
+
+msgid "Please enter a USSD code"
+msgstr "Vui lòng nhập mã để gửi"
+
+msgid "USSD Codes"
+msgstr "Mã USSD"
+
+msgid "Send to"
+msgstr "Gửi đến"
+
+msgid "Message text"
+msgstr "Nội dung tin nhắn"
+
+msgid "Send"
+msgstr "Gửi"
+
+msgid "Send to number"
+msgstr "Gửi đến số"
+
+msgid "to number"
+msgstr "đến số"
+
+msgid "to group"
+msgstr "đến nhóm"
+
+msgid "SMS sent sucessfully"
+msgstr "SMS đã được gửi thành công"
+
+msgid "Code to send"
+msgstr "Mã để gửi"
+
+msgid "Send code"
+msgstr "Gửi mã"
+
+msgid "SMS Settings"
+msgstr "Cài đặt tin nhắn SMS"
+
+msgid "USSD Codes Settings"
+msgstr "Cài đặt mã USSD"
+
+msgid "SMS reading port"
+msgstr "Cổng đọc SMS"
+
+msgid "SMS sending port"
+msgstr "Cổng gửi SMS"
+
+msgid "AT commands sending port"
+msgstr "Cổng gửi lệnh AT"
+
+msgid "AT Commands Settings"
+msgstr "Cài đặt lệnh AT"
+
+msgid "Merge split messages"
+msgstr "Gộp tin nhắn bị chia"
+
+msgid "Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received."
+msgstr "Các tin nhắn bị chia sẽ được gộp lại. Bật tùy chọn này sẽ giúp đọc SMS dễ dàng hơn nhưng sẽ gây ra sự không khớp về số lượng tin nhắn hiển thị và nhận được."
+
+msgid "USSD sending port"
+msgstr "Cổng gửi mã USSD"
+
+msgid "Sending USSD code in plain text"
+msgstr "Gửi mã USSD bằng văn bản thuần"
+
+msgid "Receive message without PDU decoding"
+msgstr "Nhận tin nhắn mà không giải mã PDU"
+
+msgid "Send the USSD code in plain text. Command is not being coded to the PDU."
+msgstr "Gửi mã USSD bằng văn bản thuần. Lệnh không được mã hóa thành PDU."
+
+msgid "Receive and display the message without decoding it as a PDU."
+msgstr "Tin nhắn nhận được sẽ hiển thị mà không giải mã dạng PDU."
+
+msgid "Explanation of number and prefix"
+msgstr "Giải thích về số và mã vùng"
+
+msgid "In the tab for sending SMSes, show an explanation of the prefix and the correct phone number."
+msgstr "Trong tab gửi SMS, hiển thị giải thích về mã vùng và số điện thoại đúng."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."
+msgstr "Số điện thoại phải có mã quốc gia đứng trước (ví dụ Việt Nam là 84, không có '+'). Nếu số có 5, 4 hoặc 3 ký tự, nó được coi là 'số ngắn' và không cần mã quốc gia."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without +). If the number is 5, 4 or 3 characters, it is treated as.. short and should not be preceded by a country prefix."
+msgstr "Số điện thoại phải có mã quốc gia đứng trước (ví dụ Việt Nam là 84, không có +). Nếu số có 5, 4 hoặc 3 ký tự, nó được coi là số ngắn và không cần mã quốc gia."
+
+msgid "Add prefix to phone number"
+msgstr "Thêm mã vùng vào số điện thoại"
+
+msgid "Automatically add prefix to the phone number field."
+msgstr "Tự động thêm mã vùng vào trường số điện thoại."
+
+msgid "Prefix number"
+msgstr "Số mã vùng"
+
+msgid "Please specify the command to send"
+msgstr "Vui lòng chỉ định lệnh để gửi"
+
+msgid "Please specify the code to send"
+msgstr "Vui lòng chỉ định mã để gửi"
+
+msgid "Please set the port for communication with the modem"
+msgstr "Vui lòng đặt cổng để giao tiếp với modem"
+
+msgid "User AT commands"
+msgstr "Lệnh AT của người dùng"
+
+msgid "Command to send"
+msgstr "Lệnh để gửi"
+
+msgid "Clear form"
+msgstr "Xóa biểu mẫu"
+
+msgid "Send command"
+msgstr "Gửi lệnh"
+
+msgid "Send code"
+msgstr "Gửi mã"
+
+msgid "Reply"
+msgstr "Trả lời"
+
+msgid "Message storage area"
+msgstr "Vùng lưu trữ tin nhắn"
+
+msgid "Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device."
+msgstr "Tin nhắn được lưu trữ ở vị trí cụ thể (ví dụ trên thẻ SIM hoặc bộ nhớ modem), nhưng tùy loại thiết bị có thể có các vùng khác."
+
+msgid "SIM card"
+msgstr "Thẻ SIM"
+
+msgid "Modem memory"
+msgstr "Bộ nhớ modem"
+
+msgid "Storage used / Total capacity"
+msgstr "Bộ nhớ đã dùng / Tổng dung lượng"
+
+msgid "Delete selected"
+msgstr "Xóa đã chọn"
+
+msgid "Delete message(s)"
+msgstr "Xóa tin nhắn"
+
+msgid "Delete all"
+msgstr "Xóa tất cả"
+
+msgid "Refresh messages"
+msgstr "Làm mới tin nhắn"
+
+msgid "Please select the message(s) to be deleted"
+msgstr "Vui lòng chọn tin nhắn để xóa"
+
+msgid "Delete selected message(s)?"
+msgstr "Xóa tin nhắn đã chọn?"
+
+msgid "Delete all the messages?"
+msgstr "Xóa tất cả tin nhắn?"
+
+msgid "User interface for reading messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Giao diện người dùng để đọc tin nhắn SMS bằng sms-tool. Thông tin thêm về chương trình sms-tool trên %sdiễn đàn eko.one.pl%s."
+
+msgid "User interface for sending messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Giao diện người dùng để gửi tin nhắn SMS bằng sms-tool. Thông tin thêm về chương trình sms-tool trên %sdiễn đàn eko.one.pl%s."
+
+msgid "User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Giao diện người dùng để gửi lệnh AT bằng sms-tool. Thông tin thêm về chương trình sms-tool trên %sdiễn đàn eko.one.pl%s."
+
+msgid "User interface for sending USSD codes using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Giao diện người dùng để gửi mã USSD bằng sms-tool. Thông tin thêm về chương trình sms-tool trên %sdiễn đàn eko.one.pl%s."
+
+msgid "Configuration sms-tool"
+msgstr "Cấu hình sms-tool"
+
+msgid "Configuration panel for sms-tool and gui application."
+msgstr "Bảng cài đặt cho chương trình sms-tool và giao diện người dùng."
+
+msgid "Port for communication with the modem"
+msgstr "Cổng để giao tiếp với modem"
+
+msgid "Select one of the available ttyUSBX ports."
+msgstr "Chọn một trong các cổng ttyUSBX có sẵn."
+
+msgid "Please select a port"
+msgstr "Vui lòng chọn cổng"
+
+msgid "User contacts"
+msgstr "Danh bạ người dùng"
+
+msgid "Enable group messaging"
+msgstr "Bật tin nhắn nhóm"
+
+msgid "This option allows you to send one message to all contacts in the user's contact list."
+msgstr "Tùy chọn này cho phép gửi một tin nhắn đến tất cả liên hệ trong danh bạ của người dùng."
+
+msgid "Message sending delay"
+msgstr "Độ trễ khi gửi tin nhắn"
+
+msgid "[Bot] Message sent to number:"
+msgstr "[Bot] Tin nhắn đã gửi đến số:"
+
+msgid "To deactivate this option, go to 'Configuration' and uncheck 'Enable group messaging'"
+msgstr "Để tắt tùy chọn này, vào 'Cấu hình' và bỏ chọn 'Bật tin nhắn nhóm'"
+
+msgid "Press [Enter] to send the command, press [Delete] to delete the command"
+msgstr "Nhấn [Enter] để gửi lệnh, nhấn [Delete] để xóa"
+
+msgid "Press [Enter] to send the code, press [Delete] to delete the code"
+msgstr "Nhấn [Enter] để gửi mã, nhấn [Delete] để xóa"
+
+msgid "Press [Delete] to delete the phone number"
+msgstr "Nhấn [Delete] để xóa số điện thoại"
+
+msgid "Press [Delete] to delete the content of the message"
+msgstr "Nhấn [Delete] để xóa nội dung tin nhắn"
+
+msgid "Notification Settings"
+msgstr "Cài đặt thông báo"
+
+msgid "The LED informs about a new message. Before activating this function, please config and save the SMS reading port, time to check SMS inbox and select the notification LED."
+msgstr "Đèn LED thông báo tin nhắn mới. Trước khi kích hoạt chức năng này, vui lòng cấu hình cổng đọc SMS, thời gian kiểm tra hộp thư đến và chọn đèn LED thông báo."
+
+msgid "Check inbox every minute(s)"
+msgstr "Kiểm tra hộp thư đến mỗi phút"
+
+msgid "Specify how many minutes you want your inbox to be checked."
+msgstr "Chỉ định mỗi bao nhiêu phút hộp thư đến sẽ được kiểm tra để tìm tin nhắn mới."
+
+msgid "Notification LED"
+msgstr "Đèn LED thông báo"
+
+msgid "Select the notification LED."
+msgstr "Chọn đèn LED thông báo."
+
+msgid "Notify new messages"
+msgstr "Thông báo tin nhắn mới"
+
+msgid "Restart the inbox checking process every"
+msgstr "Khởi động lại quá trình kiểm tra mỗi"
+
+msgid "The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."
+msgstr "Quá trình sẽ được khởi động lại sau khoảng thời gian đã chọn. Điều này sẽ loại bỏ độ trễ khi kiểm tra hộp thư đến."
+
+msgid "4h"
+msgstr "4 giờ"
+
+msgid "6h"
+msgstr "6 giờ"
+
+msgid "8h"
+msgstr "8 giờ"
+
+msgid "12h"
+msgstr "12 giờ"
+
+msgid "The diode is dedicated only to these notifications"
+msgstr "Đèn LED chỉ dành cho các thông báo này"
+
+msgid ""
+"Select 'No' in case the router has only one LED or if the LED is multi-tasking. <br /><br /><b>Important</b> <br />This "
+"option requires LED to be defined in the system (if possible) to work properly. This requirement applies when the diode supports multiple tasks."
+msgstr ""
+"Chọn 'Không' nếu router chỉ có một đèn LED hoặc đèn LED đa nhiệm. <br /><br /><b>Quan trọng</b> <br />Tùy chọn "
+"này yêu cầu đèn LED phải được định nghĩa trong hệ thống (nếu có thể) để hoạt động đúng. Yêu cầu này áp dụng khi đèn LED hỗ trợ nhiều tác vụ."
+
+msgid ""
+"[3 - 59] second(s) <br /><br /><b>Important</b> <br />Messages "
+"are sent without verification and confirmation delivery of the message. Therefore, there is a risk of non-delivery of the message."
+msgstr ""
+"[3 - 59] giây <br /><br /><b>Quan trọng</b> <br />Tin nhắn "
+"được gửi mà không có xác minh và xác nhận giao hàng. Do đó có rủi ro tin nhắn không được giao."
+
+msgid "No"
+msgstr "Không"
+
+msgid "Yes"
+msgstr "Có"
+
+msgid "Merge algorithm"
+msgstr "Thuật toán gộp"
+
+msgid "Simple (merge without sorting)"
+msgstr "Đơn giản (gộp không sắp xếp)"
+
+msgid "Advanced (merges with sorting)"
+msgstr "Nâng cao (gộp có sắp xếp)"
+
+msgid "Phone number to be blurred"
+msgstr "Số điện thoại cần làm mờ"
+
+msgid "The last 5 digits of this number will be blurred."
+msgstr "5 chữ số cuối của số này sẽ bị làm mờ."
+
+msgid "Expect a decimal value between five and fifty-nine"
+msgstr "Mong đợi giá trị thập phân từ năm đến năm mươi chín"
+
+msgid "Expect a decimal value between three and fifty-nine"
+msgstr "Mong đợi giá trị thập phân từ ba đến năm mươi chín"
+
+msgid "Expect a decimal value"
+msgstr "Mong đợi giá trị thập phân"
+
+msgid "Direction of message merging"
+msgstr "Hướng gộp tin nhắn"
+
+msgid "From beginning to end"
+msgstr "Từ đầu đến cuối"
+
+msgid "From end to beginning"
+msgstr "Từ cuối đến đầu"
+
+msgid "Save messages to a text file"
+msgstr "Lưu tin nhắn vào tệp văn bản"
+
+msgid "Save sms to txt file?"
+msgstr "Lưu tin nhắn SMS vào tệp txt?"
+
+msgid "Save as .txt file"
+msgstr "Lưu dưới dạng tệp .txt"
+
+msgid "Saving..."
+msgstr "Đang lưu..."
+
+msgid "Please wait.. Process of saving SMS message to a text file is in progress."
+msgstr "Vui lòng đợi.. Đang trong quá trình lưu tin nhắn SMS vào tệp văn bản."
+
+msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
+msgstr "Tùy chọn này cho phép sao lưu tin nhắn SMS hoặc ví dụ lưu các tin nhắn không được sms-tool hỗ trợ."
+
+msgid "Delete all messages"
+msgstr "Xóa tất cả tin nhắn"
+
+msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
+msgstr "Tùy chọn này cho phép xóa tất cả tin nhắn SMS khi chúng không hiển thị trong tab 'Tin nhắn đã nhận'."
+
+msgid "Saving SMS messages to a file failed. Please try again."
+msgstr "Lưu tin nhắn SMS vào tệp thất bại. Vui lòng thử lại."
+
+msgid "PDU decoding scheme"
+msgstr "Sơ đồ giải mã PDU"
+
+msgid "Autodetect"
+msgstr "Tự động phát hiện"
+
+msgid "Keep the previous reply when sending a new USSD code."
+msgstr "Giữ phản hồi trước đó khi gửi mã USSD mới."
+
+msgid "Check this option if you need to use the menu built on USSD codes"
+msgstr "Chọn tùy chọn này nếu bạn cần sử dụng menu dựa trên mã USSD"
+
+msgid "Turn over the replies."
+msgstr "Đảo ngược các phản hồi."
+
+msgid "View new reply from top"
+msgstr "Xem phản hồi mới từ trên xuống"
+
+msgid "Please wait... deleted"
+msgstr "Vui lòng đợi... đã xóa"
+
+msgid "of"
+msgstr "trong số"
+
+msgid "selected messages"
+msgstr "tin nhắn đã chọn"
+
+msgid ""
+"The package requires user configuration. <br /><br /><b>The following "
+"need to be set:</b> <ul><li>1. All ports for communication with the modem.</li><li>2. Additional "
+"options specific to the given modem (for handling USSD codes).</li><li> 3. Notification LED (optional).</li><li><ul>"
+
+msgstr ""
+"Gói yêu cầu cấu hình người dùng. <br /><br /><b>Cần "
+"thiết lập:</b> <ul><li>1. Tất cả các cổng để giao tiếp với modem.</li><li>2. Các tùy chọn bổ sung "
+"dành riêng cho modem cụ thể (để xử lý mã USSD).</li><li> 3. Đèn LED thông báo (tùy chọn).</li><li><ul>"
+
+msgid "Any change in the area from which SMS messages will be read requires refreshing the messages"
+msgstr "Mọi thay đổi về vùng đọc tin nhắn SMS đều yêu cầu làm mới tin nhắn"
+
+msgid "Characters remaining:"
+msgstr "Số ký tự còn lại:"
+
+msgid "Encoding standard"
+msgstr "Tiêu chuẩn mã hóa"
+
+msgid "GSM-7 (160 characters)"
+msgstr "GSM-7 (160 ký tự)"
+
+msgid "Unicode (70 characters)"
+msgstr "Unicode (70 ký tự)"
+
+msgid "GSM-7 encoding (160 characters)"
+msgstr "Mã hóa GSM-7 (160 ký tự)"
+
+msgid "Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii"
+msgstr "Mã hóa Unicode (70 ký tự), không hỗ trợ gửi ký tự quốc gia (trong utf8) – chỉ ASCII"
+
+msgid "The tab allows users to support the package."
+msgstr "Tab này cho phép người dùng hỗ trợ gói"
+
+msgid "Luci-app-sms-tool-js Info"
+msgstr "Thông tin về gói luci-app-sms-tool-js"
+
+msgid "Report a bug"
+msgstr "Báo cáo lỗi"
+
+msgid "Write in the topic of the package on the forum eko.one.pl"
+msgstr "Viết trong chủ đề của gói trên diễn đàn eko.one.pl"
+
+msgid "Write on forum"
+msgstr "Viết trên diễn đàn"
+
+msgid "Report a bug on the package Github page"
+msgstr "Báo cáo lỗi trên trang Github của gói"
+
+msgid "Open a package discussion on Github"
+msgstr "Mở thảo luận về gói trên Github"
+
+msgid "Open discussion"
+msgstr "Mở thảo luận"
+
+msgid "Buy a coffee if you want to support the development of the project and the author"
+msgstr "Mua một tách cà phê nếu bạn muốn hỗ trợ phát triển dự án và tác giả"
+
+msgid "Buy a coffee"
+msgstr "Mua cà phê"
+
+msgid "Become a sponsor if you want to support the development of the project and the author"
+msgstr "Trở thành nhà tài trợ nếu bạn muốn hỗ trợ phát triển dự án và tác giả"
+
+msgid "Become a sponsor"
+msgstr "Trở thành nhà tài trợ"
+
+msgid "Package Info"
+msgstr "Thông tin gói"
+
+msgid "Author (package maintainer)"
+msgstr "Tác giả (người duy trì gói)"
+
+msgid "Package update and support"
+msgstr "Cập nhật gói và hỗ trợ"

@@ -65,5 +65,13 @@
 			"path": "modem/smsconfig"
 		}
 	},
-
+	
+	"admin/modem/luci-app-sms-tool-js/sms_support": {
+		"title": "Package update and support",
+		"order": 60,
+		"action": {
+			"type": "view",
+			"path": "modem/sms_support"
+		}
+	}
 }

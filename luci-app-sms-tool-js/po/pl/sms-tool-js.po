@@ -13,7 +13,7 @@ msgstr "Wysyłanie wiadomości"
 msgid "USSD"
 msgstr "USSD"
 
-msgid "From"
+msgid "Sender"
 msgstr "Nadawca"
 
 msgid "Received"
@@ -423,3 +423,66 @@ msgstr ""
 
 msgid "Any change in the area from which SMS messages will be read requires refreshing the messages"
 msgstr "Każda zmiana miejsca z którego SMS-y będą odczytywane wymaga odświeżenia wiadomości"
+
+msgid "Characters remaining:"
+msgstr "Pozostało znaków:"
+
+msgid "Encoding standard"
+msgstr "Standard kodowania"
+
+msgid "GSM-7 (160 characters)"
+msgstr "GSM-7 (160 znaków)"
+
+msgid "Unicode (70 characters)"
+msgstr "Unicode (70 znaków)"
+
+msgid "GSM-7 encoding (160 characters)"
+msgstr "Kodowanie GSM-7 (160 znaków)"
+
+msgid "Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii"
+msgstr "Kodowanie Unicode (70 znaków), nie obsługuje wysyłania znaków narodowych (w utf8) – tylko ascii"
+
+msgid "The tab allows users to support the package."
+msgstr "Zakładka umożliwia użytkownikom wsparcie pakietu"
+
+msgid "Luci-app-sms-tool-js Info"
+msgstr "Informacje o pakiecie luci-app-sms-tool-js"
+
+msgid "Report a bug"
+msgstr "Zgłoś błąd"
+
+msgid "Write in the topic of the package on the forum eko.one.pl"
+msgstr "Napisz w temacie pakietu na forum eko.one.pl"
+
+msgid "Write on forum"
+msgstr "Napisz na forum"
+
+msgid "Report a bug on the package Github page"
+msgstr "Zgłoś błąd na stronie Github pakietu"
+
+msgid "Open a package discussion on Github"
+msgstr "Otwórz dyskusję na temat pakietu na Github"
+
+msgid "Open discussion"
+msgstr "Otwórz dyskusję"
+
+msgid "Buy a coffee if you want to support the development of the project and the author"
+msgstr "Postaw kawę jeśli chcesz wesprzeć rozwój projektu oraz autora"
+
+msgid "Buy a coffee"
+msgstr "Postaw kawę"
+
+msgid "Become a sponsor if you want to support the development of the project and the author"
+msgstr "Zostań sponsorem jeśli chcesz wesprzeć rozwój projektu oraz autora"
+
+msgid "Become a sponsor"
+msgstr "Zostań sponsorem"
+
+msgid "Package Info"
+msgstr "Informacja o pakiecie"
+
+msgid "Author (package maintainer)"
+msgstr "Autor (opiekun pakietu)"
+
+msgid "Package update and support"
+msgstr "Aktualizacja pakietu oraz wsparcie"

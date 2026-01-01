@@ -1,5 +1,5 @@
 #!/bin/sh /etc/rc.common
-# Copyright 2023 Rafał Wabik (IceG) - From eko.one.pl forum
+# Copyright 2023-2026 Rafał Wabik (IceG) - From eko.one.pl forum
 # Licensed to the GNU General Public License v3.0.
 
 
@@ -23,7 +23,7 @@ service_triggers()
 
 stop_service() {
 	for KILLPID in `ps | grep 'my_new_sms' | awk ' { print $1;}'`; do 
-  	(kill -9 $KILLPID >/dev/null 2>&1 )&
+  	kill -9 $KILLPID >/dev/null 2>&1 &
 	done
 	sleep 1
 	return 0

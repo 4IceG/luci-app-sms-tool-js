@@ -1,0 +1,479 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+msgid "SMS Messages"
+msgstr "SMS-Nachrichten"
+
+msgid "Received Messages"
+msgstr "Empfangene Nachrichten"
+
+msgid "Send Messages"
+msgstr "Nachrichten senden"
+
+msgid "USSD"
+msgstr "USSD"
+
+msgid "Sender"
+msgstr "Absender"
+
+msgid "Received"
+msgstr "Empfangen"
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Configuration"
+msgstr "Einstellungen"
+
+msgid "AT Commands"
+msgstr "AT-Befehle"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Please enter phone number"
+msgstr "Bitte geben Sie die Telefonnummer ein"
+
+msgid "Please enter a message text"
+msgstr "Bitte geben Sie den Nachrichtentext ein"
+
+msgid "Reply"
+msgstr "Antwort"
+
+msgid "Please enter a USSD code"
+msgstr "Bitte geben Sie den zu sendenden Code ein"
+
+msgid "USSD Codes"
+msgstr "USSD-Codes"
+
+msgid "Send to"
+msgstr "Senden an"
+
+msgid "Message text"
+msgstr "Nachrichtentext"
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "Send to number"
+msgstr "An Nummer senden"
+
+msgid "to number"
+msgstr "an Nummer"
+
+msgid "to group"
+msgstr "an Gruppe"
+
+msgid "SMS sent sucessfully"
+msgstr "SMS erfolgreich gesendet"
+
+msgid "Code to send"
+msgstr "Zu sendender Code"
+
+msgid "Send code"
+msgstr "Code senden"
+
+msgid "SMS Settings"
+msgstr "SMS-Einstellungen"
+
+msgid "USSD Codes Settings"
+msgstr "USSD-Code-Einstellungen"
+
+msgid "SMS reading port"
+msgstr "Port zum Lesen von SMS"
+
+msgid "SMS sending port"
+msgstr "Port zum Senden von SMS"
+
+msgid "AT commands sending port"
+msgstr "Port zum Senden von AT-Befehlen"
+
+msgid "AT Commands Settings"
+msgstr "AT-Befehls-Einstellungen"
+
+msgid "Merge split messages"
+msgstr "Geteilte Nachrichten zusammenführen"
+
+msgid "Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received."
+msgstr "Geteilte Nachrichten werden zusammengeführt. Die Aktivierung dieser Option erleichtert das Lesen von SMS, führt jedoch zu einer Diskrepanz bei der Anzahl der angezeigten und empfangenen Nachrichten."
+
+msgid "USSD sending port"
+msgstr "Port zum Senden von USSD-Codes"
+
+msgid "Sending USSD code in plain text"
+msgstr "USSD-Code im Klartext senden"
+
+msgid "Receive message without PDU decoding"
+msgstr "Nachricht ohne PDU-Dekodierung empfangen"
+
+msgid "Send the USSD code in plain text. Command is not being coded to the PDU."
+msgstr "Sendet den USSD-Code im Klartext. Der Befehl wird nicht in PDU kodiert."
+
+msgid "Receive and display the message without decoding it as a PDU."
+msgstr "Die empfangene Nachricht wird ohne PDU-Dekodierung angezeigt."
+
+msgid "Explanation of number and prefix"
+msgstr "Erklärung zu Nummer und Vorwahl"
+
+msgid "In the tab for sending SMSes, show an explanation of the prefix and the correct phone number."
+msgstr "Zeige im Tab zum Senden von SMS eine Erklärung zur Vorwahl und zur korrekten Telefonnummer."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."
+msgstr "Der Telefonnummer sollte die Landesvorwahl vorangestellt werden (für Deutschland ist es 49, ohne '+'). Wenn die Nummer 5, 4 oder 3 Zeichen hat, wird sie als 'Kurznummer' behandelt und sollte keine Landesvorwahl haben."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without +). If the number is 5, 4 or 3 characters, it is treated as.. short and should not be preceded by a country prefix."
+msgstr "Der Telefonnummer sollte die Landesvorwahl vorangestellt werden (für Deutschland ist es 49, ohne +). Wenn die Nummer 5, 4 oder 3 Zeichen hat, wird sie als Kurznummer behandelt und sollte keine Landesvorwahl haben."
+
+msgid "Add prefix to phone number"
+msgstr "Vorwahl zur Telefonnummer hinzufügen"
+
+msgid "Automatically add prefix to the phone number field."
+msgstr "Vorwahl automatisch zum Telefonnummernfeld hinzufügen."
+
+msgid "Prefix number"
+msgstr "Vorwahlnummer"
+
+msgid "Please specify the command to send"
+msgstr "Bitte geben Sie den zu sendenden Befehl an"
+
+msgid "Please specify the code to send"
+msgstr "Bitte geben Sie den zu sendenden Code an"
+
+msgid "Please set the port for communication with the modem"
+msgstr "Bitte geben Sie den Port für die Kommunikation mit dem Modem an"
+
+msgid "User AT commands"
+msgstr "Benutzer-AT-Befehle"
+
+msgid "Command to send"
+msgstr "Zu sendender Befehl"
+
+msgid "Clear form"
+msgstr "Formular löschen"
+
+msgid "Send command"
+msgstr "Befehl senden"
+
+msgid "Send code"
+msgstr "Code senden"
+
+msgid "Reply"
+msgstr "Antwort"
+
+msgid "Message storage area"
+msgstr "Nachrichtenspeicherbereich"
+
+msgid "Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device."
+msgstr "Nachrichten werden an einem bestimmten Ort gespeichert (z. B. auf der SIM-Karte oder im Modemspeicher), aber je nach Gerätetyp können auch andere Bereiche verfügbar sein."
+
+msgid "SIM card"
+msgstr "SIM-Karte"
+
+msgid "Modem memory"
+msgstr "Modemspeicher"
+
+msgid "Storage used / Total capacity"
+msgstr "Verwendeter Speicher / Gesamtkapazität"
+
+msgid "Delete selected"
+msgstr "Ausgewählte löschen"
+
+msgid "Delete message(s)"
+msgstr "Nachricht(en) löschen"
+
+msgid "Delete all"
+msgstr "Alle löschen"
+
+msgid "Refresh messages"
+msgstr "Nachrichten aktualisieren"
+
+msgid "Please select the message(s) to be deleted"
+msgstr "Bitte wählen Sie die zu löschende(n) Nachricht(en) aus"
+
+msgid "Delete selected message(s)?"
+msgstr "Ausgewählte Nachricht(en) löschen?"
+
+msgid "Delete all the messages?"
+msgstr "Alle Nachrichten löschen?"
+
+msgid "User interface for reading messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Benutzeroberfläche zum Lesen von SMS-Nachrichten mit sms-tool. Weitere Informationen über das Programm sms-tool im %seko.one.pl Forum%s."
+
+msgid "User interface for sending messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Benutzeroberfläche zum Senden von SMS-Nachrichten mit sms-tool. Weitere Informationen über das Programm sms-tool im %seko.one.pl Forum%s."
+
+msgid "User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Benutzeroberfläche zum Senden von AT-Befehlen mit sms-tool. Weitere Informationen über das Programm sms-tool im %seko.one.pl Forum%s."
+
+msgid "User interface for sending USSD codes using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Benutzeroberfläche zum Senden von USSD-Codes mit sms-tool. Weitere Informationen über das Programm sms-tool im %seko.one.pl Forum%s."
+
+msgid "Configuration sms-tool"
+msgstr "Konfiguration sms-tool"
+
+msgid "Configuration panel for sms-tool and gui application."
+msgstr "Konfigurationspanel für das Programm sms-tool und die grafische Benutzeroberfläche."
+
+msgid "Port for communication with the modem"
+msgstr "Port für die Kommunikation mit dem Modem"
+
+msgid "Select one of the available ttyUSBX ports."
+msgstr "Wählen Sie einen der verfügbaren ttyUSBX-Ports."
+
+msgid "Please select a port"
+msgstr "Bitte wählen Sie einen Port"
+
+msgid "User contacts"
+msgstr "Benutzerkontakte"
+
+msgid "Enable group messaging"
+msgstr "Gruppennachrichten aktivieren"
+
+msgid "This option allows you to send one message to all contacts in the user's contact list."
+msgstr "Diese Option ermöglicht das Senden einer Nachricht an alle Kontakte in der Kontaktliste des Benutzers."
+
+msgid "Message sending delay"
+msgstr "Verzögerung beim Senden von Nachrichten"
+
+msgid "[Bot] Message sent to number:"
+msgstr "[Bot] Nachricht gesendet an Nummer:"
+
+msgid "To deactivate this option, go to 'Configuration' and uncheck 'Enable group messaging'"
+msgstr "Um diese Option zu deaktivieren, gehen Sie zu 'Konfiguration' und deaktivieren Sie 'Gruppennachrichten aktivieren'"
+
+msgid "Press [Enter] to send the command, press [Delete] to delete the command"
+msgstr "Drücken Sie [Enter], um den Befehl zu senden, drücken Sie [Entf], um zu löschen"
+
+msgid "Press [Enter] to send the code, press [Delete] to delete the code"
+msgstr "Drücken Sie [Enter], um den Code zu senden, drücken Sie [Entf], um zu löschen"
+
+msgid "Press [Delete] to delete the phone number"
+msgstr "Drücken Sie [Entf], um die Telefonnummer zu löschen"
+
+msgid "Press [Delete] to delete the content of the message"
+msgstr "Drücken Sie [Entf], um den Nachrichteninhalt zu löschen"
+
+msgid "Notification Settings"
+msgstr "Benachrichtigungseinstellungen"
+
+msgid "The LED informs about a new message. Before activating this function, please config and save the SMS reading port, time to check SMS inbox and select the notification LED."
+msgstr "Die LED benachrichtigt über neue Nachrichten. Bevor Sie diese Funktion aktivieren, konfigurieren Sie bitte den SMS-Leseport, die Zeit zum Überprüfen des Posteingangs und wählen Sie die Benachrichtigungs-LED aus."
+
+msgid "Check inbox every minute(s)"
+msgstr "Posteingang alle Minute(n) überprüfen"
+
+msgid "Specify how many minutes you want your inbox to be checked."
+msgstr "Geben Sie an, alle wie viele Minuten der Posteingang auf neue Nachrichten überprüft werden soll."
+
+msgid "Notification LED"
+msgstr "Benachrichtigungs-LED"
+
+msgid "Select the notification LED."
+msgstr "Wählen Sie die Benachrichtigungs-LED aus."
+
+msgid "Notify new messages"
+msgstr "Über neue Nachrichten benachrichtigen"
+
+msgid "Restart the inbox checking process every"
+msgstr "Posteingangsüberprüfung neu starten alle"
+
+msgid "The process will restart at the selected time interval. This will eliminate the delay in checking your inbox."
+msgstr "Der Prozess wird nach dem ausgewählten Zeitintervall neu gestartet. Dies beseitigt die Verzögerung bei der Überprüfung des Posteingangs."
+
+msgid "4h"
+msgstr "4 Std."
+
+msgid "6h"
+msgstr "6 Std."
+
+msgid "8h"
+msgstr "8 Std."
+
+msgid "12h"
+msgstr "12 Std."
+
+msgid "The diode is dedicated only to these notifications"
+msgstr "Die LED ist nur für diese Benachrichtigungen vorgesehen"
+
+msgid ""
+"Select 'No' in case the router has only one LED or if the LED is multi-tasking. <br /><br /><b>Important</b> <br />This "
+"option requires LED to be defined in the system (if possible) to work properly. This requirement applies when the diode supports multiple tasks."
+msgstr ""
+"Wählen Sie 'Nein', wenn der Router nur eine LED hat oder die LED mehrere Aufgaben erfüllt. <br /><br /><b>Wichtig</b> <br />Diese "
+"Option erfordert, dass die LED im System definiert ist (falls möglich), um ordnungsgemäß zu funktionieren. Diese Anforderung gilt, wenn die LED mehrere Aufgaben unterstützt."
+
+msgid ""
+"[3 - 59] second(s) <br /><br /><b>Important</b> <br />Messages "
+"are sent without verification and confirmation delivery of the message. Therefore, there is a risk of non-delivery of the message."
+msgstr ""
+"[3 - 59] Sekunde(n) <br /><br /><b>Wichtig</b> <br />Nachrichten "
+"werden ohne Überprüfung und Zustellungsbestätigung gesendet. Daher besteht das Risiko einer Nicht-Zustellung der Nachricht."
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Merge algorithm"
+msgstr "Zusammenführungsalgorithmus"
+
+msgid "Simple (merge without sorting)"
+msgstr "Einfach (Zusammenführen ohne Sortierung)"
+
+msgid "Advanced (merges with sorting)"
+msgstr "Erweitert (Zusammenführen mit Sortierung)"
+
+msgid "Phone number to be blurred"
+msgstr "Zu verbergende Telefonnummer"
+
+msgid "The last 5 digits of this number will be blurred."
+msgstr "Die letzten 5 Ziffern dieser Nummer werden verborgen."
+
+msgid "Expect a decimal value between five and fifty-nine"
+msgstr "Es wird ein Dezimalwert zwischen fünf und neunundfünfzig erwartet"
+
+msgid "Expect a decimal value between three and fifty-nine"
+msgstr "Es wird ein Dezimalwert zwischen drei und neunundfünfzig erwartet"
+
+msgid "Expect a decimal value"
+msgstr "Es wird ein Dezimalwert erwartet"
+
+msgid "Direction of message merging"
+msgstr "Richtung der Nachrichtenzusammenführung"
+
+msgid "From beginning to end"
+msgstr "Von Anfang bis Ende"
+
+msgid "From end to beginning"
+msgstr "Von Ende zum Anfang"
+
+msgid "Save messages to a text file"
+msgstr "Nachrichten in eine Textdatei speichern"
+
+msgid "Save sms to txt file?"
+msgstr "SMS in txt-Datei speichern?"
+
+msgid "Save as .txt file"
+msgstr "Als .txt-Datei speichern"
+
+msgid "Saving..."
+msgstr "Speichern..."
+
+msgid "Please wait.. Process of saving SMS message to a text file is in progress."
+msgstr "Bitte warten.. Der Vorgang zum Speichern der SMS-Nachricht in eine Textdatei läuft."
+
+msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
+msgstr "Diese Option ermöglicht die Sicherung von SMS-Nachrichten oder z. B. das Speichern von Nachrichten, die von sms-tool nicht unterstützt werden."
+
+msgid "Delete all messages"
+msgstr "Alle Nachrichten löschen"
+
+msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
+msgstr "Diese Option ermöglicht das Löschen aller SMS-Nachrichten, wenn sie im Tab 'Empfangene Nachrichten' nicht sichtbar sind."
+
+msgid "Saving SMS messages to a file failed. Please try again."
+msgstr "Das Speichern der SMS-Nachrichten in eine Datei ist fehlgeschlagen. Bitte versuchen Sie es erneut."
+
+msgid "PDU decoding scheme"
+msgstr "PDU-Dekodierungsschema"
+
+msgid "Autodetect"
+msgstr "Automatische Erkennung"
+
+msgid "Keep the previous reply when sending a new USSD code."
+msgstr "Vorherige Antwort beim Senden eines neuen USSD-Codes behalten."
+
+msgid "Check this option if you need to use the menu built on USSD codes"
+msgstr "Aktivieren Sie diese Option, wenn Sie das Menü basierend auf USSD-Codes verwenden müssen"
+
+msgid "Turn over the replies."
+msgstr "Antworten umkehren."
+
+msgid "View new reply from top"
+msgstr "Neue Antwort von oben anzeigen"
+
+msgid "Please wait... deleted"
+msgstr "Bitte warten... gelöscht"
+
+msgid "of"
+msgstr "von"
+
+msgid "selected messages"
+msgstr "ausgewählten Nachrichten"
+
+msgid ""
+"The package requires user configuration. <br /><br /><b>The following "
+"need to be set:</b> <ul><li>1. All ports for communication with the modem.</li><li>2. Additional "
+"options specific to the given modem (for handling USSD codes).</li><li> 3. Notification LED (optional).</li><li><ul>"
+
+msgstr ""
+"Das Paket erfordert eine Benutzerkonfiguration. <br /><br /><b>Folgendes "
+"muss eingestellt werden:</b> <ul><li>1. Alle Ports für die Kommunikation mit dem Modem.</li><li>2. Zusätzliche "
+"Optionen speziell für das jeweilige Modem (zur Handhabung von USSD-Codes).</li><li> 3. Benachrichtigungs-LED (optional).</li><li><ul>"
+
+msgid "Any change in the area from which SMS messages will be read requires refreshing the messages"
+msgstr "Jede Änderung des Bereichs, aus dem SMS-Nachrichten gelesen werden, erfordert eine Aktualisierung der Nachrichten"
+
+msgid "Characters remaining:"
+msgstr "Verbleibende Zeichen:"
+
+msgid "Encoding standard"
+msgstr "Kodierungsstandard"
+
+msgid "GSM-7 (160 characters)"
+msgstr "GSM-7 (160 Zeichen)"
+
+msgid "Unicode (70 characters)"
+msgstr "Unicode (70 Zeichen)"
+
+msgid "GSM-7 encoding (160 characters)"
+msgstr "GSM-7-Kodierung (160 Zeichen)"
+
+msgid "Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii"
+msgstr "Unicode-Kodierung (70 Zeichen), unterstützt kein Senden nationaler Zeichen (in utf8) – nur ASCII"
+
+msgid "The tab allows users to support the package."
+msgstr "Der Tab ermöglicht Benutzern, das Paket zu unterstützen"
+
+msgid "Luci-app-sms-tool-js Info"
+msgstr "Informationen zu luci-app-sms-tool-js"
+
+msgid "Report a bug"
+msgstr "Fehler melden"
+
+msgid "Write in the topic of the package on the forum eko.one.pl"
+msgstr "Schreiben Sie im Thema des Pakets im Forum eko.one.pl"
+
+msgid "Write on forum"
+msgstr "Im Forum schreiben"
+
+msgid "Report a bug on the package Github page"
+msgstr "Fehler auf der Github-Seite des Pakets melden"
+
+msgid "Open a package discussion on Github"
+msgstr "Paketdiskussion auf Github öffnen"
+
+msgid "Open discussion"
+msgstr "Diskussion öffnen"
+
+msgid "Buy a coffee if you want to support the development of the project and the author"
+msgstr "Spendieren Sie einen Kaffee, wenn Sie die Entwicklung des Projekts und den Autor unterstützen möchten"
+
+msgid "Buy a coffee"
+msgstr "Einen Kaffee spendieren"
+
+msgid "Become a sponsor if you want to support the development of the project and the author"
+msgstr "Werden Sie Sponsor, wenn Sie die Entwicklung des Projekts und den Autor unterstützen möchten"
+
+msgid "Become a sponsor"
+msgstr "Sponsor werden"
+
+msgid "Package Info"
+msgstr "Paketinformationen"
+
+msgid "Author (package maintainer)"
+msgstr "Autor (Paketbetreuer)"
+
+msgid "Package update and support"
+msgstr "Paketaktualisierung und Support"

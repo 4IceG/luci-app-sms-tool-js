@@ -7,7 +7,7 @@
 'require view';
 
 /*
-	Copyright 2022-2025 Rafał Wabik - IceG - From eko.one.pl forum
+	Copyright 2022-2026 Rafał Wabik - IceG - From eko.one.pl forum
 	
 	Licensed to the GNU General Public License v3.0.
 */
@@ -622,7 +622,7 @@ return view.extend({
 						'click': ui.createHandlerFn(this, 'handleSelect')
 					}), '',
 					),
-					E('th', { 'class': 'th from' }, _('From')),
+					E('th', { 'class': 'th from' }, _('Sender')),
 					E('th', { 'class': 'th received' }, _('Received')),
 					E('th', { 'class': 'th center message' }, _('Message'))
 				])
