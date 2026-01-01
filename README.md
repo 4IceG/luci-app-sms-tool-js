@@ -184,7 +184,7 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_sms.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/send_sms_2.0.30-r20260101.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
