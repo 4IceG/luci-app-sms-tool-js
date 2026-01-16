@@ -13,11 +13,13 @@ Luci-app-sms-tool-js is a conversion of the https://github.com/4IceG/luci-app-sm
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> What You Should Know / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Co powinieneś wiedzieć
 > [!IMPORTANT]
-> My package will not work if you are using ModemManager.   
-> Preferred version OpenWrt >= 21.02.
+> Package will not work if you are using ModemManager.   
+> Preferred version OpenWrt >= 21.02.   
+> Do you use MM? If you want to have SMS support, install this package [luci-app-sms-manager](https://github.com/4IceG/luci-app-sms-manager).
 >
-> Mój pakiet nie będzie działać jeżeli uzywasz ModemManager-a.   
-> Preferowana wersja OpenWrt >= 21.02.
+> Pakiet nie będzie działać jeżeli uzywasz ModemManager-a.   
+> Preferowana wersja OpenWrt >= 21.02.   
+> Używasz MM? i chcesz mieć obsługę SMS zainstaluj ten pakiet [luci-app-sms-manager](https://github.com/4IceG/luci-app-sms-manager).
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Installation / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Instalacja
 
