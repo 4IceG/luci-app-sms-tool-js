@@ -1,0 +1,495 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+msgid "SMS Messages"
+msgstr "Messaggi SMS"
+
+msgid "Received Messages"
+msgstr "Messaggi ricevuti"
+
+msgid "Send Messages"
+msgstr "Invia messaggi"
+
+msgid "USSD"
+msgstr "USSD"
+
+msgid "Sender"
+msgstr "Mittente"
+
+msgid "Received"
+msgstr "Ricevuto"
+
+msgid "Message"
+msgstr "Messaggio"
+
+msgid "Configuration"
+msgstr "Configurazione"
+
+msgid "AT Commands"
+msgstr "Comandi AT"
+
+msgid "Please enter phone number"
+msgstr "Inserire il numero di telefono"
+
+msgid "Please enter a message text"
+msgstr "Inserire il testo del messaggio"
+
+msgid "Reply"
+msgstr "Rispondi"
+
+msgid "Please enter a USSD code"
+msgstr "Inserire un codice USSD"
+
+msgid "USSD Codes"
+msgstr "Codici USSD"
+
+msgid "Send to"
+msgstr "Invia a"
+
+msgid "Message text"
+msgstr "Testo del messaggio"
+
+msgid "Send"
+msgstr "Invia"
+
+msgid "Send to number"
+msgstr "Invia al numero"
+
+msgid "to number"
+msgstr "al numero"
+
+msgid "to group"
+msgstr "al gruppo"
+
+msgid "SMS sent sucessfully"
+msgstr "SMS inviato con successo"
+
+msgid "Code to send"
+msgstr "Codice da inviare"
+
+msgid "Send code"
+msgstr "Invia codice"
+
+msgid "SMS Settings"
+msgstr "Impostazioni SMS"
+
+msgid "USSD Codes Settings"
+msgstr "Impostazioni codici USSD"
+
+msgid "SMS reading port"
+msgstr "Porta di lettura SMS"
+
+msgid "SMS sending port"
+msgstr "Porta di invio SMS"
+
+msgid "AT commands sending port"
+msgstr "Porta di invio comandi AT"
+
+msgid "AT Commands Settings"
+msgstr "Impostazioni comandi AT"
+
+msgid "Merge split messages"
+msgstr "Unisci messaggi divisi"
+
+msgid "Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received."
+msgstr "Questa opzione renderà più facile la lettura dei messaggi, ma causerà una discrepanza nel numero di messaggi mostrati e ricevuti."
+
+msgid "USSD sending port"
+msgstr "Porta di invio USSD"
+
+msgid "Sending USSD code in plain text"
+msgstr "Invia codice USSD in testo normale"
+
+msgid "Receive message without PDU decoding"
+msgstr "Ricevi messaggio senza decodifica PDU"
+
+msgid "Send the USSD code in plain text. Command is not being coded to the PDU."
+msgstr "Invia il codice USSD in testo normale. Il comando non viene codificato in PDU."
+
+msgid "Receive and display the message without decoding it as a PDU."
+msgstr "Ricevi e visualizza il messaggio senza decodificarlo come PDU."
+
+msgid "Explanation of number and prefix"
+msgstr "Spiegazione del numero e prefisso"
+
+msgid "In the tab for sending SMSes, show an explanation of the prefix and the correct phone number."
+msgstr "Nella scheda per l'invio di SMS, mostra una spiegazione del prefisso e del numero di telefono corretto."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."
+msgstr "Il numero di telefono deve essere preceduto dal prefisso del paese (per l'Italia è 39, senza '+'). Se il numero è di 5, 4 o 3 caratteri, viene trattato come 'breve' e non deve essere preceduto da un prefisso di paese."
+
+msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without +). If the number is 5, 4 or 3 characters, it is treated as.. short and should not be preceded by a country prefix."
+msgstr "Il numero di telefono deve essere preceduto dal prefisso del paese (per l'Italia è 39, senza +). Se il numero è di 5, 4 o 3 caratteri, viene trattato come breve e non deve essere preceduto da un prefisso di paese."
+
+msgid "Add prefix to phone number"
+msgstr "Aggiungi prefisso al numero di telefono"
+
+msgid "Automatically add prefix to the phone number field."
+msgstr "Aggiungi automaticamente il prefisso al campo del numero di telefono."
+
+msgid "Prefix number"
+msgstr "Numero di prefisso"
+
+msgid "Please specify the command to send"
+msgstr "Specificare il comando da inviare"
+
+msgid "Please specify the code to send"
+msgstr "Specificare il codice da inviare"
+
+msgid "Please set the port for communication with the modem"
+msgstr "Impostare la porta per la comunicazione con il modem"
+
+msgid "User AT commands"
+msgstr "Comandi AT utente"
+
+msgid "Command to send"
+msgstr "Comando da inviare"
+
+msgid "Clear form"
+msgstr "Cancella modulo"
+
+msgid "Send command"
+msgstr "Invia comando"
+
+msgid "Message storage area"
+msgstr "Area di archiviazione messaggi"
+
+msgid "Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device."
+msgstr "I messaggi sono archiviati in una posizione specifica (ad esempio, sulla scheda SIM o nella memoria del modem), ma altre aree potrebbero essere disponibili a seconda del tipo di dispositivo."
+
+msgid "SIM card"
+msgstr "Scheda SIM"
+
+msgid "Modem memory"
+msgstr "Memoria del modem"
+
+msgid "Storage used / Total capacity"
+msgstr "Archiviazione utilizzata / Capacità totale"
+
+msgid "Delete selected"
+msgstr "Elimina selezionati"
+
+msgid "Delete"
+msgstr "Elimina"
+
+msgid "Delete all"
+msgstr "Elimina tutti"
+
+msgid "Refresh"
+msgstr "Aggiorna"
+
+msgid "Please select the message(s) to be deleted"
+msgstr "Selezionare il/i messaggio/i da eliminare"
+
+msgid "Delete selected message(s)?"
+msgstr "Eliminare il/i messaggio/i selezionato/i?"
+
+msgid "Delete all the messages?"
+msgstr "Eliminare tutti i messaggi?"
+
+msgid "User interface for reading messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Interfaccia utente per la lettura dei messaggi utilizzando sms-tool. Maggiori informazioni su sms-tool nel %sforum eko.one.pl%s."
+
+msgid "User interface for sending messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Interfaccia utente per l'invio di messaggi utilizzando sms-tool. Maggiori informazioni su sms-tool nel %sforum eko.one.pl%s."
+
+msgid "User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Interfaccia utente per l'invio di comandi AT utilizzando sms-tool. Maggiori informazioni su sms-tool nel %sforum eko.one.pl%s."
+
+msgid "User interface for sending USSD codes using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
+msgstr "Interfaccia utente per l'invio di codici USSD utilizzando sms-tool. Maggiori informazioni su sms-tool nel %sforum eko.one.pl%s."
+
+msgid "Configuration sms-tool"
+msgstr "Configurazione sms-tool"
+
+msgid "Configuration panel for sms-tool and gui application."
+msgstr "Pannello di configurazione per sms-tool e applicazione GUI."
+
+msgid "Port for communication with the modem"
+msgstr "Porta per la comunicazione con il modem"
+
+msgid "Select one of the available ttyUSBX ports."
+msgstr "Selezionare una delle porte ttyUSBX disponibili."
+
+msgid "Please select a port"
+msgstr "Selezionare una porta"
+
+msgid "User contacts"
+msgstr "Contatti utente"
+
+msgid "Enable group messaging"
+msgstr "Abilita messaggistica di gruppo"
+
+msgid "This option allows you to send one message to all contacts in the user's contact list."
+msgstr "Questa opzione consente di inviare un messaggio a tutti i contatti nell'elenco contatti dell'utente."
+
+msgid "Message sending delay"
+msgstr "Ritardo nell'invio dei messaggi"
+
+msgid "[Bot] Message sent to number:"
+msgstr "[Bot] Messaggio inviato al numero:"
+
+msgid "User USSD codes"
+msgstr "Codici USSD utente"
+
+msgid "Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>."
+msgstr "Ogni riga deve avere il seguente formato: 'Nome contatto;numero di telefono'. Per comodità dell'utente, il file viene salvato nella posizione <code>/etc/modem/phonebook.user</code>."
+
+msgid "Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds.user</code>."
+msgstr "Ogni riga deve avere il seguente formato: 'Descrizione comando AT;comando AT'. Per comodità dell'utente, il file viene salvato nella posizione <code>/etc/modem/atcmmds.user</code>."
+
+msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."
+msgstr "Ogni riga deve avere il seguente formato: 'Descrizione codice;codice'. Per comodità dell'utente, il file viene salvato nella posizione <code>/etc/modem/ussdcodes.user</code>."
+
+msgid "Name of the list or command or code."
+msgstr "Nome dell'elenco, comando o codice."
+
+msgid "Select..."
+msgstr "Seleziona..."
+
+msgid "Create a backup with all SMS messages to a text file. Please wait..."
+msgstr "Crea un backup con tutti i messaggi SMS in un file di testo. Attendere..."
+
+msgid "Please wait.. The process of saving SMS messages to a text file is in progress."
+msgstr "Attendere.. Il processo di salvataggio dei messaggi SMS in un file di testo è in corso."
+
+msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
+msgstr "Questa opzione consente di eseguire il backup dei messaggi SMS o, ad esempio, salvare messaggi non supportati da sms-tool."
+
+msgid "Delete all messages"
+msgstr "Elimina tutti i messaggi"
+
+msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
+msgstr "Questa opzione consente di eliminare tutti i messaggi SMS quando non sono visibili nella scheda 'Messaggi ricevuti'."
+
+msgid "Saving SMS messages to a file failed. Please try again."
+msgstr "Salvataggio dei messaggi SMS su file non riuscito. Riprovare."
+
+msgid "PDU decoding scheme"
+msgstr "Schema di decodifica PDU"
+
+msgid "Autodetect"
+msgstr "Rilevamento automatico"
+
+msgid "Keep the previous reply when sending a new USSD code."
+msgstr "Mantieni la risposta precedente quando invii un nuovo codice USSD."
+
+msgid "Check this option if you need to use the menu built on USSD codes"
+msgstr "Seleziona questa opzione se devi utilizzare il menu basato sui codici USSD"
+
+msgid "Turn over the replies."
+msgstr "Inverti le risposte."
+
+msgid "View new reply from top"
+msgstr "Visualizza nuova risposta dall'alto"
+
+msgid "Please wait... deleted"
+msgstr "Attendere... eliminato"
+
+msgid "of"
+msgstr "di"
+
+msgid "selected messages"
+msgstr "messaggi selezionati"
+
+msgid ""
+"The package requires user configuration. <br /><br /><b>The following "
+"need to be set:</b> <ul><li>1. All ports for communication with the modem.</li><li>2. Additional "
+"options specific to the given modem (for handling USSD codes).</li><li> 3. Notification LED (optional).</li><li><ul>"
+
+msgstr ""
+"Il pacchetto richiede la configurazione dell'utente. <br /><br /><b>I seguenti elementi "
+"devono essere impostati:</b> <ul><li>1. Tutte le porte per la comunicazione con il modem.</li><li>2. Opzioni "
+"aggiuntive specifiche per il modem (per la gestione dei codici USSD).</li><li> 3. LED di notifica (opzionale).</li><li><ul>"
+
+msgid "Any change in the area from which SMS messages will be read requires refreshing the messages"
+msgstr "Qualsiasi modifica dell'area da cui verranno letti i messaggi SMS richiede l'aggiornamento dei messaggi"
+
+msgid "Characters remaining:"
+msgstr "Caratteri rimanenti:"
+
+msgid "Encoding standard"
+msgstr "Standard di codifica"
+
+msgid "GSM-7 (160 characters)"
+msgstr "GSM-7 (160 caratteri)"
+
+msgid "Unicode (70 characters)"
+msgstr "Unicode (70 caratteri)"
+
+msgid "GSM-7 encoding (160 characters)"
+msgstr "Codifica GSM-7 (160 caratteri)"
+
+msgid "Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii"
+msgstr "Codifica Unicode (70 caratteri), non supporta l'invio di caratteri nazionali (in UTF-8) – solo ASCII"
+
+msgid "The tab allows users to support the package."
+msgstr "La scheda consente agli utenti di supportare il pacchetto."
+
+msgid "Luci-app-sms-tool-js Info"
+msgstr "Info Luci-app-sms-tool-js"
+
+msgid "Report a bug"
+msgstr "Segnala un bug"
+
+msgid "Write in the topic of the package on the forum eko.one.pl"
+msgstr "Scrivi nell'argomento del pacchetto sul forum eko.one.pl"
+
+msgid "Write on forum"
+msgstr "Scrivi sul forum"
+
+msgid "Report a bug on the package Github page"
+msgstr "Segnala un bug sulla pagina Github del pacchetto"
+
+msgid "Open a package discussion on Github"
+msgstr "Apri una discussione sul pacchetto su Github"
+
+msgid "Open discussion"
+msgstr "Apri discussione"
+
+msgid "Buy a coffee if you want to support the development of the project and the author"
+msgstr "Offri un caffè se vuoi supportare lo sviluppo del progetto e l'autore"
+
+msgid "Buy a coffee"
+msgstr "Offri un caffè"
+
+msgid "Become a sponsor if you want to support the development of the project and the author"
+msgstr "Diventa uno sponsor se vuoi supportare lo sviluppo del progetto e l'autore"
+
+msgid "Become a sponsor"
+msgstr "Diventa sponsor"
+
+msgid "Package Info"
+msgstr "Informazioni sul pacchetto"
+
+msgid "Author (package maintainer)"
+msgstr "Autore (manutentore del pacchetto)"
+
+msgid "Package update and support"
+msgstr "Aggiornamento e supporto del pacchetto"
+
+msgid "SMS Forwarding to E-mail Settings"
+msgstr "Impostazioni inoltro SMS a e-mail"
+
+msgid "An e-mail will be sent.."
+msgstr "Verrà inviata un'e-mail.."
+
+msgid "Enable message forwarding"
+msgstr "Abilita inoltro messaggi"
+
+msgid "E-mail settings"
+msgstr "Impostazioni e-mail"
+
+msgid "Select a predefined e-mail settings or enter settings manually."
+msgstr "Seleziona impostazioni e-mail predefinite o inserisci le impostazioni manualmente."
+
+msgid "Recipient"
+msgstr "Destinatario"
+
+msgid "E-mail address of the recipient."
+msgstr "Indirizzo e-mail del destinatario."
+
+msgid "E-mail address of the sender."
+msgstr "Indirizzo e-mail del mittente."
+
+msgid "User"
+msgstr "Utente"
+
+msgid "Username for SMTP authentication."
+msgstr "Nome utente per l'autenticazione SMTP."
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Google app password / Password for SMTP authentication."
+msgstr "Password app Google / Password per l'autenticazione SMTP."
+
+msgid "SMTP server"
+msgstr "Server SMTP"
+
+msgid "Hostname/IP address of the SMTP server."
+msgstr "Nome host/indirizzo IP del server SMTP."
+
+msgid "SMTP server port"
+msgstr "Porta del server SMTP"
+
+msgid "Security"
+msgstr "Sicurezza"
+
+msgid "TLS: use STARTTLS if the server supports it."
+msgstr "TLS: usa STARTTLS se il server lo supporta."
+
+msgid "SSL: SMTP over SSL."
+msgstr "SSL: SMTP tramite SSL."
+
+msgid "Required Package"
+msgstr "Pacchetto richiesto"
+
+msgid "The SMS forwarding option requires the mailsend package to be installed."
+msgstr "L'opzione di inoltro SMS richiede l'installazione del pacchetto mailsend."
+
+msgid "Check required packages"
+msgstr "Controlla pacchetti richiesti"
+
+msgid "Check"
+msgstr "Controlla"
+
+msgid "Mailsend Package"
+msgstr "Pacchetto mailsend"
+
+msgid "Loading package data…"
+msgstr "Caricamento dati pacchetto…"
+
+msgid "Installed"
+msgstr "Installato"
+
+msgid "Install…"
+msgstr "Installa…"
+
+msgid "Please select exactly one message to forward"
+msgstr "Selezionare esattamente un messaggio da inoltrare"
+
+msgid "Forward selected message to e-mail?"
+msgstr "Inoltrare il messaggio selezionato all'e-mail?"
+
+msgid "Sending e-mail..."
+msgstr "Invio e-mail..."
+
+msgid "Message forwarded successfully"
+msgstr "Messaggio inoltrato con successo"
+
+msgid "Failed to forward message: %s"
+msgstr "Impossibile inoltrare il messaggio: %s"
+
+msgid "Error: %s"
+msgstr "Errore: %s"
+
+msgid "user define"
+msgstr "definito dall'utente"
+
+msgid "Forward SMS"
+msgstr "Inoltra"
+
+msgid "Please select the message(s) to be forwarded"
+msgstr "Selezionare il/i messaggio/i da inoltrare"
+
+msgid "SMS forwarding function is not enabled. Please configure it first"
+msgstr "La funzione di inoltro SMS non è abilitata. Configurarla prima"
+
+msgid "My Router"
+msgstr "Il mio router"
+
+msgid "Forward SMS to E-mail"
+msgstr "Inoltra SMS a e-mail"
+
+msgid "Subject:"
+msgstr "Oggetto:"
+
+msgid "Message text:"
+msgstr "Testo del messaggio:"
+
+msgid "Subject and body cannot be empty"
+msgstr "Oggetto e corpo non possono essere vuoti"
+
+msgid "Package mailsend is not installed. Please install it first using the Install... button below"
+msgstr "Il pacchetto mailsend non è installato. Installarlo prima utilizzando il pulsante Installa... qui sotto"

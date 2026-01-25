@@ -178,14 +178,14 @@ msgstr "Użyta pamięć / Całkowita pojemność"
 msgid "Delete selected"
 msgstr "Usuń wybraną"
 
-msgid "Delete message(s)"
-msgstr "Usuń wiadomość(-ci)"
+msgid "Delete"
+msgstr "Usuń"
 
 msgid "Delete all"
 msgstr "Usuń wszystkie"
 
-msgid "Refresh messages"
-msgstr "Odśwież wiadomości"
+msgid "Refresh"
+msgstr "Odśwież"
 
 msgid "Please select the message(s) to be deleted"
 msgstr "Proszę wybrać wiadomość(-ci) do usunięcia"
@@ -486,3 +486,138 @@ msgstr "Autor (opiekun pakietu)"
 
 msgid "Package update and support"
 msgstr "Aktualizacja pakietu oraz wsparcie"
+
+msgid "SMS Forwarding to E-mail Settings"
+msgstr "Ustawienia przekazywania SMS na e-mail"
+
+msgid "An e-mail will be sent.."
+msgstr "E-mail zostanie wysłany.."
+
+msgid "Enable message forwarding"
+msgstr "Włącz przekazywanie wiadomości"
+
+msgid "E-mail settings"
+msgstr "Ustawienia dla poczty e-mail"
+
+msgid "Select a predefined e-mail settings or enter settings manually."
+msgstr "Wybierz predefiniowane ustawienia poczty e-mail lub wprowadź ustawienia ręcznie."
+
+msgid "Recipient"
+msgstr "Odbiorca"
+
+msgid "E-mail address of the recipient."
+msgstr "Adres e-mail odbiorcy."
+
+msgid "Sender"
+msgstr "Nadawca"
+
+msgid "E-mail address of the sender."
+msgstr "Adres e-mail nadawcy."
+
+msgid "User"
+msgstr "Użytkownik"
+
+msgid "Username for SMTP authentication."
+msgstr "Nazwa użytkownika do uwierzytelnienia SMTP."
+
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Google app password / Password for SMTP authentication."
+msgstr "Hasło do aplikacji Google / Hasło do uwierzytelnienia SMTP."
+
+msgid "SMTP server"
+msgstr "Serwer SMTP"
+
+msgid "Hostname/IP address of the SMTP server."
+msgstr "Nazwa hosta/adres IP serwera SMTP."
+
+msgid "SMTP server port"
+msgstr "Port serwera SMTP"
+
+msgid "Security"
+msgstr "Bezpieczeństwo"
+
+msgid "TLS: use STARTTLS if the server supports it."
+msgstr "TLS: użyj STARTTLS jeśli serwer to obsługuje."
+
+msgid "SSL: SMTP over SSL."
+msgstr "SSL: SMTP przez SSL."
+
+msgid "Required Package"
+msgstr "Wymagany pakiet"
+
+msgid "The SMS forwarding option requires the mailsend package to be installed."
+msgstr "Opcja przekazywania wiadomości SMS wymaga zainstalowanego pakietu mailsend."
+
+msgid "Check required packages"
+msgstr "Sprawdź wymagane pakiety"
+
+msgid "Check"
+msgstr "Sprawdź"
+
+msgid "Mailsend Package"
+msgstr "Pakiet mailsend"
+
+msgid "Loading package data…"
+msgstr "Ładowanie danych pakietu…"
+
+msgid "Installed"
+msgstr "Zainstalowany"
+
+msgid "Install…"
+msgstr "Instaluj…"
+
+msgid "Mailsend Package"
+msgstr "Pakiet mailsend"
+
+msgid "Please select exactly one message to forward"
+msgstr "Proszę wybrać dokładnie jedną wiadomość do przekazania"
+
+msgid "Forward selected message to e-mail?"
+msgstr "Przekazać wybraną wiadomość na e-mail?"
+
+msgid "Sending e-mail..."
+msgstr "Wysyłanie wiadomości e-mail..."
+
+msgid "Message forwarded successfully"
+msgstr "Wiadomość została pomyślnie przekazana"
+
+msgid "Failed to forward message: %s"
+msgstr "Nie udało się przekazać wiadomości: %s"
+
+msgid "Error: %s"
+msgstr "Błąd: %s"
+
+msgid "user define"
+msgstr "ustawienia użytkownika"
+
+msgid "Forward SMS"
+msgstr "Przekaż SMS"
+
+msgid "Please select the message(s) to be forwarded"
+msgstr "Wybierz wiadomość(-ci), którą(-e) chcesz przekazać dalej"
+
+msgid "SMS forwarding function is not enabled. Please configure it first"
+msgstr "Funkcja przekazywania wiadomości SMS nie jest włączona. Najpierw ją skonfiguruj"
+
+msgid "My Router"
+msgstr "Mój router"
+
+msgid "Forward SMS to E-mail"
+msgstr "Przekaż wiadomość(-ci) SMS na adres e-mail"
+
+msgid "Subject:"
+msgstr "Temat:"
+
+msgid "Message text:"
+msgstr "Treść wiadomości:"
+
+msgid "Send"
+msgstr "Wyślij"
+
+msgid "Subject and body cannot be empty"
+msgstr "Temat i treść nie mogą być puste"
+
+msgid "Package mailsend is not installed. Please install it first using the Install... button below"
+msgstr "Pakiet mailsend nie jest zainstalowany. Proszę najpierw go zainstalować, używając np. przycisku Instaluj... poniżej"

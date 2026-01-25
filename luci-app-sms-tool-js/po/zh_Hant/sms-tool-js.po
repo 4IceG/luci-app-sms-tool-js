@@ -1,299 +1,299 @@
 msgid ""
 msgstr ""
-"Language: zh_CN\n"
+"Language: zh_TW\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "SMS Messages"
-msgstr "短信"
+msgstr "簡訊"
 
 msgid "Received Messages"
-msgstr "已接收的消息"
+msgstr "已接收的訊息"
 
 msgid "Send Messages"
-msgstr "发送消息"
+msgstr "傳送訊息"
 
 msgid "USSD"
 msgstr "USSD"
 
 msgid "Sender"
-msgstr "发件人"
+msgstr "寄件者"
 
 msgid "Received"
 msgstr "已接收"
 
 msgid "Message"
-msgstr "消息"
+msgstr "訊息"
 
 msgid "Configuration"
-msgstr "配置"
+msgstr "設定"
 
 msgid "AT Commands"
 msgstr "AT 命令"
 
 msgid "Please enter phone number"
-msgstr "请输入电话号码"
+msgstr "請輸入電話號碼"
 
 msgid "Please enter a message text"
-msgstr "请输入消息文本"
+msgstr "請輸入訊息文字"
 
 msgid "Reply"
-msgstr "回复"
+msgstr "回覆"
 
 msgid "Please enter a USSD code"
-msgstr "请输入 USSD 代码"
+msgstr "請輸入 USSD 代碼"
 
 msgid "USSD Codes"
-msgstr "USSD 代码"
+msgstr "USSD 代碼"
 
 msgid "Send to"
-msgstr "发送至"
+msgstr "傳送至"
 
 msgid "Message text"
-msgstr "消息文本"
+msgstr "訊息文字"
 
 msgid "Send"
-msgstr "发送"
+msgstr "傳送"
 
 msgid "Send to number"
-msgstr "发送至号码"
+msgstr "傳送至號碼"
 
 msgid "to number"
-msgstr "至号码"
+msgstr "至號碼"
 
 msgid "to group"
-msgstr "至群组"
+msgstr "至群組"
 
 msgid "SMS sent sucessfully"
-msgstr "短信已成功发送"
+msgstr "簡訊已成功傳送"
 
 msgid "Code to send"
-msgstr "要发送的代码"
+msgstr "要傳送的代碼"
 
 msgid "Send code"
-msgstr "发送代码"
+msgstr "傳送代碼"
 
 msgid "SMS Settings"
-msgstr "短信设置"
+msgstr "簡訊設定"
 
 msgid "USSD Codes Settings"
-msgstr "USSD 代码设置"
+msgstr "USSD 代碼設定"
 
 msgid "SMS reading port"
-msgstr "短信读取端口"
+msgstr "簡訊讀取連接埠"
 
 msgid "SMS sending port"
-msgstr "短信发送端口"
+msgstr "簡訊傳送連接埠"
 
 msgid "AT commands sending port"
-msgstr "AT 命令发送端口"
+msgstr "AT 命令傳送連接埠"
 
 msgid "AT Commands Settings"
-msgstr "AT 命令设置"
+msgstr "AT 命令設定"
 
 msgid "Merge split messages"
-msgstr "合并拆分的消息"
+msgstr "合併拆分的訊息"
 
 msgid "Checking this option will make it easier to read the messages, but it will cause a discrepancy in the number of messages shown and received."
-msgstr "选中此选项将使消息更易读,但会导致显示和接收的消息数量不一致。"
+msgstr "勾選此選項將使訊息更易讀,但會導致顯示和接收的訊息數量不一致。"
 
 msgid "USSD sending port"
-msgstr "USSD 发送端口"
+msgstr "USSD 傳送連接埠"
 
 msgid "Sending USSD code in plain text"
-msgstr "以纯文本发送 USSD 代码"
+msgstr "以純文字傳送 USSD 代碼"
 
 msgid "Receive message without PDU decoding"
-msgstr "接收消息而不进行 PDU 解码"
+msgstr "接收訊息而不進行 PDU 解碼"
 
 msgid "Send the USSD code in plain text. Command is not being coded to the PDU."
-msgstr "以纯文本发送 USSD 代码。命令不会编码为 PDU。"
+msgstr "以純文字傳送 USSD 代碼。命令不會編碼為 PDU。"
 
 msgid "Receive and display the message without decoding it as a PDU."
-msgstr "接收并显示消息而不将其解码为 PDU。"
+msgstr "接收並顯示訊息而不將其解碼為 PDU。"
 
 msgid "Explanation of number and prefix"
-msgstr "号码和前缀说明"
+msgstr "號碼和前綴說明"
 
 msgid "In the tab for sending SMSes, show an explanation of the prefix and the correct phone number."
-msgstr "在发送短信的选项卡中,显示前缀和正确电话号码的说明。"
+msgstr "在傳送簡訊的標籤中,顯示前綴和正確電話號碼的說明。"
 
 msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without '+'). If the number is 5, 4 or 3 characters, it is treated as 'short' and should not be preceded by a country prefix."
-msgstr "电话号码前应加上国家代码(对于中国是 86,不带 '+')。如果号码是 5、4 或 3 个字符,则将其视为'短号码',不应加上国家代码。"
+msgstr "電話號碼前應加上國家代碼(對於台灣是 886,不帶 '+')。如果號碼是 5、4 或 3 個字元,則將其視為'短號碼',不應加上國家代碼。"
 
 msgid "The phone number should be preceded by the country prefix (for Poland it is 48, without +). If the number is 5, 4 or 3 characters, it is treated as.. short and should not be preceded by a country prefix."
-msgstr "电话号码前应加上国家代码(对于中国是 86,不带 +)。如果号码是 5、4 或 3 个字符,则将其视为短号码,不应加上国家代码。"
+msgstr "電話號碼前應加上國家代碼(對於台灣是 886,不帶 +)。如果號碼是 5、4 或 3 個字元,則將其視為短號碼,不應加上國家代碼。"
 
 msgid "Add prefix to phone number"
-msgstr "向电话号码添加前缀"
+msgstr "向電話號碼新增前綴"
 
 msgid "Automatically add prefix to the phone number field."
-msgstr "自动向电话号码字段添加前缀。"
+msgstr "自動向電話號碼欄位新增前綴。"
 
 msgid "Prefix number"
-msgstr "前缀号码"
+msgstr "前綴號碼"
 
 msgid "Please specify the command to send"
-msgstr "请指定要发送的命令"
+msgstr "請指定要傳送的命令"
 
 msgid "Please specify the code to send"
-msgstr "请指定要发送的代码"
+msgstr "請指定要傳送的代碼"
 
 msgid "Please set the port for communication with the modem"
-msgstr "请设置与调制解调器通信的端口"
+msgstr "請設定與數據機通訊的連接埠"
 
 msgid "User AT commands"
-msgstr "用户 AT 命令"
+msgstr "使用者 AT 命令"
 
 msgid "Command to send"
-msgstr "要发送的命令"
+msgstr "要傳送的命令"
 
 msgid "Clear form"
-msgstr "清除表单"
+msgstr "清除表單"
 
 msgid "Send command"
-msgstr "发送命令"
+msgstr "傳送命令"
 
 msgid "Message storage area"
-msgstr "消息存储区域"
+msgstr "訊息儲存區域"
 
 msgid "Messages are stored in a specific location (for example, on the SIM card or modem memory), but other areas may also be available depending on the type of device."
-msgstr "消息存储在特定位置(例如,在 SIM 卡或调制解调器内存中),但根据设备类型,也可能有其他区域可用。"
+msgstr "訊息儲存在特定位置(例如,在 SIM 卡或數據機記憶體中),但根據裝置類型,也可能有其他區域可用。"
 
 msgid "SIM card"
 msgstr "SIM 卡"
 
 msgid "Modem memory"
-msgstr "调制解调器内存"
+msgstr "數據機記憶體"
 
 msgid "Storage used / Total capacity"
-msgstr "已用存储 / 总容量"
+msgstr "已用儲存空間 / 總容量"
 
 msgid "Delete selected"
-msgstr "删除选定项"
+msgstr "刪除選定項"
 
 msgid "Delete"
-msgstr "删除"
+msgstr "刪除"
 
 msgid "Delete all"
-msgstr "全部删除"
+msgstr "全部刪除"
 
 msgid "Refresh"
-msgstr "刷新"
+msgstr "重新整理"
 
 msgid "Please select the message(s) to be deleted"
-msgstr "请选择要删除的消息"
+msgstr "請選擇要刪除的訊息"
 
 msgid "Delete selected message(s)?"
-msgstr "删除选定的消息?"
+msgstr "刪除選定的訊息?"
 
 msgid "Delete all the messages?"
-msgstr "删除所有消息?"
+msgstr "刪除所有訊息?"
 
 msgid "User interface for reading messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
-msgstr "使用 sms-tool 读取消息的用户界面。有关 sms-tool 的更多信息,请访问 %seko.one.pl 论坛%s。"
+msgstr "使用 sms-tool 讀取訊息的使用者介面。有關 sms-tool 的更多資訊,請訪問 %seko.one.pl 論壇%s。"
 
 msgid "User interface for sending messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
-msgstr "使用 sms-tool 发送消息的用户界面。有关 sms-tool 的更多信息,请访问 %seko.one.pl 论坛%s。"
+msgstr "使用 sms-tool 傳送訊息的使用者介面。有關 sms-tool 的更多資訊,請訪問 %seko.one.pl 論壇%s。"
 
 msgid "User interface for sending AT commands using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
-msgstr "使用 sms-tool 发送 AT 命令的用户界面。有关 sms-tool 的更多信息,请访问 %seko.one.pl 论坛%s。"
+msgstr "使用 sms-tool 傳送 AT 命令的使用者介面。有關 sms-tool 的更多資訊,請訪問 %seko.one.pl 論壇%s。"
 
 msgid "User interface for sending USSD codes using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s."
-msgstr "使用 sms-tool 发送 USSD 代码的用户界面。有关 sms-tool 的更多信息,请访问 %seko.one.pl 论坛%s。"
+msgstr "使用 sms-tool 傳送 USSD 代碼的使用者介面。有關 sms-tool 的更多資訊,請訪問 %seko.one.pl 論壇%s。"
 
 msgid "Configuration sms-tool"
-msgstr "配置 sms-tool"
+msgstr "設定 sms-tool"
 
 msgid "Configuration panel for sms-tool and gui application."
-msgstr "sms-tool 和 GUI 应用程序的配置面板。"
+msgstr "sms-tool 和 GUI 應用程式的設定面板。"
 
 msgid "Port for communication with the modem"
-msgstr "与调制解调器通信的端口"
+msgstr "與數據機通訊的連接埠"
 
 msgid "Select one of the available ttyUSBX ports."
-msgstr "选择一个可用的 ttyUSBX 端口。"
+msgstr "選擇一個可用的 ttyUSBX 連接埠。"
 
 msgid "Please select a port"
-msgstr "请选择端口"
+msgstr "請選擇連接埠"
 
 msgid "User contacts"
-msgstr "用户联系人"
+msgstr "使用者聯絡人"
 
 msgid "Enable group messaging"
-msgstr "启用群组消息"
+msgstr "啟用群組訊息"
 
 msgid "This option allows you to send one message to all contacts in the user's contact list."
-msgstr "此选项允许您向用户联系人列表中的所有联系人发送一条消息。"
+msgstr "此選項允許您向使用者聯絡人清單中的所有聯絡人傳送一條訊息。"
 
 msgid "Message sending delay"
-msgstr "消息发送延迟"
+msgstr "訊息傳送延遲"
 
 msgid "[Bot] Message sent to number:"
-msgstr "[机器人] 消息已发送至号码:"
+msgstr "[機器人] 訊息已傳送至號碼:"
 
 msgid "User USSD codes"
-msgstr "用户 USSD 代码"
+msgstr "使用者 USSD 代碼"
 
 msgid "Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>."
-msgstr "每行必须采用以下格式:'联系人姓名;电话号码'。为方便用户,文件保存到 <code>/etc/modem/phonebook.user</code> 位置。"
+msgstr "每行必須採用以下格式:'聯絡人姓名;電話號碼'。為方便使用者,檔案儲存到 <code>/etc/modem/phonebook.user</code> 位置。"
 
 msgid "Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds.user</code>."
-msgstr "每行必须采用以下格式:'AT 命令说明;AT 命令'。为方便用户,文件保存到 <code>/etc/modem/atcmmds.user</code> 位置。"
+msgstr "每行必須採用以下格式:'AT 命令說明;AT 命令'。為方便使用者,檔案儲存到 <code>/etc/modem/atcmmds.user</code> 位置。"
 
 msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."
-msgstr "每行必须采用以下格式:'代码说明;代码'。为方便用户,文件保存到 <code>/etc/modem/ussdcodes.user</code> 位置。"
+msgstr "每行必須採用以下格式:'代碼說明;代碼'。為方便使用者,檔案儲存到 <code>/etc/modem/ussdcodes.user</code> 位置。"
 
 msgid "Name of the list or command or code."
-msgstr "列表、命令或代码的名称。"
+msgstr "清單、命令或代碼的名稱。"
 
 msgid "Select..."
-msgstr "选择..."
+msgstr "選擇..."
 
 msgid "Create a backup with all SMS messages to a text file. Please wait..."
-msgstr "将所有短信备份到文本文件。请稍候..."
+msgstr "將所有簡訊備份到文字檔案。請稍候..."
 
 msgid "Please wait.. The process of saving SMS messages to a text file is in progress."
-msgstr "请稍候.. 正在将短信保存到文本文件。"
+msgstr "請稍候.. 正在將簡訊儲存到文字檔案。"
 
 msgid "This option allows to backup SMS messages or, for example, save messages that are not supported by the sms-tool."
-msgstr "此选项允许备份短信,或例如保存 sms-tool 不支持的消息。"
+msgstr "此選項允許備份簡訊,或例如儲存 sms-tool 不支援的訊息。"
 
 msgid "Delete all messages"
-msgstr "删除所有消息"
+msgstr "刪除所有訊息"
 
 msgid "This option allows you to delete all SMS messages when they are not visible in the 'Received Messages' tab."
-msgstr "此选项允许您在'已接收的消息'选项卡中不可见时删除所有短信。"
+msgstr "此選項允許您在'已接收的訊息'標籤中不可見時刪除所有簡訊。"
 
 msgid "Saving SMS messages to a file failed. Please try again."
-msgstr "将短信保存到文件失败。请重试。"
+msgstr "將簡訊儲存到檔案失敗。請重試。"
 
 msgid "PDU decoding scheme"
-msgstr "PDU 解码方案"
+msgstr "PDU 解碼方案"
 
 msgid "Autodetect"
-msgstr "自动检测"
+msgstr "自動偵測"
 
 msgid "Keep the previous reply when sending a new USSD code."
-msgstr "发送新 USSD 代码时保留上一个回复。"
+msgstr "傳送新 USSD 代碼時保留上一個回覆。"
 
 msgid "Check this option if you need to use the menu built on USSD codes"
-msgstr "如果您需要使用基于 USSD 代码构建的菜单,请选中此选项"
+msgstr "如果您需要使用基於 USSD 代碼建構的選單,請勾選此選項"
 
 msgid "Turn over the replies."
-msgstr "翻转回复。"
+msgstr "翻轉回覆。"
 
 msgid "View new reply from top"
-msgstr "从顶部查看新回复"
+msgstr "從頂部檢視新回覆"
 
 msgid "Please wait... deleted"
-msgstr "请稍候... 已删除"
+msgstr "請稍候... 已刪除"
 
 msgid "of"
 msgstr "/"
 
 msgid "selected messages"
-msgstr "选定的消息"
+msgstr "選定的訊息"
 
 msgid ""
 "The package requires user configuration. <br /><br /><b>The following "
@@ -301,196 +301,196 @@ msgid ""
 "options specific to the given modem (for handling USSD codes).</li><li> 3. Notification LED (optional).</li><li><ul>"
 
 msgstr ""
-"该软件包需要用户配置。<br /><br /><b>需要设置以下内容:</b> <ul><li>1. 与调制解调器通信的所有端口。</li><li>2. 特定于给定调制解调器的其他选项(用于处理 USSD 代码)。</li><li> 3. 通知 LED(可选)。</li><li><ul>"
+"該套件需要使用者設定。<br /><br /><b>需要設定以下內容:</b> <ul><li>1. 與數據機通訊的所有連接埠。</li><li>2. 特定於給定數據機的其他選項(用於處理 USSD 代碼)。</li><li> 3. 通知 LED(可選)。</li><li><ul>"
 
 msgid "Any change in the area from which SMS messages will be read requires refreshing the messages"
-msgstr "从中读取短信的区域的任何更改都需要刷新消息"
+msgstr "從中讀取簡訊的區域的任何變更都需要重新整理訊息"
 
 msgid "Characters remaining:"
-msgstr "剩余字符数:"
+msgstr "剩餘字元數:"
 
 msgid "Encoding standard"
-msgstr "编码标准"
+msgstr "編碼標準"
 
 msgid "GSM-7 (160 characters)"
-msgstr "GSM-7(160 个字符)"
+msgstr "GSM-7(160 個字元)"
 
 msgid "Unicode (70 characters)"
-msgstr "Unicode(70 个字符)"
+msgstr "Unicode(70 個字元)"
 
 msgid "GSM-7 encoding (160 characters)"
-msgstr "GSM-7 编码(160 个字符)"
+msgstr "GSM-7 編碼(160 個字元)"
 
 msgid "Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii"
-msgstr "Unicode 编码(70 个字符),不支持发送国家字符(UTF-8 格式)– 仅支持 ASCII"
+msgstr "Unicode 編碼(70 個字元),不支援傳送國家字元(UTF-8 格式)– 僅支援 ASCII"
 
 msgid "The tab allows users to support the package."
-msgstr "该选项卡允许用户支持该软件包。"
+msgstr "該標籤允許使用者支援該套件。"
 
 msgid "Luci-app-sms-tool-js Info"
-msgstr "Luci-app-sms-tool-js 信息"
+msgstr "Luci-app-sms-tool-js 資訊"
 
 msgid "Report a bug"
-msgstr "报告错误"
+msgstr "回報錯誤"
 
 msgid "Write in the topic of the package on the forum eko.one.pl"
-msgstr "在 eko.one.pl 论坛的软件包主题中发表意见"
+msgstr "在 eko.one.pl 論壇的套件主題中發表意見"
 
 msgid "Write on forum"
-msgstr "在论坛上发表"
+msgstr "在論壇上發表"
 
 msgid "Report a bug on the package Github page"
-msgstr "在软件包的 Github 页面上报告错误"
+msgstr "在套件的 Github 頁面上回報錯誤"
 
 msgid "Open a package discussion on Github"
-msgstr "在 Github 上开启软件包讨论"
+msgstr "在 Github 上開啟套件討論"
 
 msgid "Open discussion"
-msgstr "开启讨论"
+msgstr "開啟討論"
 
 msgid "Buy a coffee if you want to support the development of the project and the author"
-msgstr "如果您想支持项目和作者的开发,请买杯咖啡"
+msgstr "如果您想支援專案和作者的開發,請買杯咖啡"
 
 msgid "Buy a coffee"
-msgstr "买杯咖啡"
+msgstr "買杯咖啡"
 
 msgid "Become a sponsor if you want to support the development of the project and the author"
-msgstr "如果您想支持项目和作者的开发,请成为赞助商"
+msgstr "如果您想支援專案和作者的開發,請成為贊助商"
 
 msgid "Become a sponsor"
-msgstr "成为赞助商"
+msgstr "成為贊助商"
 
 msgid "Package Info"
-msgstr "软件包信息"
+msgstr "套件資訊"
 
 msgid "Author (package maintainer)"
-msgstr "作者(软件包维护者)"
+msgstr "作者(套件維護者)"
 
 msgid "Package update and support"
-msgstr "软件包更新和支持"
+msgstr "套件更新和支援"
 
 msgid "SMS Forwarding to E-mail Settings"
-msgstr "短信转发到电子邮件设置"
+msgstr "簡訊轉寄到電子郵件設定"
 
 msgid "An e-mail will be sent.."
-msgstr "将发送一封电子邮件.."
+msgstr "將傳送一封電子郵件.."
 
 msgid "Enable message forwarding"
-msgstr "启用消息转发"
+msgstr "啟用訊息轉寄"
 
 msgid "E-mail settings"
-msgstr "电子邮件设置"
+msgstr "電子郵件設定"
 
 msgid "Select a predefined e-mail settings or enter settings manually."
-msgstr "选择预定义的电子邮件设置或手动输入设置。"
+msgstr "選擇預先定義的電子郵件設定或手動輸入設定。"
 
 msgid "Recipient"
-msgstr "收件人"
+msgstr "收件者"
 
 msgid "E-mail address of the recipient."
-msgstr "收件人的电子邮件地址。"
+msgstr "收件者的電子郵件地址。"
 
 msgid "E-mail address of the sender."
-msgstr "发件人的电子邮件地址。"
+msgstr "寄件者的電子郵件地址。"
 
 msgid "User"
-msgstr "用户"
+msgstr "使用者"
 
 msgid "Username for SMTP authentication."
-msgstr "SMTP 身份验证的用户名。"
+msgstr "SMTP 驗證的使用者名稱。"
 
 msgid "Password"
-msgstr "密码"
+msgstr "密碼"
 
 msgid "Google app password / Password for SMTP authentication."
-msgstr "Google 应用密码 / SMTP 身份验证密码。"
+msgstr "Google 應用程式密碼 / SMTP 驗證密碼。"
 
 msgid "SMTP server"
-msgstr "SMTP 服务器"
+msgstr "SMTP 伺服器"
 
 msgid "Hostname/IP address of the SMTP server."
-msgstr "SMTP 服务器的主机名/IP 地址。"
+msgstr "SMTP 伺服器的主機名稱/IP 位址。"
 
 msgid "SMTP server port"
-msgstr "SMTP 服务器端口"
+msgstr "SMTP 伺服器連接埠"
 
 msgid "Security"
-msgstr "安全"
+msgstr "安全性"
 
 msgid "TLS: use STARTTLS if the server supports it."
-msgstr "TLS:如果服务器支持,则使用 STARTTLS。"
+msgstr "TLS:如果伺服器支援,則使用 STARTTLS。"
 
 msgid "SSL: SMTP over SSL."
 msgstr "SSL:SMTP over SSL。"
 
 msgid "Required Package"
-msgstr "所需软件包"
+msgstr "所需套件"
 
 msgid "The SMS forwarding option requires the mailsend package to be installed."
-msgstr "短信转发选项需要安装 mailsend 软件包。"
+msgstr "簡訊轉寄選項需要安裝 mailsend 套件。"
 
 msgid "Check required packages"
-msgstr "检查所需软件包"
+msgstr "檢查所需套件"
 
 msgid "Check"
-msgstr "检查"
+msgstr "檢查"
 
 msgid "Mailsend Package"
-msgstr "Mailsend 软件包"
+msgstr "Mailsend 套件"
 
 msgid "Loading package data…"
-msgstr "正在加载软件包数据…"
+msgstr "正在載入套件資料…"
 
 msgid "Installed"
-msgstr "已安装"
+msgstr "已安裝"
 
 msgid "Install…"
-msgstr "安装…"
+msgstr "安裝…"
 
 msgid "Please select exactly one message to forward"
-msgstr "请选择要转发的一条消息"
+msgstr "請選擇要轉寄的一條訊息"
 
 msgid "Forward selected message to e-mail?"
-msgstr "将选定的消息转发到电子邮件?"
+msgstr "將選定的訊息轉寄到電子郵件?"
 
 msgid "Sending e-mail..."
-msgstr "正在发送电子邮件..."
+msgstr "正在傳送電子郵件..."
 
 msgid "Message forwarded successfully"
-msgstr "消息已成功转发"
+msgstr "訊息已成功轉寄"
 
 msgid "Failed to forward message: %s"
-msgstr "转发消息失败:%s"
+msgstr "轉寄訊息失敗:%s"
 
 msgid "Error: %s"
-msgstr "错误:%s"
+msgstr "錯誤:%s"
 
 msgid "user define"
-msgstr "用户定义"
+msgstr "使用者定義"
 
 msgid "Forward SMS"
-msgstr "转发"
+msgstr "轉寄"
 
 msgid "Please select the message(s) to be forwarded"
-msgstr "请选择要转发的消息"
+msgstr "請選擇要轉寄的訊息"
 
 msgid "SMS forwarding function is not enabled. Please configure it first"
-msgstr "未启用短信转发功能。请先配置"
+msgstr "未啟用簡訊轉寄功能。請先設定"
 
 msgid "My Router"
 msgstr "我的路由器"
 
 msgid "Forward SMS to E-mail"
-msgstr "将短信转发到电子邮件"
+msgstr "將簡訊轉寄到電子郵件"
 
 msgid "Subject:"
-msgstr "主题:"
+msgstr "主旨:"
 
 msgid "Message text:"
-msgstr "消息文本:"
+msgstr "訊息文字:"
 
 msgid "Subject and body cannot be empty"
-msgstr "主题和正文不能为空"
+msgstr "主旨和內文不能為空"
 
 msgid "Package mailsend is not installed. Please install it first using the Install... button below"
-msgstr "mailsend 软件包未安装。请先使用下面的安装...按钮进行安装"
+msgstr "mailsend 套件未安裝。請先使用下面的安裝...按鈕進行安裝"
