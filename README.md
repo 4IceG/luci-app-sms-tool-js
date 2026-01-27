@@ -182,7 +182,9 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/read_sms.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Received%20Messages1.png?raw=true)
+
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Received%20Messages2.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
@@ -198,10 +200,12 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configsms.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configussd.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configat.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/configled.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration2.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration3.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration4.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration5.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Package%20update%20and%20support.png?raw=true)
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Thanks to / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Podziękowania dla
 - [obsy (Cezary Jackiewicz)](https://github.com/obsy)
