@@ -590,11 +590,14 @@ return view.extend({
 									
 						            let PTR = uci.get('sms_tool_js', '@sms_tool_js[0]', 'prestart');
 						            
+                                    fs.exec('sleep 4');
+						            
 						            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
 							            let cronEntry = '1 */' + PTR + ' * * *  /etc/init.d/my_new_sms enable && /etc/init.d/my_new_sms restart';
 							            let newCrontab = (crontab || '').trim().replace(/\r\n/g, '\n') + '\n' + cronEntry + '\n';
 							            
 							            fs.write('/etc/crontabs/root', newCrontab).then(function() {
+                                            fs.exec('sleep 2');
 								            fs.exec_direct('/etc/init.d/cron', ['restart']);
 							            });
 						            });
@@ -607,6 +610,8 @@ return view.extend({
 								if (value == '0') {
 									uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "0");
 									uci.save();
+									
+                                    fs.exec('sleep 4');
 
 						            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
 							            let lines = (crontab || '').trim().replace(/\r\n/g, '\n').split('\n');
@@ -616,6 +621,7 @@ return view.extend({
 							            let newCrontab = filteredLines.join('\n') + '\n';
 							            
 							            fs.write('/etc/crontabs/root', newCrontab).then(function() {
+                                            fs.exec('sleep 2');
 								            fs.exec_direct('/etc/init.d/cron', ['restart']);
 							            });
 						            });
