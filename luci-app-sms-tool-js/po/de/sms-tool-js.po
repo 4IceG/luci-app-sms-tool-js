@@ -610,3 +610,182 @@ msgstr "Betreff und Text dürfen nicht leer sein"
 
 msgid "Package mailsend is not installed. Please install it first using the Install... button below"
 msgstr "Paket mailsend ist nicht installiert. Bitte installieren Sie es zuerst mit der Schaltfläche Installieren... unten"
+
+msgid "Select modem"
+msgstr "Modem auswählen"
+
+msgid "Changing a modem requires refreshing the messages"
+msgstr "Das Ändern eines Modems erfordert das Aktualisieren der Nachrichten"
+
+msgid "Defined AT command files"
+msgstr "Definierte AT-Befehlsdateien"
+
+msgid "Defined USSD code files"
+msgstr "Definierte USSD-Code-Dateien"
+
+msgid "File uploaded and saved to"
+msgstr "Datei hochgeladen und gespeichert in"
+
+msgid "Unable to upload file"
+msgstr "Datei konnte nicht hochgeladen werden"
+
+msgid "Phonebook saved successfully"
+msgstr "Telefonbuch erfolgreich gespeichert"
+
+msgid "Unable to save the file"
+msgstr "Datei konnte nicht gespeichert werden"
+
+msgid "filename.user"
+msgstr "dateiname.user"
+
+msgid "Select or create a file to edit..."
+msgstr "Datei zum Bearbeiten auswählen oder erstellen..."
+
+msgid "Please enter a file name"
+msgstr "Bitte Dateinamen eingeben"
+
+msgid "File created successfully"
+msgstr "Datei erfolgreich erstellt"
+
+msgid "Unable to create file"
+msgstr "Datei konnte nicht erstellt werden"
+
+msgid "Please select a file to delete"
+msgstr "Bitte Datei zum Löschen auswählen"
+
+msgid "Are you sure you want to delete this file?"
+msgstr "Möchten Sie diese Datei wirklich löschen?"
+
+msgid "File deleted successfully"
+msgstr "Datei erfolgreich gelöscht"
+
+msgid "Select or create a file to edit..."
+msgstr "Datei zum Bearbeiten auswählen oder erstellen..."
+
+msgid "Unable to delete file"
+msgstr "Datei konnte nicht gelöscht werden"
+
+msgid "Please select or create a file first"
+msgstr "Bitte zuerst eine Datei auswählen oder erstellen"
+
+msgid "File saved successfully"
+msgstr "Datei erfolgreich gespeichert"
+
+msgid "Unable to save file"
+msgstr "Datei konnte nicht gespeichert werden"
+
+msgid "Load .user file"
+msgstr ".user-Datei laden"
+
+msgid "Save .user file"
+msgstr ".user-Datei speichern"
+
+msgid "Please select a file to delete"
+msgstr "Bitte Datei zum Löschen auswählen"
+
+msgid "Manage contacts"
+msgstr "Kontakte verwalten"
+
+msgid "Edit User Contacts"
+msgstr "Benutzerkontakte bearbeiten"
+
+msgid "Manage USSD codes"
+msgstr "USSD-Codes verwalten"
+
+msgid "Manage User USSD Codes"
+msgstr "Benutzer-USSD-Codes verwalten"
+
+msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes/</code>."
+msgstr "Jede Zeile muss folgendes Format haben: 'Code-Beschreibung;Code'. Zur Benutzerfreundlichkeit wird die Datei unter <code>/etc/modem/ussdcodes/</code> gespeichert."
+
+msgid "Each line must have the following format: 'AT command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds/</code>."
+msgstr "Jede Zeile muss folgendes Format haben: 'AT-Befehl-Beschreibung;AT-Befehl'. Zur Benutzerfreundlichkeit wird die Datei unter <code>/etc/modem/atcmmds/</code> gespeichert."
+
+msgid "Manage AT commands"
+msgstr "AT-Befehle verwalten"
+
+msgid "Manage User AT Commands"
+msgstr "Benutzer-AT-Befehle verwalten"
+
+msgid "-- Select file --"
+msgstr "-- Datei auswählen --"
+
+msgid "Select file"
+msgstr "Datei auswählen"
+
+msgid "New file name"
+msgstr "Neuer Dateiname"
+
+msgid "Delete selected file"
+msgstr "Ausgewählte Datei löschen"
+
+msgid "Select file with AT commands to load"
+msgstr "Datei mit AT-Befehlen zum Laden auswählen"
+
+msgid "Error loading AT commands file: "
+msgstr "Fehler beim Laden der AT-Befehlsdatei: "
+
+msgid "No AT commands available"
+msgstr "Keine AT-Befehle verfügbar"
+
+msgid "Error loading initial AT commands file:"
+msgstr "Fehler beim Laden der initialen AT-Befehlsdatei:"
+
+msgid "Error loading USSD codes file: "
+msgstr "Fehler beim Laden der USSD-Codedatei: "
+
+msgid "Error loading initial USSD file:"
+msgstr "Fehler beim Laden der initialen USSD-Datei:"
+
+msgid "Select file with USSD codes to load"
+msgstr "Datei mit USSD-Codes zum Laden auswählen"
+
+msgid "No USSD codes available"
+msgstr "Keine USSD-Codes verfügbar"
+
+msgid "Show notification icon"
+msgstr "Benachrichtigungssymbol anzeigen"
+
+msgid "Show the new message notification icon on the status overview page."
+msgstr "Das Benachrichtigungssymbol für neue Nachrichten auf der Statusübersichtsseite anzeigen."
+
+msgid "Loading..."
+msgstr "Wird geladen..."
+
+msgid "Modem"
+msgstr "Modem"
+
+msgid "Modems"
+msgstr "Modems"
+
+msgid "Signal Quality"
+msgstr "Signalqualität"
+
+msgid "Align preview to:"
+msgstr "Vorschau ausrichten auf:"
+
+msgid "Left"
+msgstr "Links"
+
+msgid "Center"
+msgstr "Mitte"
+
+msgid "Right"
+msgstr "Rechts"
+
+msgid "New message information block settings"
+msgstr "Einstellungen des Informationsblocks für neue Nachrichten"
+
+msgid "Alignment settings saved successfully"
+msgstr "Ausrichtungseinstellungen erfolgreich gespeichert"
+
+msgid "SMS Info"
+msgstr "SMS-Info"
+
+msgid "New SMS"
+msgstr "Neue SMS"
+
+msgid "No new SMS"
+msgstr "Keine neuen SMS"
+
+

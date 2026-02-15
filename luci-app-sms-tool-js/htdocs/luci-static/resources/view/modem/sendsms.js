@@ -418,10 +418,45 @@ return view.extend({
 		ov.value = x;
 	},
 
+	handleModemChange: function(ev) {
+		let sections = uci.sections('defmodems', 'defmodems');
+		if (!sections || sections.length === 0) return;
+		
+		let serialModems = sections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) return;
+		
+		let currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sendport');
+		let currentIndex = serialModems.findIndex(function(s) {
+			return s.comm_port === currentPort;
+		});
+		
+		if (currentIndex === -1) currentIndex = 0;
+		
+		let direction = ev.currentTarget.classList.contains('next') ? 1 : -1;
+		let newIndex = (currentIndex + direction + serialModems.length) % serialModems.length;
+		let newModem = serialModems[newIndex];
+		
+		if (newModem && newModem.comm_port) {
+			uci.set('sms_tool_js', '@sms_tool_js[0]', 'sendport', newModem.comm_port);
+			uci.save();
+			uci.apply().then(function() {
+				let modemText = document.querySelector('.modem-display-text');
+				if (modemText) {
+					let label = newModem.modem + (newModem.user_desc ? ' (' + newModem.user_desc + ')' : '');
+					modemText.textContent = label;
+				}
+			});
+		}
+	},
+
 	load: function() {
 		return Promise.all([
 			L.resolveDefault(fs.read_direct('/etc/modem/phonebook.user'), null),
-			uci.load('sms_tool_js')
+			uci.load('sms_tool_js'),
+			L.resolveDefault(uci.load('defmodems'))
 		]);
 	},
 
@@ -444,8 +479,24 @@ return view.extend({
 	if ( sections[0].information == '1' ) {
 		ui.addNotification(null, E('p', _('The phone number should be preceded by the country prefix (for Poland it is 48, without +). If the number is 5, 4 or 3 characters, it is treated as.. short and should not be preceded by a country prefix.') ), 'info');
 	}
-		
+	
 		let info = _('User interface for sending messages using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s.').format('<a href="https://eko.one.pl/?p=openwrt-sms_tool" target="_blank">', '</a>');
+		
+		let modemSections = uci.sections('defmodems', 'defmodems');
+		let serialModems = [];
+		
+		if (modemSections && modemSections.length > 0) {
+			serialModems = modemSections.filter(function(s) {
+				return s.modemdata === 'serial';
+			});
+		}
+		
+		let currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sendport');
+		let currentModem = serialModems.find(function(s) {
+			return s.comm_port === currentPort;
+		});
+		
+		if (!currentModem && serialModems.length > 0) currentModem = serialModems[0];
 	
 		return E('div', { 'class': 'cbi-map', 'id': 'map' }, [
 				E('h2', {}, [ _('SMS Messages') ]),
@@ -453,6 +504,39 @@ return view.extend({
 				E('hr'),
 				E('div', { 'class': 'cbi-section' }, [
 					E('div', { 'class': 'cbi-section-node' }, [
+						(function() {
+							if (serialModems.length > 0) {
+								let label = currentModem.modem + (currentModem.user_desc ? ' (' + currentModem.user_desc + ')' : '');
+								let buttonsDisabled = (serialModems.length > 1) ? null : true;
+								
+								return E('div', { 'class': 'cbi-value' }, [
+									E('label', { 'class': 'cbi-value-title' }, [ _('Select modem') ]),
+									E('div', { 'class': 'cbi-value-field' }, [
+										E('div', { 'class': 'controls' }, [
+											E('div', { 'class': 'pager center', 'style': 'display: flex; align-items: center; gap: 10px;' }, [
+												E('button', { 
+													'class': 'btn cbi-button-neutral prev', 
+													'aria-label': _('Previous modem'), 
+													'click': ui.createHandlerFn(this, 'handleModemChange'),
+													'style': 'min-width: 40px;',
+													'disabled': buttonsDisabled
+												}, [ ' ◄ ' ]),
+												E('div', { 'class': 'text modem-display-text', 'style': 'flex: 1; text-align: center;' }, [ label ]),
+												E('button', { 
+													'class': 'btn cbi-button-neutral next', 
+													'aria-label': _('Next modem'), 
+													'click': ui.createHandlerFn(this, 'handleModemChange'),
+													'style': 'min-width: 40px;',
+													'disabled': buttonsDisabled
+												}, [ ' ► ' ])
+											])
+										])
+									])
+								]);
+							} else {
+								return E('div');
+							}
+						}.bind(this))(),
 						E('div', { 'class': 'cbi-value' }, [
 							E('label', { 'class': 'cbi-value-title' }, [ _('User contacts') ]),
 							E('div', { 'class': 'cbi-value-field' }, [

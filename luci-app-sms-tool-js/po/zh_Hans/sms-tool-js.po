@@ -612,3 +612,182 @@ msgstr "主题和内容不能为空"
 
 msgid "Package mailsend is not installed. Please install it first using the Install... button below"
 msgstr "mailsend软件包未安装。请先使用下面的"安装..."按钮进行安装"
+
+msgid "Select modem"
+msgstr "选择调制解调器"
+
+msgid "Changing a modem requires refreshing the messages"
+msgstr "更改调制解调器需要刷新消息"
+
+msgid "Defined AT command files"
+msgstr "已定义的AT命令文件"
+
+msgid "Defined USSD code files"
+msgstr "已定义的 USSD 代码文件"
+
+msgid "File uploaded and saved to"
+msgstr "文件已上传并保存到"
+
+msgid "Unable to upload file"
+msgstr "无法上传文件"
+
+msgid "Phonebook saved successfully"
+msgstr "电话簿保存成功"
+
+msgid "Unable to save the file"
+msgstr "无法保存文件"
+
+msgid "filename.user"
+msgstr "文件名.user"
+
+msgid "Select or create a file to edit..."
+msgstr "选择或创建要编辑的文件..."
+
+msgid "Please enter a file name"
+msgstr "请输入文件名"
+
+msgid "File created successfully"
+msgstr "文件创建成功"
+
+msgid "Unable to create file"
+msgstr "无法创建文件"
+
+msgid "Please select a file to delete"
+msgstr "请选择要删除的文件"
+
+msgid "Are you sure you want to delete this file?"
+msgstr "您确定要删除此文件吗？"
+
+msgid "File deleted successfully"
+msgstr "文件删除成功"
+
+msgid "Select or create a file to edit..."
+msgstr "选择或创建要编辑的文件..."
+
+msgid "Unable to delete file"
+msgstr "无法删除文件"
+
+msgid "Please select or create a file first"
+msgstr "请先选择或创建文件"
+
+msgid "File saved successfully"
+msgstr "文件保存成功"
+
+msgid "Unable to save file"
+msgstr "无法保存文件"
+
+msgid "Load .user file"
+msgstr "加载.user文件"
+
+msgid "Save .user file"
+msgstr "保存.user文件"
+
+msgid "Please select a file to delete"
+msgstr "请选择要删除的文件"
+
+msgid "Manage contacts"
+msgstr "管理联系人"
+
+msgid "Edit User Contacts"
+msgstr "编辑用户联系人"
+
+msgid "Manage USSD codes"
+msgstr "管理USSD代码"
+
+msgid "Manage User USSD Codes"
+msgstr "管理用户USSD代码"
+
+msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes/</code>."
+msgstr "每行必须采用以下格式：'代码描述;代码'。为方便用户，文件保存在<code>/etc/modem/ussdcodes/</code>位置。"
+
+msgid "Each line must have the following format: 'AT command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds/</code>."
+msgstr "每行必须采用以下格式：'AT命令描述;AT命令'。为方便用户，文件保存在<code>/etc/modem/atcmmds/</code>位置。"
+
+msgid "Manage AT commands"
+msgstr "管理AT命令"
+
+msgid "Manage User AT Commands"
+msgstr "管理用户AT命令"
+
+msgid "-- Select file --"
+msgstr "-- 选择文件 --"
+
+msgid "Select file"
+msgstr "选择文件"
+
+msgid "New file name"
+msgstr "新文件名"
+
+msgid "Delete selected file"
+msgstr "删除所选文件"
+
+msgid "Select file with AT commands to load"
+msgstr "选择要加载的AT命令文件"
+
+msgid "Error loading AT commands file: "
+msgstr "加载AT命令文件时出错："
+
+msgid "No AT commands available"
+msgstr "没有可用的AT命令"
+
+msgid "Error loading initial AT commands file:"
+msgstr "加载初始AT命令文件时出错："
+
+msgid "Error loading USSD codes file: "
+msgstr "加载USSD代码文件时出错："
+
+msgid "Error loading initial USSD file:"
+msgstr "加载初始USSD文件时出错："
+
+msgid "Select file with USSD codes to load"
+msgstr "选择要加载的USSD代码文件"
+
+msgid "No USSD codes available"
+msgstr "没有可用的USSD代码"
+
+msgid "Show notification icon"
+msgstr "显示通知图标"
+
+msgid "Show the new message notification icon on the status overview page."
+msgstr "在状态概览页面上显示新消息通知图标。"
+
+msgid "Loading..."
+msgstr "正在加载…"
+
+msgid "Modem"
+msgstr "调制解调器"
+
+msgid "Modems"
+msgstr "调制解调器"
+
+msgid "Signal Quality"
+msgstr "信号质量"
+
+msgid "Align preview to:"
+msgstr "将预览对齐到："
+
+msgid "Left"
+msgstr "左"
+
+msgid "Center"
+msgstr "居中"
+
+msgid "Right"
+msgstr "右"
+
+msgid "New message information block settings"
+msgstr "新消息信息块设置"
+
+msgid "Alignment settings saved successfully"
+msgstr "对齐设置已成功保存"
+
+msgid "SMS Info"
+msgstr "短信信息"
+
+msgid "New SMS"
+msgstr "新短信"
+
+msgid "No new SMS"
+msgstr "没有新短信"
+
+

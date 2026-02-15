@@ -80,6 +80,111 @@ function popTimeout(a, message, timeout, severity) {
     ui.addTimeLimitedNotification(a, message, timeout, severity);
 }
 
+
+function format_with_modem_index(value) {
+	return uci.load('defmodems').then(function() {
+		var defmodemSections = uci.sections('defmodems', 'defmodems');
+		
+		if (!defmodemSections || defmodemSections.length === 0) {
+			// old format
+			return value;
+		}
+		
+		var serialModems = defmodemSections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) {
+			// old format
+			return value;
+		}
+		
+		var currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport');
+		
+		var modemIndex = -1;
+		for (var i = 0; i < serialModems.length; i++) {
+			if (serialModems[i].comm_port === currentPort) {
+				modemIndex = i + 1;
+				break;
+			}
+		}
+		
+		if (modemIndex === -1) {
+			// old format
+			return value;
+		}
+		
+		return 'dfm' + modemIndex + '_' + value;
+		
+	}).catch(function() {
+		// old format
+		return value;
+	});
+}
+
+function update_sms_count_for_modem(newValue) {
+	return uci.load('defmodems').then(function() {
+		var defmodemSections = uci.sections('defmodems', 'defmodems');
+		
+		if (!defmodemSections || defmodemSections.length === 0) {
+			// old format - just set the value directly
+			return newValue;
+		}
+		
+		var serialModems = defmodemSections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) {
+			// old format
+			return newValue;
+		}
+		
+		var currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport');
+		var currentModemIndex = -1;
+		
+		for (var i = 0; i < serialModems.length; i++) {
+			if (serialModems[i].comm_port === currentPort) {
+				currentModemIndex = i + 1;
+				break;
+			}
+		}
+		
+		if (currentModemIndex === -1) {
+			// old format
+			return newValue;
+		}
+		
+		var existingSmsCount = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_count') || '';
+		var parts = existingSmsCount.split(' ').filter(function(p) { return p.trim() !== ''; });
+		
+		var updated = {};
+		parts.forEach(function(part) {
+			var match = part.match(/^dfm(\d+)_(\d+)$/);
+			if (match) {
+				var modemIdx = parseInt(match[1]);
+				if (modemIdx > 0 && modemIdx <= serialModems.length) {
+					updated[modemIdx] = match[2];
+				}
+			}
+		});
+		
+		updated[currentModemIndex] = newValue;
+		
+		var result = [];
+		for (var i = 1; i <= serialModems.length; i++) {
+			var count = updated[i] || '0';
+			result.push('dfm' + i + '_' + count);
+		}
+		
+		return result.join(' ');
+		
+	}).catch(function() {
+		// old format
+		return newValue;
+	});
+}
+
 function save_count() {
 	uci.load('sms_tool_js').then(function() {
 
@@ -93,9 +198,12 @@ function save_count() {
 								var t = total.replace ( /[^\d.]/g, '' );
 								var used = res.substring(17, res.indexOf("total"));
 								var u = used.replace ( /[^\d.]/g, '' );
-								uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
-								uci.save();
-								uci.apply();
+								
+								update_sms_count_for_modem(u).then(function(updatedValue) {
+									uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedValue);
+									uci.save();
+									uci.apply();
+								});
 							}
 			});
 	});
@@ -103,7 +211,44 @@ function save_count() {
 
 return view.extend({
 	load: function() {
-		uci.load('sms_tool_js');
+		return Promise.all([
+			uci.load('sms_tool_js'),
+			L.resolveDefault(uci.load('defmodems'))
+		]);
+	},
+
+	handleModemChange: function(ev) {
+		var sections = uci.sections('defmodems', 'defmodems');
+		if (!sections || sections.length === 0) return;
+		
+		var serialModems = sections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) return;
+		
+		var currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport');
+		var currentIndex = serialModems.findIndex(function(s) {
+			return s.comm_port === currentPort;
+		});
+		
+		if (currentIndex === -1) currentIndex = 0;
+		
+		var direction = ev.currentTarget.classList.contains('next') ? 1 : -1;
+		var newIndex = (currentIndex + direction + serialModems.length) % serialModems.length;
+		var newModem = serialModems[newIndex];
+		
+		if (newModem && newModem.comm_port) {
+			uci.set('sms_tool_js', '@sms_tool_js[0]', 'readport', newModem.comm_port);
+			uci.save();
+			uci.apply().then(function() {
+				var modemText = document.querySelector('.modem-display-text');
+				if (modemText) {
+					var label = newModem.modem + (newModem.user_desc ? ' (' + newModem.user_desc + ')' : '');
+					modemText.textContent = label;
+				}
+			});
+		}
 	},
 
 	handleSWarea: function(ev) {
@@ -135,7 +280,7 @@ return view.extend({
 		    var fwdEnabled = uci.get('sms_tool_js', '@sms_tool_js[0]', 'forward_sms_enabled');
 		    
 		    if (fwdEnabled !== '1') {
-			    ui.addNotification(null, E('p', _('SMS forwarding function is not enabled. Please configure it first')), 'info');
+			    ui.addNotification(null, E('p', _('SMS forwarding function is not enabled')), 'info');
 			    return;
 		    }
 		    
@@ -414,12 +559,10 @@ return view.extend({
 			    }
 		}
 	},
-
-                                                                                                                                                       
+                                                                                                                                              
 	handleRefresh: function(ev) {
 		window.location.reload();
 	},
-
 
 	handleSelect: function(ev) {
 		var checkBox = document.getElementById("ch-all");
@@ -601,10 +744,19 @@ return view.extend({
 															axx = axx.replace(/,/g, ' ');
 															axx = axx.replace(/-/g, ' ');
 
-															uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', L.toArray(axx).join(' '));
-															uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
-															uci.save();
-															uci.apply();
+															var axx = aidx.toString();
+															axx = axx.replace(/,/g, ' ');
+															axx = axx.replace(/-/g, ' ');
+
+															// Format index with modem, then update count for current modem only
+															format_with_modem_index(axx).then(function(formattedIndex) {
+																update_sms_count_for_modem(u).then(function(updatedCount) {
+																	uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', formattedIndex);
+																	uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedCount);
+																	uci.save();
+																	uci.apply();
+																});
+															});
 											}
 
 										}
@@ -653,10 +805,14 @@ return view.extend({
 											axx = axx.replace(/,/g, ' ');
 											axx = axx.replace(/-/g, ' ');
 
-											uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', L.toArray(axx).join(' '));
-											uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
-											uci.save();
-											uci.apply();
+											format_with_modem_index(axx).then(function(formattedIndex) {
+												update_sms_count_for_modem(u).then(function(updatedCount) {
+													uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', formattedIndex);
+													uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedCount);
+													uci.save();
+													uci.apply();
+												});
+											});
 									}
 
 								}
@@ -682,8 +838,60 @@ return view.extend({
 
 			E('h3', _('Received Messages')),
 			E('table', { 'class': 'table' }, [
-    					E('tr', { 'class': 'tr' }, [
-        					E('td', { 'class': 'td left', 'width': '33%' }, [ _('Message storage area') ]),
+				(function() {
+					var sections = uci.sections('defmodems', 'defmodems');
+					var serialModems = [];
+					
+					if (sections && sections.length > 0) {
+						serialModems = sections.filter(function(s) {
+							return s.modemdata === 'serial';
+						});
+					}
+					
+					if (serialModems.length > 0) {
+						var currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport');
+						var currentModem = serialModems.find(function(s) {
+							return s.comm_port === currentPort;
+						});
+						
+						if (!currentModem) currentModem = serialModems[0];
+						
+						var label = currentModem.modem + (currentModem.user_desc ? ' (' + currentModem.user_desc + ')' : '');
+						
+						var buttonsDisabled = (serialModems.length > 1) ? null : true;
+						
+						return E('tr', { 'class': 'tr' }, [
+							E('td', { 'class': 'td left', 'width': '33%' }, [ _('Select modem') ]),
+							E('td', { 'class': 'td' }, [
+								E('div', { 'class': 'controls' }, [
+									E('div', { 'class': 'pager center', 'style': 'display: flex; align-items: center; gap: 10px;' }, [
+										E('button', { 
+											'class': 'btn cbi-button-neutral prev', 
+											'aria-label': _('Previous modem'), 
+											'click': ui.createHandlerFn(this, 'handleModemChange'),
+											'data-tooltip': _('Changing a modem requires refreshing the messages'),
+											'style': 'min-width: 40px;',
+											'disabled': buttonsDisabled
+										}, [ ' ◄ ' ]),
+										E('div', { 'class': 'text modem-display-text', 'style': 'flex: 1; text-align: center;' }, [ label ]),
+										E('button', { 
+											'class': 'btn cbi-button-neutral next', 
+											'aria-label': _('Next modem'), 
+											'click': ui.createHandlerFn(this, 'handleModemChange'),
+											'data-tooltip': _('Changing a modem requires refreshing the messages'),
+											'style': 'min-width: 40px;',
+											'disabled': buttonsDisabled
+										}, [ ' ► ' ])
+									])
+								])
+							])
+						]);
+					} else {
+						return E('div', { 'style': 'display: none;' });
+					}
+				}.bind(this))(),
+    				E('tr', { 'class': 'tr' }, [
+        				E('td', { 'class': 'td left', 'width': '33%' }, [ _('Message storage area') ]),
         					E('td', { 'class': 'td' }, [
 							E('div', [
 							E('label', {
@@ -745,7 +953,6 @@ return view.extend({
 					}, [ _('Forward SMS') ]),
 					'\xa0\xa0\xa0',
 					E('button', {
-						//'class': 'cbi-button cbi-button-negative important',
 						'class': 'cbi-button cbi-button-remove',
 						'id': 'execute',
 						'click': ui.createHandlerFn(this, 'handleDelete')

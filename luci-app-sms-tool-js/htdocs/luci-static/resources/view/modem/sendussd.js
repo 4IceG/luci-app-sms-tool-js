@@ -13,6 +13,26 @@
 */
 
 return view.extend({
+	viewName: 'sendussd',
+	
+	restoreSettingsFromLocalStorage: function() {
+		try {
+			let selectedFile = localStorage.getItem('luci-app-' + this.viewName + '-selectedFile');
+			return selectedFile;
+		} catch(e) {
+			console.error('localStorage not available:', e);
+			return null;
+		}
+	},
+	
+	saveSettingsToLocalStorage: function(fileName) {
+		try {
+			localStorage.setItem('luci-app-' + this.viewName + '-selectedFile', fileName);
+		} catch(e) {
+			console.error('localStorage not available:', e);
+		}
+	},
+	
 	handleCommand: function(exec, args) {
 		let buttons = document.querySelectorAll('.cbi-button');
 
@@ -189,6 +209,38 @@ return view.extend({
 		});
 	},
 
+	handleFileChange: function(ev) {
+		let selectedFile = ev.target.value;
+		let selectElement = document.getElementById('tk');
+		
+		if (!selectElement || !selectedFile) return;
+		
+		this.saveSettingsToLocalStorage(selectedFile);
+		
+		return fs.read_direct('/etc/modem/ussdcodes/' + selectedFile).then(function(content) {
+			selectElement.innerHTML = '';
+			
+			let codes = (content || '').trim().split('\n');
+			codes.forEach(function(cmd) {
+				if (cmd.trim()) {
+					let fields = cmd.split(/;/);
+					let name = fields[0];
+					let code = fields[1] || fields[0];
+					let option = document.createElement('option');
+					option.value = code;
+					option.textContent = name;
+					selectElement.appendChild(option);
+				}
+			});
+			
+			let cmdInput = document.getElementById('cmdvalue');
+			if (cmdInput) cmdInput.value = '';
+		}).catch(function(err) {
+			console.error('Error loading USSD file:', err);
+			ui.addNotification(null, E('p', _('Error loading USSD codes file: ') + selectedFile), 'error');
+		});
+	},
+
 	handleGo: function(ev) {
 		let ussd = document.getElementById('cmdvalue').value;
 		let sections = uci.sections('sms_tool_js');
@@ -267,11 +319,47 @@ return view.extend({
 		ov.value = x;
 	},
 
+	handleModemChange: function(ev) {
+		let sections = uci.sections('defmodems', 'defmodems');
+		if (!sections || sections.length === 0) return;
+		
+		let serialModems = sections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) return;
+		
+		let currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'ussdport');
+		let currentIndex = serialModems.findIndex(function(s) {
+			return s.comm_port === currentPort;
+		});
+		
+		if (currentIndex === -1) currentIndex = 0;
+		
+		let direction = ev.currentTarget.classList.contains('next') ? 1 : -1;
+		let newIndex = (currentIndex + direction + serialModems.length) % serialModems.length;
+		let newModem = serialModems[newIndex];
+		
+		if (newModem && newModem.comm_port) {
+			uci.set('sms_tool_js', '@sms_tool_js[0]', 'ussdport', newModem.comm_port);
+			uci.save();
+			uci.apply().then(function() {
+				let modemText = document.querySelector('.modem-display-text');
+				if (modemText) {
+					let label = newModem.modem + (newModem.user_desc ? ' (' + newModem.user_desc + ')' : '');
+					modemText.textContent = label;
+				}
+			});
+		}
+	},
+
 	load: function() {
 
 		return Promise.all([
 			L.resolveDefault(fs.read_direct('/etc/modem/ussdcodes.user'), null),
-			uci.load('sms_tool_js')
+			L.resolveDefault(fs.list('/etc/modem/ussdcodes'), []),
+			uci.load('sms_tool_js'),
+			L.resolveDefault(uci.load('defmodems'))
 		]);
 	},
 
@@ -279,12 +367,136 @@ return view.extend({
 
 	let info = _('User interface for sending USSD codes using sms-tool. More information about the sms-tool on the %seko.one.pl forum%s.').format('<a href="https://eko.one.pl/?p=openwrt-sms_tool" target="_blank">', '</a>');
 
+		let sections = uci.sections('defmodems', 'defmodems');
+		let serialModems = [];
+		
+		if (sections && sections.length > 0) {
+			serialModems = sections.filter(function(s) {
+				return s.modemdata === 'serial';
+			});
+		}
+		
+		let currentPort = uci.get('sms_tool_js', '@sms_tool_js[0]', 'ussdport');
+		let currentModem = serialModems.find(function(s) {
+			return s.comm_port === currentPort;
+		});
+		
+		if (!currentModem && serialModems.length > 0) currentModem = serialModems[0];
+
 		return E('div', { 'class': 'cbi-map', 'id': 'map' }, [
 				E('h2', {}, [ _('USSD Codes') ]),
 				E('div', { 'class': 'cbi-map-descr'}, info),
 				E('hr'),
 				E('div', { 'class': 'cbi-section' }, [
 					E('div', { 'class': 'cbi-section-node' }, [
+						(function() {
+							if (serialModems.length > 0) {
+								let label = currentModem.modem + (currentModem.user_desc ? ' (' + currentModem.user_desc + ')' : '');
+								let buttonsDisabled = (serialModems.length > 1) ? null : true;
+								
+								return E('div', { 'class': 'cbi-value' }, [
+									E('label', { 'class': 'cbi-value-title' }, [ _('Select modem') ]),
+									E('div', { 'class': 'cbi-value-field' }, [
+										E('div', { 'class': 'controls' }, [
+											E('div', { 'class': 'pager center', 'style': 'display: flex; align-items: center; gap: 10px;' }, [
+												E('button', { 
+													'class': 'btn cbi-button-neutral prev', 
+													'aria-label': _('Previous modem'), 
+													'click': ui.createHandlerFn(this, 'handleModemChange'),
+													'style': 'min-width: 40px;',
+													'disabled': buttonsDisabled
+												}, [ ' ◄ ' ]),
+												E('div', { 'class': 'text modem-display-text', 'style': 'flex: 1; text-align: center;' }, [ label ]),
+												E('button', { 
+													'class': 'btn cbi-button-neutral next', 
+													'aria-label': _('Next modem'), 
+													'click': ui.createHandlerFn(this, 'handleModemChange'),
+													'style': 'min-width: 40px;',
+													'disabled': buttonsDisabled
+												}, [ ' ► ' ])
+											])
+										])
+									])
+								]);
+							} else {
+								return E('div');
+							}
+						}.bind(this))(),
+						(function() {
+							let ussdFiles = loadResults[1] || [];
+							let userFiles = ussdFiles.filter(function(file) {
+								return file.type === 'file' && file.name && file.name.match(/\.user$/);
+							});
+							
+							if (userFiles.length > 0) {
+								let savedFile = this.restoreSettingsFromLocalStorage();
+								let fileToLoad = userFiles[0].name;
+								let checkedIndex = 0;
+								
+								if (savedFile) {
+									let foundIndex = userFiles.findIndex(function(f) {
+										return f.name === savedFile;
+									});
+									if (foundIndex !== -1) {
+										fileToLoad = savedFile;
+										checkedIndex = foundIndex;
+									}
+								}
+								
+								setTimeout(function() {
+									L.resolveDefault(fs.read_direct('/etc/modem/ussdcodes/' + fileToLoad), '').then(function(content) {
+										let selectElement = document.getElementById('tk');
+										if (!selectElement) return;
+										
+										selectElement.innerHTML = '';
+										
+										let codes = (content || '').trim().split('\n');
+										codes.forEach(function(cmd) {
+											if (cmd.trim()) {
+												let fields = cmd.split(/;/);
+												let name = fields[0];
+												let code = fields[1] || fields[0];
+												let option = document.createElement('option');
+												option.value = code;
+												option.textContent = name;
+												selectElement.appendChild(option);
+											}
+										});
+									}).catch(function(err) {
+										console.error('Error loading initial USSD file:', err);
+									});
+								}, 100);
+								
+								return E('div', { 'class': 'cbi-value' }, [
+									E('label', { 'class': 'cbi-value-title' }, [ _('Defined USSD code files') ]),
+									E('div', { 'class': 'cbi-value-field' }, 
+										E('div', {}, 
+											userFiles.map(function(file, index) {
+												let fileName = file.name;
+												let displayName = fileName.replace(/\.user$/, '').toUpperCase();
+												
+												return E('label', {
+													'style': 'margin-right: 15px;',
+													'data-tooltip': _('Select file with USSD codes to load')
+												}, [
+													E('input', {
+														'type': 'radio',
+														'name': 'ussd_file',
+														'value': fileName,
+														'change': ui.createHandlerFn(this, 'handleFileChange'),
+														'checked': index === checkedIndex ? true : null
+													}),
+													' ',
+													displayName
+												]);
+											}.bind(this))
+										)
+									)
+								]);
+							} else {
+								return E('div');
+							}
+						}.bind(this))(),
 						E('div', { 'class': 'cbi-value' }, [
 							E('label', { 'class': 'cbi-value-title' }, [ _('User USSD codes') ]),
 							E('div', { 'class': 'cbi-value-field' }, [
@@ -294,12 +506,29 @@ return view.extend({
 										'change': ui.createHandlerFn(this, 'handleCopy'),
 										'mousedown': ui.createHandlerFn(this, 'handleCopy')
 									},
-									(loadResults[0] || "").trim().split("\n").map(function(cmd) {
-                                        let fields = cmd.split(/;/);
-                                        let name = fields[0];
-                                        let code = fields[1] || fields[0];
-                                        return E('option', { 'value': code }, name );
-                                    })
+									(function() {
+										let ussdFiles = loadResults[1] || [];
+										let userFiles = ussdFiles.filter(function(file) {
+											return file.type === 'file' && file.name && file.name.match(/\.user$/);
+										});
+										
+										let content = '';
+										if (userFiles.length === 0 && loadResults[0]) {
+											content = loadResults[0];
+										}
+										
+										if (!content || !content.trim()) {
+											return [E('option', { 'value': '' }, _('No USSD codes available'))];
+										}
+										
+										return content.trim().split("\n").map(function(cmd) {
+											if (!cmd.trim()) return null;
+											let fields = cmd.split(/;/);
+											let name = fields[0];
+											let code = fields[1] || fields[0];
+											return E('option', { 'value': code }, name );
+										}).filter(function(opt) { return opt !== null; });
+									})()
 								)
 							]) 
 						]),
@@ -382,4 +611,4 @@ return view.extend({
 	handleSaveApply: null,
 	handleSave: null,
 	handleReset: null
-})
+});

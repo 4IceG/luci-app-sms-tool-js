@@ -10,6 +10,9 @@ chmod +x /etc/uci-defaults/off_sms.sh >/dev/null 2>&1 &
 chmod +x /etc/uci-defaults/setup_sms_tool_js.sh >/dev/null 2>&1 &
 chmod +x /etc/init.d/my_new_sms >/dev/null 2>&1 &
 
+mkdir -p /etc/modem/atcmmds >/dev/null 2>&1 &
+mkdir -p /etc/modem/ussdcodes >/dev/null 2>&1 &
+
 chmod +x /usr/libexec/rpcd/sms_forward >/dev/null 2>&1 &
 
 rm -rf /tmp/luci-indexcache >/dev/null 2>&1 &

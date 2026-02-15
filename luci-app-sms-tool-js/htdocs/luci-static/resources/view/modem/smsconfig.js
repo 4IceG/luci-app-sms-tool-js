@@ -1,4 +1,5 @@
 'use strict';
+'require baseclass';
 'require form';
 'require fs';
 'require view';
@@ -12,6 +13,70 @@
 
 	Licensed to the GNU General Public License v3.0.
 */
+
+function popTimeout(a, message, timeout, severity) {
+    ui.addTimeLimitedNotification(a, message, timeout, severity);
+}
+
+function update_sms_count_for_modem_sync(newValue, currentPort) {
+	return uci.load('defmodems').then(function() {
+		let defmodemSections = uci.sections('defmodems', 'defmodems');
+		
+		if (!defmodemSections || defmodemSections.length === 0) {
+			// old format
+			return newValue;
+		}
+		
+		let serialModems = defmodemSections.filter(function(s) {
+			return s.modemdata === 'serial';
+		});
+		
+		if (serialModems.length === 0) {
+			// old format
+			return newValue;
+		}
+		
+		let currentModemIndex = -1;
+		
+		for (let i = 0; i < serialModems.length; i++) {
+			if (serialModems[i].comm_port === currentPort) {
+				currentModemIndex = i + 1;
+				break;
+			}
+		}
+		
+		if (currentModemIndex === -1) {
+			// old format
+			return newValue;
+		}
+		
+		let existingSmsCount = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_count') || '';
+		let parts = existingSmsCount.split(' ').filter(function(p) { return p.trim() !== ''; });
+		
+		let updated = {};
+		parts.forEach(function(part) {
+			let match = part.match(/^dfm(\d+)_(\d+)$/);
+			if (match) {
+				updated[match[1]] = match[2];
+			}
+		});
+		
+		updated[currentModemIndex] = newValue;
+		
+		let result = [];
+		for (let key in updated) {
+			if (updated.hasOwnProperty(key)) {
+				result.push('dfm' + key + '_' + updated[key]);
+			}
+		}
+		
+		return result.join(' ');
+		
+	}).catch(function() {
+		// old format
+		return newValue;
+	});
+}
 
 var pkg = {
     get Name() { return 'mailsend'; },
@@ -61,6 +126,750 @@ var pkg = {
         });
     }
 };
+
+let phonebookEditorDialog = baseclass.extend({
+	__init__: function(title, content) {
+		this.title = title;
+		this.content = content || '';
+	},
+
+	render: function() {
+		let self = this;
+
+		ui.showModal(this.title, [
+			E('textarea', {
+				'id': 'phonebook_modal_editor',
+				'class': 'cbi-input-textarea',
+				'style': 'width:100% !important; height:50vh; min-height:300px;',
+				'wrap': 'off',
+				'spellcheck': 'false'
+			}, this.content.trim()),
+			E('p', {'style': 'margin-top: 10px; font-size: 12px; color: var(--text-color-secondary)'}),
+
+			E('div', {'style': 'display: flex; justify-content: space-between; align-items: center; margin-top: 10px;'}, [
+				E('div', {}, [
+					E('button', {
+						'class': 'btn',
+						'click': ui.hideModal
+					}, _('Close'))
+				]),
+				E('div', {'style': 'display: flex; gap: 10px;'}, [
+					E('button', {
+						'class': 'cbi-button cbi-button-action important',
+						'click': ui.createHandlerFn(this, function() {
+							let input = document.createElement('input');
+							input.type = 'file';
+							input.accept = '.user';
+							input.onchange = function(e) {
+								let file = e.target.files[0];
+								if (file) {
+									let reader = new FileReader();
+									reader.onload = function(event) {
+										let content = event.target.result;
+										let targetPath = '/etc/modem/phonebook.user';
+										
+										fs.write(targetPath, content)
+											.then(function() {
+												popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+												return fs.read(targetPath);
+											})
+											.then(function(savedContent) {
+												let textarea = document.getElementById('phonebook_modal_editor');
+												if (textarea) {
+													textarea.value = savedContent;
+												}
+											})
+											.catch(function(e) {
+												ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+											});
+									};
+									reader.readAsText(file);
+								}
+							};
+							input.click();
+						})
+					}, _('Load .user file')),
+					E('button', {
+						'class': 'btn cbi-button-action',
+						'click': ui.createHandlerFn(this, function() {
+							let textarea = document.getElementById('phonebook_modal_editor');
+							let content = textarea.value;
+							let blob = new Blob([content], { type: 'text/plain' });
+							let link = document.createElement('a');
+							link.download = 'phonebook.user';
+							link.href = URL.createObjectURL(blob);
+							link.click();
+							URL.revokeObjectURL(link.href);
+						})
+					}, _('Save .user file')),
+					E('button', {
+						'class': 'btn cbi-button-save',
+						'click': ui.createHandlerFn(this, function() {
+							let textarea = document.getElementById('phonebook_modal_editor');
+							let newContent = textarea.value.trim().replace(/\r\n/g, '\n') + '\n';
+							
+							fs.write('/etc/modem/phonebook.user', newContent)
+								.then(function() {
+									popTimeout(null, E('p', {}, _('Phonebook saved successfully')), 5000, 'info');
+									ui.hideModal();
+								})
+								.catch(function(e) {
+									ui.addNotification(null, E('p', {}, _('Unable to save the file') + ': ' + e.message), 'error');
+								});
+						})
+					}, _('Save'))
+				])
+			])
+		], 'cbi-modal');
+	},
+
+	show: function() {
+		this.render();
+	}
+});
+
+let ussdCodesManagerDialog = baseclass.extend({
+	__init__: function(title) {
+		this.title = title;
+		this.baseDir = '/etc/modem/ussdcodes';
+		this.fallbackFile = '/etc/modem/ussdcodes.user';
+		this.currentFile = null;
+	},
+
+	loadFileList: function() {
+		return fs.exec('/bin/sh', ['-c', 'ls ' + this.baseDir + '/*.user 2>/dev/null || true'])
+			.then(function(res) {
+				let files = (res.stdout || '').trim().split('\n').filter(f => f);
+				let fileNames = files.map(f => f.replace(this.baseDir + '/', ''));
+				fileNames.sort();
+				return fileNames;
+			}.bind(this))
+			.catch(function() {
+				return [];
+			});
+	},
+
+	loadInitialContent: function() {
+		let self = this;
+		return this.loadFileList().then(function(files) {
+			if (files.length > 0) {
+				self.currentFile = files[0];
+				return fs.read(self.baseDir + '/' + files[0])
+					.then(function(content) {
+						return { files: files, content: content || '', selectedFile: files[0] };
+					})
+					.catch(function() {
+						return { files: files, content: '', selectedFile: files[0] };
+					});
+			} else {
+				return fs.read(self.fallbackFile)
+					.then(function(content) {
+						return { files: [], content: content || '', selectedFile: '' };
+					})
+					.catch(function() {
+						return { files: [], content: '', selectedFile: '' };
+					});
+			}
+		});
+	},
+
+	render: function() {
+		let self = this;
+
+		this.loadInitialContent().then(function(data) {
+			ui.showModal(self.title, [
+				E('div', {'class': 'cbi-section'}, [
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('Select file')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('select', {
+								'class': 'cbi-input-select',
+								'id': 'ussd_file_select',
+								'style': 'width: 100%;',
+								'change': function() {
+									let fileName = this.value;
+									if (fileName) {
+										self.currentFile = fileName;
+										self.loadFileContent(fileName);
+									}
+								}
+							}, [
+								E('option', {'value': ''}, _('-- Select file --'))
+							].concat(data.files.map(f => E('option', {'value': f}, f))))
+						])
+					]),
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('New file name')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('div', {'style': 'display: flex; gap: 10px;'}, [
+								E('input', {
+									'class': 'cbi-input-text',
+									'id': 'ussd_new_filename',
+									'type': 'text',
+									'placeholder': _('filename.user'),
+									'style': 'flex: 1;'
+								}),
+								E('button', {
+									'class': 'btn cbi-button-add',
+									'click': ui.createHandlerFn(self, self.createNewFile)
+								}, _('Create'))
+							])
+						])
+					]),
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('Delete selected file')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('button', {
+								'class': 'btn cbi-button-remove',
+								'id': 'ussd_delete_btn',
+								'click': ui.createHandlerFn(self, self.deleteFile)
+							}, _('Delete'))
+						])
+					])
+				]),
+				E('textarea', {
+					'id': 'ussd_modal_editor',
+					'class': 'cbi-input-textarea',
+					'style': 'width:100% !important; height:40vh; min-height:250px; margin-top: 10px;',
+					'wrap': 'off',
+					'spellcheck': 'false',
+					'placeholder': _('Select or create a file to edit...')
+				}, data.content),
+
+				E('div', {'style': 'display: flex; justify-content: space-between; align-items: center; margin-top: 10px;'}, [
+					E('div', {}, [
+						E('button', {
+							'class': 'btn',
+							'click': ui.hideModal
+						}, _('Close'))
+					]),
+					E('div', {'style': 'display: flex; gap: 10px;'}, [
+						E('button', {
+							'class': 'cbi-button cbi-button-action important',
+							'click': ui.createHandlerFn(self, function() {
+								let input = document.createElement('input');
+								input.type = 'file';
+								input.accept = '.user';
+								input.onchange = function(e) {
+									let file = e.target.files[0];
+									if (file) {
+										let reader = new FileReader();
+										reader.onload = function(event) {
+											let content = event.target.result;
+											let fileName = file.name;
+											let targetPath = self.baseDir + '/' + fileName;
+											
+											fs.write(targetPath, content)
+												.then(function() {
+													popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+													self.currentFile = fileName;
+													return self.loadFileList();
+												})
+												.then(function(files) {
+													let select = document.getElementById('ussd_file_select');
+													if (select) {
+														while (select.options.length > 1) {
+															select.remove(1);
+														}
+														files.forEach(function(f) {
+															let option = document.createElement('option');
+															option.value = f;
+															option.text = f;
+															if (f === fileName) {
+																option.selected = true;
+															}
+															select.appendChild(option);
+														});
+													}
+													return fs.read(targetPath);
+												})
+												.then(function(savedContent) {
+													let textarea = document.getElementById('ussd_modal_editor');
+													if (textarea) {
+														textarea.value = savedContent;
+													}
+												})
+												.catch(function(e) {
+													ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+												});
+										};
+										reader.readAsText(file);
+									}
+								};
+								input.click();
+							})
+						}, _('Load .user file')),
+						E('button', {
+							'class': 'btn cbi-button-action',
+							'click': ui.createHandlerFn(self, function() {
+								let textarea = document.getElementById('ussd_modal_editor');
+								let content = textarea.value;
+								let fileName = self.currentFile || 'ussdcodes.user';
+								let blob = new Blob([content], { type: 'text/plain' });
+								let link = document.createElement('a');
+								link.download = fileName;
+								link.href = URL.createObjectURL(blob);
+								link.click();
+								URL.revokeObjectURL(link.href);
+							})
+						}, _('Save .user file')),
+						E('button', {
+							'class': 'btn cbi-button-save',
+							'id': 'ussd_save_btn',
+							'click': ui.createHandlerFn(self, self.saveFile)
+						}, _('Save'))
+					])
+				])
+			], 'cbi-modal');
+			
+			setTimeout(function() {
+				let select = document.getElementById('ussd_file_select');
+				if (select && data.selectedFile) {
+					select.value = data.selectedFile;
+				}
+			}, 0);
+		});
+	},
+
+	loadFileContent: function(fileName) {
+		let filePath = this.baseDir + '/' + fileName;
+		fs.read(filePath)
+			.then(function(content) {
+				let textarea = document.getElementById('ussd_modal_editor');
+				if (textarea) {
+					textarea.value = content || '';
+				}
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to load file') + ': ' + e.message), 'error');
+			});
+	},
+
+	createNewFile: function() {
+		let input = document.getElementById('ussd_new_filename');
+		let fileName = input.value.trim();
+
+		if (!fileName) {
+			ui.addNotification(null, E('p', {}, _('Please enter a file name')), 'warning');
+			return;
+		}
+
+		if (!fileName.endsWith('.user')) {
+			fileName += '.user';
+		}
+
+		let filePath = this.baseDir + '/' + fileName;
+
+		fs.exec('/bin/sh', ['-c', 'mkdir -p ' + this.baseDir])
+			.then(function() {
+				return fs.write(filePath, '');
+			}.bind(this))
+			.then(function() {
+				return fs.exec('/bin/chmod', ['644', filePath]);
+			})
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File created successfully')), 5000, 'info');
+				this.currentFile = fileName;
+				input.value = '';
+				
+				let select = document.getElementById('ussd_file_select');
+				let option = E('option', {'value': fileName, 'selected': 'selected'}, fileName);
+				select.appendChild(option);
+				select.value = fileName;
+				
+				let textarea = document.getElementById('ussd_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = '';
+				}
+			}.bind(this))
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to create file') + ': ' + e.message), 'error');
+			});
+	},
+
+	deleteFile: function() {
+		let select = document.getElementById('ussd_file_select');
+		let fileName = select.value;
+
+		if (!fileName) {
+			ui.addNotification(null, E('p', {}, _('Please select a file to delete')), 'warning');
+			return;
+		}
+
+		if (!confirm(_('Are you sure you want to delete this file?') + '\n' + fileName)) {
+			return;
+		}
+
+		let filePath = this.baseDir + '/' + fileName;
+
+		fs.exec('/bin/rm', ['-f', filePath])
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File deleted successfully')), 5000, 'info');
+				
+				let option = select.querySelector('option[value="' + fileName + '"]');
+				if (option) {
+					option.remove();
+				}
+				select.value = '';
+				this.currentFile = null;
+				
+				let textarea = document.getElementById('ussd_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = _('Select or create a file to edit...');
+				}
+			}.bind(this))
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to delete file') + ': ' + e.message), 'error');
+			});
+	},
+
+	saveFile: function() {
+		if (!this.currentFile) {
+			ui.addNotification(null, E('p', {}, _('Please select or create a file first')), 'warning');
+			return;
+		}
+
+		let textarea = document.getElementById('ussd_modal_editor');
+		let content = textarea.value.trim().replace(/\r\n/g, '\n') + '\n';
+		let filePath = this.baseDir + '/' + this.currentFile;
+
+		fs.write(filePath, content)
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File saved successfully')), 5000, 'info');
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to save file') + ': ' + e.message), 'error');
+			});
+	},
+
+	show: function() {
+		this.render();
+	}
+});
+
+let atCommandsManagerDialog = baseclass.extend({
+	__init__: function(title) {
+		this.title = title;
+		this.baseDir = '/etc/modem/atcmmds';
+		this.fallbackFile = '/etc/modem/atcmmds.user';
+		this.currentFile = null;
+	},
+
+	loadFileList: function() {
+		return fs.exec('/bin/sh', ['-c', 'ls ' + this.baseDir + '/*.user 2>/dev/null || true'])
+			.then(function(res) {
+				let files = (res.stdout || '').trim().split('\n').filter(f => f);
+				let fileNames = files.map(f => f.replace(this.baseDir + '/', ''));
+				fileNames.sort();
+				return fileNames;
+			}.bind(this))
+			.catch(function() {
+				return [];
+			});
+	},
+
+	loadInitialContent: function() {
+		let self = this;
+		return this.loadFileList().then(function(files) {
+			if (files.length > 0) {
+				self.currentFile = files[0];
+				return fs.read(self.baseDir + '/' + files[0])
+					.then(function(content) {
+						return { files: files, content: content || '', selectedFile: files[0] };
+					})
+					.catch(function() {
+						return { files: files, content: '', selectedFile: files[0] };
+					});
+			} else {
+				return fs.read(self.fallbackFile)
+					.then(function(content) {
+						return { files: [], content: content || '', selectedFile: '' };
+					})
+					.catch(function() {
+						return { files: [], content: '', selectedFile: '' };
+					});
+			}
+		});
+	},
+
+	render: function() {
+		let self = this;
+
+		this.loadInitialContent().then(function(data) {
+			ui.showModal(self.title, [
+				E('div', {'class': 'cbi-section'}, [
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('Select file')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('select', {
+								'class': 'cbi-input-select',
+								'id': 'at_file_select',
+								'style': 'width: 100%;',
+								'change': function() {
+									let fileName = this.value;
+									if (fileName) {
+										self.currentFile = fileName;
+										self.loadFileContent(fileName);
+									}
+								}
+							}, [
+								E('option', {'value': ''}, _('-- Select file --'))
+							].concat(data.files.map(f => E('option', {'value': f}, f))))
+						])
+					]),
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('New file name')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('div', {'style': 'display: flex; gap: 10px;'}, [
+								E('input', {
+									'class': 'cbi-input-text',
+									'id': 'at_new_filename',
+									'type': 'text',
+									'placeholder': _('filename.user'),
+									'style': 'flex: 1;'
+								}),
+								E('button', {
+									'class': 'btn cbi-button-add',
+									'click': ui.createHandlerFn(self, self.createNewFile)
+								}, _('Create'))
+							])
+						])
+					]),
+					E('div', {'class': 'cbi-value'}, [
+						E('label', {'class': 'cbi-value-title'}, _('Delete selected file')),
+						E('div', {'class': 'cbi-value-field'}, [
+							E('button', {
+								'class': 'btn cbi-button-remove',
+								'id': 'at_delete_btn',
+								'click': ui.createHandlerFn(self, self.deleteFile)
+							}, _('Delete'))
+						])
+					])
+				]),
+				E('textarea', {
+					'id': 'at_modal_editor',
+					'class': 'cbi-input-textarea',
+					'style': 'width:100% !important; height:40vh; min-height:250px; margin-top: 10px;',
+					'wrap': 'off',
+					'spellcheck': 'false',
+					'placeholder': _('Select or create a file to edit...')
+				}, data.content),
+
+				E('div', {'style': 'display: flex; justify-content: space-between; align-items: center; margin-top: 10px;'}, [
+					E('div', {}, [
+						E('button', {
+							'class': 'btn',
+							'click': ui.hideModal
+						}, _('Close'))
+					]),
+					E('div', {'style': 'display: flex; gap: 10px;'}, [
+						E('button', {
+							'class': 'cbi-button cbi-button-action important',
+							'click': ui.createHandlerFn(self, function() {
+								let input = document.createElement('input');
+								input.type = 'file';
+								input.accept = '.user';
+								input.onchange = function(e) {
+									let file = e.target.files[0];
+									if (file) {
+										let reader = new FileReader();
+										reader.onload = function(event) {
+											let content = event.target.result;
+											let fileName = file.name;
+											let targetPath = self.baseDir + '/' + fileName;
+											
+											fs.write(targetPath, content)
+												.then(function() {
+													popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+													self.currentFile = fileName;
+													return self.loadFileList();
+												})
+												.then(function(files) {
+													let select = document.getElementById('at_file_select');
+													if (select) {
+														while (select.options.length > 1) {
+															select.remove(1);
+														}
+														files.forEach(function(f) {
+															let option = document.createElement('option');
+															option.value = f;
+															option.text = f;
+															if (f === fileName) {
+																option.selected = true;
+															}
+															select.appendChild(option);
+														});
+													}
+													
+													return fs.read(targetPath);
+												})
+												.then(function(savedContent) {
+													let textarea = document.getElementById('at_modal_editor');
+													if (textarea) {
+														textarea.value = savedContent;
+													}
+												})
+												.catch(function(e) {
+													ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+												});
+										};
+										reader.readAsText(file);
+									}
+								};
+								input.click();
+							})
+						}, _('Load .user file')),
+						E('button', {
+							'class': 'btn cbi-button-action',
+							'click': ui.createHandlerFn(self, function() {
+								let textarea = document.getElementById('at_modal_editor');
+								let content = textarea.value;
+								let fileName = self.currentFile || 'atcmmds.user';
+								let blob = new Blob([content], { type: 'text/plain' });
+								let link = document.createElement('a');
+								link.download = fileName;
+								link.href = URL.createObjectURL(blob);
+								link.click();
+								URL.revokeObjectURL(link.href);
+							})
+						}, _('Save .user file')),
+						E('button', {
+							'class': 'btn cbi-button-save',
+							'id': 'at_save_btn',
+							'click': ui.createHandlerFn(self, self.saveFile)
+						}, _('Save'))
+					])
+				])
+			], 'cbi-modal');
+			
+			setTimeout(function() {
+				let select = document.getElementById('at_file_select');
+				if (select && data.selectedFile) {
+					select.value = data.selectedFile;
+				}
+			}, 0);
+		});
+	},
+
+	loadFileContent: function(fileName) {
+		let filePath = this.baseDir + '/' + fileName;
+		fs.read(filePath)
+			.then(function(content) {
+				let textarea = document.getElementById('at_modal_editor');
+				if (textarea) {
+					textarea.value = content || '';
+				}
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to load file') + ': ' + e.message), 'error');
+			});
+	},
+
+	createNewFile: function() {
+		let input = document.getElementById('at_new_filename');
+		let fileName = input.value.trim();
+
+		if (!fileName) {
+			ui.addNotification(null, E('p', {}, _('Please enter a file name')), 'warning');
+			return;
+		}
+
+		if (!fileName.endsWith('.user')) {
+			fileName += '.user';
+		}
+
+		let filePath = this.baseDir + '/' + fileName;
+
+		fs.exec('/bin/sh', ['-c', 'mkdir -p ' + this.baseDir])
+			.then(function() {
+				return fs.write(filePath, '');
+			}.bind(this))
+			.then(function() {
+				return fs.exec('/bin/chmod', ['644', filePath]);
+			})
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File created successfully')), 5000, 'info');
+				this.currentFile = fileName;
+				input.value = '';
+				
+				let select = document.getElementById('at_file_select');
+				let option = E('option', {'value': fileName, 'selected': 'selected'}, fileName);
+				select.appendChild(option);
+				select.value = fileName;
+				
+				let textarea = document.getElementById('at_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = '';
+				}
+			}.bind(this))
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to create file') + ': ' + e.message), 'error');
+			});
+	},
+
+	deleteFile: function() {
+		let select = document.getElementById('at_file_select');
+		let fileName = select.value;
+
+		if (!fileName) {
+			ui.addNotification(null, E('p', {}, _('Please select a file to delete')), 'warning');
+			return;
+		}
+
+		if (!confirm(_('Are you sure you want to delete this file?') + '\n' + fileName)) {
+			return;
+		}
+
+		let filePath = this.baseDir + '/' + fileName;
+
+		fs.exec('/bin/rm', ['-f', filePath])
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File deleted successfully')), 5000, 'info');
+				
+				let option = select.querySelector('option[value="' + fileName + '"]');
+				if (option) {
+					option.remove();
+				}
+				select.value = '';
+				this.currentFile = null;
+				
+				let textarea = document.getElementById('at_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = _('Select or create a file to edit...');
+				}
+			}.bind(this))
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to delete file') + ': ' + e.message), 'error');
+			});
+	},
+
+	saveFile: function() {
+		if (!this.currentFile) {
+			ui.addNotification(null, E('p', {}, _('Please select or create a file first')), 'warning');
+			return;
+		}
+
+		let textarea = document.getElementById('at_modal_editor');
+		let content = textarea.value.trim().replace(/\r\n/g, '\n') + '\n';
+		let filePath = this.baseDir + '/' + this.currentFile;
+
+		fs.write(filePath, content)
+			.then(function() {
+				popTimeout(null, E('p', {}, _('File saved successfully')), 5000, 'info');
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to save file') + ': ' + e.message), 'error');
+			});
+	},
+
+	show: function() {
+		this.render();
+	}
+});
 
 return view.extend({
 	load: function() {
@@ -235,14 +1044,18 @@ return view.extend({
 		o.rmempty = false;
 		//o.default = true;
 
-		o = s.taboption('smstab', form.TextValue, '_tmp2', _('User contacts'),
-			_("Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>."));
-		o.rows = 7;
-		o.cfgvalue = function(section_id) {
-			return fs.trimmed('/etc/modem/phonebook.user');
-		};
-		o.write = function(section_id, formvalue) {
-			return fs.write('/etc/modem/phonebook.user', formvalue.trim().replace(/\r\n/g, '\n') + '\n');
+		o = s.taboption('smstab', form.Button, '_phonebook_edit');
+		o.title = _('User contacts');
+		o.description = _("Each line must have the following format: 'Contact name;phone number'. For user convenience, the file is saved to the location <code>/etc/modem/phonebook.user</code>.");
+		o.inputtitle = _('Manage contacts');
+		o.onclick = function() {
+			return fs.trimmed('/etc/modem/phonebook.user').then(function(content) {
+				let dialog = new phonebookEditorDialog(_('Edit User Contacts'), content || '');
+				dialog.show();
+			}).catch(function(e) {
+				let dialog = new phonebookEditorDialog(_('Edit User Contacts'), '');
+				dialog.show();
+			});
 		};
 
 		//TAB FORWARD SMS by E-MAIL
@@ -517,14 +1330,13 @@ return view.extend({
 		o.value('2', _('UCS2'));
 		o.default = 'auto';
 
-		o = s.taboption('ussd', form.TextValue, '_tmp4', _('User USSD codes'),
-			_("Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes.user</code>."));
-		o.rows = 7;
-		o.cfgvalue = function(section_id) {
-			return fs.trimmed('/etc/modem/ussdcodes.user');
-		};
-		o.write = function(section_id, formvalue) {
-			return fs.write('/etc/modem/ussdcodes.user', formvalue.trim().replace(/\r\n/g, '\n') + '\n');
+		o = s.taboption('ussd', form.Button, '_ussd_manage');
+		o.title = _('User USSD codes');
+		o.description = _("Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes/</code>.");
+		o.inputtitle = _('Manage USSD codes');
+		o.onclick = function() {
+			let dialog = new ussdCodesManagerDialog(_('Manage User USSD Codes'));
+			dialog.show();
 		};
 
 		//TAB AT
@@ -540,14 +1352,13 @@ return view.extend({
 		o.placeholder = _('Please select a port');
 		o.rmempty = false;
 
-		o = s.taboption('attab' , form.TextValue, '_tmp6', _('User AT commands'),
-			_("Each line must have the following format: 'At command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds.user</code>."));
-		o.rows = 20;
-		o.cfgvalue = function(section_id) {
-			return fs.trimmed('/etc/modem/atcmmds.user');
-		};
-		o.write = function(section_id, formvalue) {
-			return fs.write('/etc/modem/atcmmds.user', formvalue.trim().replace(/\r\n/g, '\n') + '\n');
+		o = s.taboption('attab', form.Button, '_at_manage');
+		o.title = _('User AT commands');
+		o.description = _("Each line must have the following format: 'AT command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds/</code>.");
+		o.inputtitle = _('Manage AT commands');
+		o.onclick = function() {
+			let dialog = new atCommandsManagerDialog(_('Manage User AT Commands'));
+			dialog.show();
 		};
 
 		//TAB INFO
@@ -584,27 +1395,29 @@ return view.extend({
 								let led = sections[0].smsled;
 
 								if (value == '1') {
-									uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', L.toArray(u).join(' '));
-									uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "1");
-									uci.save();
-									
-						            let PTR = uci.get('sms_tool_js', '@sms_tool_js[0]', 'prestart');
-						            
-                                    fs.exec('sleep 4');
-						            
-						            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
-							            let cronEntry = '1 */' + PTR + ' * * *  /etc/init.d/my_new_sms enable && /etc/init.d/my_new_sms restart';
-							            let newCrontab = (crontab || '').trim().replace(/\r\n/g, '\n') + '\n' + cronEntry + '\n';
+									update_sms_count_for_modem_sync(u, portR).then(function(updatedValue) {
+										uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedValue);
+										uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "1");
+										uci.save();
+										
+							            let PTR = uci.get('sms_tool_js', '@sms_tool_js[0]', 'prestart');
 							            
-							            fs.write('/etc/crontabs/root', newCrontab).then(function() {
+                                    fs.exec('sleep 4');
+							            
+							            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
+								            let cronEntry = '1 */' + PTR + ' * * *  /etc/init.d/my_new_sms enable && /etc/init.d/my_new_sms restart';
+								            let newCrontab = (crontab || '').trim().replace(/\r\n/g, '\n') + '\n' + cronEntry + '\n';
+								            
+								            fs.write('/etc/crontabs/root', newCrontab).then(function() {
                                             fs.exec('sleep 2');
-								            fs.exec_direct('/etc/init.d/cron', ['restart']);
+									            fs.exec_direct('/etc/init.d/cron', ['restart']);
+								            });
 							            });
-						            });
 
-									fs.exec_direct('/etc/init.d/my_new_sms', [ 'enable' ]);
-									fs.exec('sleep 2');
-									fs.exec_direct('/etc/init.d/my_new_sms', [ 'start' ]);
+										fs.exec_direct('/etc/init.d/my_new_sms', [ 'enable' ]);
+										fs.exec('sleep 2');
+										fs.exec_direct('/etc/init.d/my_new_sms', [ 'start' ]);
+									});
 								}
 
 								if (value == '0') {
@@ -641,6 +1454,12 @@ return view.extend({
 			
 			return form.Flag.prototype.write.apply(this, [section_id, value]);
 		};
+		
+		o = s.taboption('notifytab', form.Flag, 'ontopsms', _('Show notification icon'),
+		_('Show the new message notification icon on the status overview page.')
+		);
+		o.rmempty = false;
+        //o.depends('lednotify', '1');
 
 		o = s.taboption('notifytab', form.Value, 'checktime', _('Check inbox every minute(s)'),
 			_('Specify how many minutes you want your inbox to be checked.'));

@@ -612,3 +612,180 @@ msgstr "Тема и текст не могут быть пустыми"
 
 msgid "Package mailsend is not installed. Please install it first using the Install... button below"
 msgstr "Пакет mailsend не установлен. Пожалуйста, сначала установите его, используя кнопку Установить... ниже"
+
+msgid "Select modem"
+msgstr "Выбрать модем"
+
+msgid "Changing a modem requires refreshing the messages"
+msgstr "Смена модема требует обновления сообщений"
+
+msgid "Defined AT command files"
+msgstr "Определенные файлы AT-команд"
+
+msgid "Defined USSD code files"
+msgstr "Определённые файлы USSD-кодов"
+
+msgid "File uploaded and saved to"
+msgstr "Файл загружен и сохранен в"
+
+msgid "Unable to upload file"
+msgstr "Не удалось загрузить файл"
+
+msgid "Phonebook saved successfully"
+msgstr "Телефонная книга успешно сохранена"
+
+msgid "Unable to save the file"
+msgstr "Не удалось сохранить файл"
+
+msgid "filename.user"
+msgstr "имяфайла.user"
+
+msgid "Select or create a file to edit..."
+msgstr "Выберите или создайте файл для редактирования..."
+
+msgid "Please enter a file name"
+msgstr "Пожалуйста, введите имя файла"
+
+msgid "File created successfully"
+msgstr "Файл успешно создан"
+
+msgid "Unable to create file"
+msgstr "Не удалось создать файл"
+
+msgid "Please select a file to delete"
+msgstr "Пожалуйста, выберите файл для удаления"
+
+msgid "Are you sure you want to delete this file?"
+msgstr "Вы уверены, что хотите удалить этот файл?"
+
+msgid "File deleted successfully"
+msgstr "Файл успешно удален"
+
+msgid "Select or create a file to edit..."
+msgstr "Выберите или создайте файл для редактирования..."
+
+msgid "Unable to delete file"
+msgstr "Не удалось удалить файл"
+
+msgid "Please select or create a file first"
+msgstr "Пожалуйста, сначала выберите или создайте файл"
+
+msgid "File saved successfully"
+msgstr "Файл успешно сохранен"
+
+msgid "Unable to save file"
+msgstr "Не удалось сохранить файл"
+
+msgid "Load .user file"
+msgstr "Загрузить .user файл"
+
+msgid "Save .user file"
+msgstr "Сохранить .user файл"
+
+msgid "Please select a file to delete"
+msgstr "Пожалуйста, выберите файл для удаления"
+
+msgid "Manage contacts"
+msgstr "Управление контактами"
+
+msgid "Edit User Contacts"
+msgstr "Редактировать контакты пользователя"
+
+msgid "Manage USSD codes"
+msgstr "Управление USSD-кодами"
+
+msgid "Manage User USSD Codes"
+msgstr "Управление пользовательскими USSD-кодами"
+
+msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes/</code>."
+msgstr "Каждая строка должна иметь следующий формат: 'Описание кода;код'. Для удобства пользователя файл сохраняется в <code>/etc/modem/ussdcodes/</code>."
+
+msgid "Each line must have the following format: 'AT command description;AT command'. For user convenience, the file is saved to the location <code>/etc/modem/atcmmds/</code>."
+msgstr "Каждая строка должна иметь следующий формат: 'Описание AT-команды;AT-команда'. Для удобства пользователя файл сохраняется в <code>/etc/modem/atcmmds/</code>."
+
+msgid "Manage AT commands"
+msgstr "Управление AT-командами"
+
+msgid "Manage User AT Commands"
+msgstr "Управление пользовательскими AT-командами"
+
+msgid "-- Select file --"
+msgstr "-- Выберите файл --"
+
+msgid "Select file"
+msgstr "Выбрать файл"
+
+msgid "New file name"
+msgstr "Новое имя файла"
+
+msgid "Delete selected file"
+msgstr "Удалить выбранный файл"
+
+msgid "Select file with AT commands to load"
+msgstr "Выберите файл с AT-командами для загрузки"
+
+msgid "Error loading AT commands file: "
+msgstr "Ошибка загрузки файла AT-команд: "
+
+msgid "No AT commands available"
+msgstr "AT-команды недоступны"
+
+msgid "Error loading initial AT commands file:"
+msgstr "Ошибка загрузки исходного файла AT-команд:"
+
+msgid "Error loading USSD codes file: "
+msgstr "Ошибка загрузки файла USSD-кодов: "
+
+msgid "Error loading initial USSD file:"
+msgstr "Ошибка загрузки исходного файла USSD:"
+
+msgid "Select file with USSD codes to load"
+msgstr "Выберите файл с USSD-кодами для загрузки"
+
+msgid "No USSD codes available"
+msgstr "USSD-коды недоступны"
+
+msgid "Show notification icon"
+msgstr "Показывать значок уведомлений"
+
+msgid "Show the new message notification icon on the status overview page."
+msgstr "Показывать значок уведомления о новом сообщении на странице обзора состояния."
+
+msgid "Loading..."
+msgstr "Загрузка..."
+
+msgid "Modem"
+msgstr "Модем"
+
+msgid "Modems"
+msgstr "Модемы"
+
+msgid "Signal Quality"
+msgstr "Качество сигнала"
+
+msgid "Align preview to:"
+msgstr "Выровнять предпросмотр по:"
+
+msgid "Left"
+msgstr "Слева"
+
+msgid "Center"
+msgstr "По центру"
+
+msgid "Right"
+msgstr "Справа"
+
+msgid "New message information block settings"
+msgstr "Настройки блока информации о новых сообщениях"
+
+msgid "Alignment settings saved successfully"
+msgstr "Настройки выравнивания успешно сохранены"
+
+msgid "SMS Info"
+msgstr "Информация SMS"
+
+msgid "New SMS"
+msgstr "Новое SMS"
+
+msgid "No new SMS"
+msgstr "Нет новых SMS"
