@@ -180,31 +180,36 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
    
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Screenshots / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Zrzuty ekranu
 
+> "SMS Info" window / Okno informacyjne o nowych wiadomościach:
+
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Overview.png?raw=true)
+
 > "Received Messages" window / Okno odebranych wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Received%20Messages1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Received%20Messages.png?raw=true)
 
 ![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Received%20Messages2.png?raw=true)
 
 > "Sending Message" window / Okno wysyłania wiadomości:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/send_sms_2.0.30-r20260101.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Send%20Messages.png?raw=true)
 
 > "USSD Codes" window / Okno kodów USSD:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_ussd.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/USSD%20Codes.png?raw=true)
 
 > "AT Commands" window / Okno poleceń AT:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/2.0.25-r20250517/send_at.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/AT%20Commands.png?raw=true)
 
 > "Configuration" window / Okno konfiguracji:
 
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration1.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration2.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration3.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration4.png?raw=true)
-![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Configuration5.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration1.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration2.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration3.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration4.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration5.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Configuration6.png?raw=true)
 ![](https://github.com/4IceG/Personal_data/blob/master/sms-tool-js/sms_tool_last/Package%20update%20and%20support.png?raw=true)
 
 ### <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_United_Kingdom.png" height="24"> Thanks to / <img src="https://raw.githubusercontent.com/4IceG/Personal_data/master/dooffy_design_icons_EU_flags_Poland.png" height="24"> Podziękowania dla
