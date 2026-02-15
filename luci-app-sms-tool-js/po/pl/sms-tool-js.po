@@ -787,7 +787,7 @@ msgid "New message information block settings"
 msgstr "Ustawienia bloku z informacją o nowych wiadomościach"
 
 msgid "Alignment settings saved successfully"
-msgstr "Ustawienia wyrównania zostały zapise pomyślnie"
+msgstr "Ustawienia wyrównania zostały zapisane pomyślnie"
 
 msgid "SMS Info"
 msgstr "Info SMS"
