@@ -16,7 +16,7 @@
 return baseclass.extend({
 	title: _('Modems'),
 
-	checkInterval: 12, // 12 cykli × ~5s = ~60 sekund
+	checkInterval: 12, // 12 × 5s = 60s
 
 	restoreAlignmentSettings() {
 		let alignment = localStorage.getItem('luci-modem-tiles-alignment');
@@ -244,8 +244,6 @@ return baseclass.extend({
 				}
 				
 				return {
-					vendor: json[0].vendor || '',
-					product: json[0].product || '',
 					operator: json[2].operator_name || '-',
 					mode: json[2].mode || '-',
 					signalQuality: signalQuality
@@ -508,7 +506,7 @@ return baseclass.extend({
 						forced_plmn_op: modem.forced_plmn_op || '0',
 						mbim_op: modem.mbim_op || '0',
 						modemdata: modem.modemdata || 'serial',
-						modemName: modem.modem_name || ('Modem ' + (i + 1)),
+						modemName: modem.modem || (_('Modem')+' ' + (i + 1)),
 						smsCount: this.parseSmsCountForModem(smsCountString, i + 1),
 						storage: storage,
 						skipModemData: false
@@ -580,7 +578,7 @@ return baseclass.extend({
 					let modemInfo = {
 						operator: '-',
 						mode: '-',
-						modemName: modem.modemName || 'Modem',
+						modemName: modem.modemName || _('Modem'),
 						smsCount: modem.smsCount || 0,
 						signalQuality: 0
 					};
@@ -603,7 +601,7 @@ return baseclass.extend({
 								'style': 'padding:4px 6px;font-weight:normal;font-size:13px;cursor:pointer;',
 								'click': onHeaderClick
 							}, [
-								E('span', { 'class': 'modem-name-truncate', 'title': modem.modemName || 'Modem' }, 
+								E('span', { 'class': 'modem-name-truncate', 'title': modem.modemName || _('Modem') }, 
 									modem.modemName || (_('Modem')+': ' + modem.index))
 							]),
 							E('div', { 
@@ -648,21 +646,6 @@ return baseclass.extend({
 							modemInfo.operator = result.operator || '-';
 							modemInfo.mode = result.mode || '-';
 							modemInfo.signalQuality = result.signalQuality || 0;
-							
-							if (!modem.modemName || modem.modemName === 'Modem ' + modem.index || modem.modemName === 'Modem') {
-								let vendorProduct = '';
-								if (result.vendor && result.product) {
-									vendorProduct = result.vendor + ' ' + result.product;
-								} else if (result.vendor) {
-									vendorProduct = result.vendor;
-								} else if (result.product) {
-									vendorProduct = result.product;
-								}
-								
-								if (vendorProduct) {
-									modemInfo.modemName = vendorProduct;
-								}
-							}
 						}
 						
 						if (!window.modemDetectorCache) {

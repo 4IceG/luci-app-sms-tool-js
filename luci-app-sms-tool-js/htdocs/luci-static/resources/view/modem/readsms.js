@@ -127,7 +127,7 @@ function update_sms_count_for_modem(newValue) {
 		var defmodemSections = uci.sections('defmodems', 'defmodems');
 		
 		if (!defmodemSections || defmodemSections.length === 0) {
-			// old format - just set the value directly
+			// old format
 			return newValue;
 		}
 		
@@ -695,7 +695,8 @@ return view.extend({
     													combinedjson[newkey] = { sender, timestamp, total, content, index };
   													}
 												}
-												var result = Object.values(combinedjson);											}
+												var result = Object.values(combinedjson);
+											}
 
 											if (algo == "Simple")
 											{
@@ -719,7 +720,6 @@ return view.extend({
 											}
 													if (u){
 															var Lres = L.resource('icons/newdelsms.png');
-															var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 															for (var i = 0; i < result.length; i++) {
             													var row = table.insertRow(-1);
@@ -727,7 +727,18 @@ return view.extend({
   																var cell2 = row.insertCell(0);
   																var cell3 = row.insertCell(0);
   																var cell4 = row.insertCell(0);
-																cell4.innerHTML = "<input type='checkbox' name='smsn' id="+result[i].index+","+" />"+iconz;
+																
+																var checkbox = E('input', {
+																	'type': 'checkbox',
+																	'name': 'smsn',
+																	'id': result[i].index + ','
+																});
+																var icon = E('img', {
+																	'src': Lres,
+																	'style': 'width: 24px; height: 24px;'
+																});
+																cell4.appendChild(checkbox);
+																cell4.appendChild(icon);
 																	if (result[i].sender.includes(hide)) {
 																		var removeLast5 = result[i].sender.slice(0, -5);
 																		cell3.innerHTML = removeLast5 + '#####';
@@ -748,7 +759,6 @@ return view.extend({
 															axx = axx.replace(/,/g, ' ');
 															axx = axx.replace(/-/g, ' ');
 
-															// Format index with modem, then update count for current modem only
 															format_with_modem_index(axx).then(function(formattedIndex) {
 																update_sms_count_for_modem(u).then(function(updatedCount) {
 																	uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count_index', formattedIndex);
@@ -780,7 +790,6 @@ return view.extend({
 										if (u){
 
 											var Lres = L.resource('icons/newdelsms.png');
-											var iconz = String.format('<img style="width: 24px; height: 24px; "src="%s"/>', Lres);
 
 											for (var i = 0; i < sortedData.length; i++) {
             								var row = table.insertRow(-1);
@@ -788,7 +797,18 @@ return view.extend({
   											var cell2 = row.insertCell(0);
   											var cell3 = row.insertCell(0);
   											var cell4 = row.insertCell(0);
-											cell4.innerHTML = "<input type='checkbox' name='smsn' id="+sortedData[i].index+","+" />"+iconz;
+											
+											var checkbox = E('input', {
+												'type': 'checkbox',
+												'name': 'smsn',
+												'id': sortedData[i].index + ','
+											});
+											var icon = E('img', {
+												'src': Lres,
+												'style': 'width: 24px; height: 24px;'
+											});
+											cell4.appendChild(checkbox);
+											cell4.appendChild(icon);
 												if (sortedData[i].sender.includes(hide)) {
 													var removeLast5 = sortedData[i].sender.slice(0, -5);
 													cell3.innerHTML = removeLast5 + '#####';

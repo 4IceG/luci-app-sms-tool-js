@@ -787,13 +787,13 @@ msgid "New message information block settings"
 msgstr "Ustawienia bloku z informacją o nowych wiadomościach"
 
 msgid "Alignment settings saved successfully"
-msgstr "Ustawienia wyrównania zostały zapisane pomyślnie"
+msgstr "Ustawienia wyrównania zostały pomyślnie zapisane"
 
 msgid "SMS Info"
 msgstr "Info SMS"
 
 msgid "New SMS"
-msgstr "Nowy SMS(-y)"
+msgstr "Nowy(-e) SMS(-y)"
 
 msgid "No new SMS"
 msgstr "Brak nowych SMS-ów"
