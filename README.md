@@ -182,7 +182,7 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "SMS Info" window / Okno informacyjne o nowych wiadomościach:
 
-![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Overview.png?raw=true)
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Overview2.png?raw=true)
 
 > "Received Messages" window / Okno odebranych wiadomości:
 
