@@ -64,6 +64,15 @@ td input[type="checkbox"] {
 #smsTable .message {
   width: 88% !important;
 }
+
+.sms-row-icon {
+  position: relative;
+  display: inline-block;
+}
+
+:root[data-darkmode="true"] .sms-row-icon {
+  opacity: 0.5;
+}
 `));
 
 function msg_bar(v, m) {
@@ -504,7 +513,8 @@ return view.extend({
 											var used = res.substring(17, res.indexOf("total"));
 											var u = used.replace ( /[^\d.]/g, '' );
 											msg_bar(Math.floor(u), t);
-											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
+											deletelabel.innerHTML = '';
+											deletelabel.appendChild(E('span', {'class': 'spinning', 'style': 'font-size: inherit;'}, _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages')));
 										}
 										});
 				
@@ -517,14 +527,34 @@ return view.extend({
 											var used = res.substring(17, res.indexOf("total"));
 											var u = used.replace ( /[^\d.]/g, '' );
 											msg_bar(Math.floor(u), t);
-											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
+											deletelabel.innerHTML = '';
+											deletelabel.appendChild(E('span', {'class': 'spinning', 'style': 'font-size: inherit;'}, _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages')));
 										}
 										});
 
 										if (smsdelcount == smsdeleted) {
 											setTimeout(function() {
 											var hidecount = document.getElementById('deleteinfo');
-    											hidecount.style.display = 'none';
+											uci.load('sms_tool_js').then(function() {
+												var savedCount = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_count') || '';
+												L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+												.then(function(verifyRes) {
+													if (verifyRes) {
+														var verifyUsed = verifyRes.substring(17, verifyRes.indexOf("total"));
+														var verifyU = verifyUsed.replace( /[^\d.]/g, '' );
+														var savedMatch = savedCount.match(/(?:dfm\d+_)?(\d+)(?:\s|$)/);
+														var savedNum = savedMatch ? savedMatch[1] : savedCount.replace(/[^\d]/g, '');
+														if (savedNum !== verifyU) {
+															update_sms_count_for_modem(verifyU).then(function(correctedValue) {
+																uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', correctedValue);
+																uci.save();
+																uci.apply();
+															});
+														}
+													}
+													hidecount.style.display = 'none';
+												});
+											});
 											    save_count();
 											}, 7000);
 										}
@@ -538,7 +568,8 @@ return view.extend({
 											var used = res.substring(17, res.indexOf("total"));
 											var u = used.replace ( /[^\d.]/g, '' );
 											msg_bar(Math.floor(u), t);
-											deletelabel.innerHTML = _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages');
+											deletelabel.innerHTML = '';
+											deletelabel.appendChild(E('span', {'class': 'spinning', 'style': 'font-size: inherit;'}, _('Please wait... deleted')+' '+smsdeleted+' '+_('of')+' '+smsdelcount+' '+_('selected messages')));
 										}
 										});
 								}
@@ -733,10 +764,12 @@ return view.extend({
 																	'name': 'smsn',
 																	'id': result[i].index + ','
 																});
-																var icon = E('img', {
-																	'src': Lres,
-																	'style': 'width: 24px; height: 24px;'
-																});
+																var icon = E('span', { 'class': 'sms-row-icon' }, [
+																	E('img', {
+																		'src': Lres,
+																		'style': 'width: 24px; height: 24px;'
+																	})
+																]);
 																cell4.appendChild(checkbox);
 																cell4.appendChild(icon);
 																	if (result[i].sender.includes(hide)) {
@@ -792,7 +825,7 @@ return view.extend({
 											var Lres = L.resource('icons/newdelsms.png');
 
 											for (var i = 0; i < sortedData.length; i++) {
-            								var row = table.insertRow(-1);
+                                            var row = table.insertRow(-1);
   											var cell1 = row.insertCell(0);
   											var cell2 = row.insertCell(0);
   											var cell3 = row.insertCell(0);
@@ -803,10 +836,12 @@ return view.extend({
 												'name': 'smsn',
 												'id': sortedData[i].index + ','
 											});
-											var icon = E('img', {
-												'src': Lres,
-												'style': 'width: 24px; height: 24px;'
-											});
+											var icon = E('span', { 'class': 'sms-row-icon' }, [
+												E('img', {
+													'src': Lres,
+													'style': 'width: 24px; height: 24px;'
+												})
+											]);
 											cell4.appendChild(checkbox);
 											cell4.appendChild(icon);
 												if (sortedData[i].sender.includes(hide)) {

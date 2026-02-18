@@ -163,6 +163,19 @@ return baseclass.extend({
 				border: 1px solid rgba(46, 204, 113, 0.6);
 			}
 			
+			.sms-icon-no-messages img {
+				opacity: 0.7;
+			}
+			
+			.sms-icon-with-messages img {
+				opacity: 1;
+			}
+			
+			:root[data-darkmode="true"] .sms-icon-no-messages img,
+			:root[data-darkmode="true"] .sms-icon-with-messages img {
+				opacity: 0.5;
+			}
+			
 			.modem-info-box .ifacebox-head,
 			.modem-info-box .ifacebox-body {
 				user-select: none;
@@ -301,34 +314,6 @@ return baseclass.extend({
 		return modeDisplay;
 	},
 
-	parseSmsCountForModem: function(smsCountString, modemIndex) {
-		if (!smsCountString) return 0;
-		
-		let parts = smsCountString.split(' ').filter(function(p) { 
-			return p.trim() !== ''; 
-		});
-		
-		for (let i = 0; i < parts.length; i++) {
-			let match = parts[i].match(/^dfm(\d+)_(\d+)$/);
-			if (match && parseInt(match[1]) === modemIndex) {
-				return parseInt(match[2]) || 0;
-			}
-		}
-		
-		return 0;
-	},
-
-	getSimpleSmsCount: function(smsCountString) {
-		if (!smsCountString) return 0;
-		
-		let simpleMatch = smsCountString.match(/^\d+$/);
-		if (simpleMatch) {
-			return parseInt(smsCountString) || 0;
-		}
-		
-		return 0;
-	},
-
 	renderModemBadge: function(modemData, hasFullData, onHeaderClick) {
 		let operator = modemData.operator || '-';
 		let technology = this.formatMode(modemData.mode);
@@ -362,7 +347,8 @@ return baseclass.extend({
 				}, [
 					E('span', {
 						'title': smsCount > 0 ? '%s: %d'.format(_('New SMS'), smsCount) : _('No new SMS'),
-						'style': 'position:relative;display:inline-block;' + (smsCount === 0 ? 'opacity:0.3;' : '')
+						'style': 'position:relative;display:inline-block;' + (smsCount === 0 ? 'opacity:1;' : ''),
+						'class': smsCount > 0 ? 'sms-icon-active' : ''
 					}, [
 						E('img', { 
 							'src': smsIconUrl,
@@ -419,7 +405,8 @@ return baseclass.extend({
 						}, [
 							E('span', {
 								'title': smsCount > 0 ? '%s: %d'.format(_('New SMS'), smsCount) : _('No new SMS'),
-								'style': 'position:relative;display:inline-block;' + (smsCount === 0 ? 'opacity:0.3;' : '')
+								'style': 'position:relative;display:inline-block;',
+								'class': smsCount > 0 ? 'sms-icon-with-messages' : 'sms-icon-no-messages'
 							}, [
 								E('img', { 
 									'src': smsIconUrl,
@@ -436,68 +423,82 @@ return baseclass.extend({
 		]);
 	},
 
+	parseSmsCountUniversal: function(smsCountString, modemIndex) {
+		if (!smsCountString) return 0;
+
+		let parts = smsCountString.split(' ').filter(function(p) { return p.trim() !== ''; });
+
+		let dfmParts = {};
+		let hasDfmFormat = false;
+		for (let i = 0; i < parts.length; i++) {
+			let match = parts[i].match(/^dfm(\d+)_(\d+)$/);
+			if (match) {
+				hasDfmFormat = true;
+				dfmParts[parseInt(match[1])] = parseInt(match[2]) || 0;
+			}
+		}
+
+		if (hasDfmFormat) {
+			if (modemIndex != null) {
+				return dfmParts[modemIndex] || 0;
+			} else {
+				if (dfmParts[1] != null) {
+					return dfmParts[1];
+				}
+				let keys = Object.keys(dfmParts);
+				if (keys.length > 0) {
+					return dfmParts[parseInt(keys[0])] || 0;
+				}
+				return 0;
+			}
+		}
+
+		let simpleMatch = smsCountString.match(/^(\d+)(\s|$)/);
+		if (simpleMatch) {
+			return parseInt(simpleMatch[1]) || 0;
+		}
+
+		return 0;
+	},
+
 	load: function() {
-		return L.resolveDefault(uci.load('sms_tool_js')).then(L.bind(function() {
+		return Promise.all([
+			L.resolveDefault(uci.load('sms_tool_js')),
+			L.resolveDefault(uci.load('defmodems'))
+		]).then(L.bind(function() {
 			let onTopSms = uci.get('sms_tool_js', '@sms_tool_js[0]', 'ontopsms');
-			
+
 			if (onTopSms !== '1') {
 				return null;
 			}
-			
+
 			window.modemDetectorCounter = ('modemDetectorCounter' in window) ?
 				++window.modemDetectorCounter : 0;
-			
+
 			if (!('modemDetectorData' in window)) {
 				window.modemDetectorData = null;
 			}
-			
-			if (window.modemDetectorData !== null && 
+
+			if (window.modemDetectorData !== null &&
 			    window.modemDetectorCounter % this.checkInterval !== 0) {
 				return window.modemDetectorData;
 			}
-			
+
 			window.modemDetectorCache = {};
-			
-			return Promise.all([
-				L.resolveDefault(uci.load('defmodems')),
-				L.resolveDefault(uci.load('sms_tool_js'))
-			]).then(L.bind(function() {
-			let defmodemSections = uci.sections('defmodems', 'defmodems');
+
+			let defmodemSections = uci.sections('defmodems', 'defmodems') || [];
 			let smsCountString = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_count') || '';
 			let storage = uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage') || 'MS';
 			let readport = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport') || '/dev/ttyUSB2';
-			
-			let hasDefmodems = defmodemSections && defmodemSections.length > 0;
-			
-			if (!hasDefmodems) {
-				let simpleSmsCount = this.getSimpleSmsCount(smsCountString);
-				
-				window.modemDetectorData = {
-					modems: [{
-						index: 1,
-						comm_port: readport,
-						forced_plmn_op: '0',
-						mbim_op: '0',
-						modemdata: 'serial',
-						modemName: 'Modem',
-						smsCount: simpleSmsCount,
-						storage: storage,
-						skipModemData: true
-					}],
-					mode: 'sms-only'
-				};
-				return window.modemDetectorData;
-			}
-			
-			let modemsToLoad = [];
-			
+
 			let serialModems = defmodemSections.filter(function(s) {
 				return s.modemdata === 'serial';
-			});
-			
-			serialModems = serialModems.slice(0, 5);
-			
-			if (serialModems.length > 0) {
+			}).slice(0, 5);
+
+			let hasDefmodems = serialModems.length > 0;
+
+			if (hasDefmodems) {
+				let modemsToLoad = [];
 				for (let i = 0; i < serialModems.length; i++) {
 					let modem = serialModems[i];
 					modemsToLoad.push({
@@ -506,22 +507,21 @@ return baseclass.extend({
 						forced_plmn_op: modem.forced_plmn_op || '0',
 						mbim_op: modem.mbim_op || '0',
 						modemdata: modem.modemdata || 'serial',
-						modemName: modem.modem || (_('Modem')+' ' + (i + 1)),
-						smsCount: this.parseSmsCountForModem(smsCountString, i + 1),
+						modemName: modem.modem || (_('Modem') + ' ' + (i + 1)),
+						smsCount: this.parseSmsCountUniversal(smsCountString, i + 1),
 						storage: storage,
 						skipModemData: false
 					});
 				}
-				
 				window.modemDetectorData = {
 					modems: modemsToLoad,
 					mode: 'multi'
 				};
 				return window.modemDetectorData;
 			}
-			
-			let simpleSmsCount = this.getSimpleSmsCount(smsCountString);
-			
+
+			let savedSmsCount = this.parseSmsCountUniversal(smsCountString, null);
+
 			window.modemDetectorData = {
 				modems: [{
 					index: 1,
@@ -530,15 +530,14 @@ return baseclass.extend({
 					mbim_op: '0',
 					modemdata: 'serial',
 					modemName: 'Modem',
-					smsCount: simpleSmsCount,
+					smsCount: savedSmsCount,
 					storage: storage,
-					skipModemData: true
+					skipModemData: false
 				}],
 				mode: 'sms-only'
 			};
 			return window.modemDetectorData;
-			
-		}, this));
+
 		}, this));
 	},
 
@@ -574,93 +573,77 @@ return baseclass.extend({
 				let cached = window.modemDetectorCache[modem.index];
 				container.appendChild(this.renderModemBadge(cached, hasDefmodems && !skipModemData, onHeaderClick));
 			} else {
-				if (skipModemData) {
+				let boxStyle = skipModemData
+					? 'margin:0.2em;flex:1;min-width:80px;max-width:100px;'
+					: 'margin:0.2em;flex:1;min-width:160px;max-width:220px;';
+
+				container.appendChild(
+					E('div', {
+						'class': 'ifacebox modem-info-box',
+						'style': boxStyle,
+						'id': badgeId
+					}, [
+						E('div', {
+							'class': 'ifacebox-head port-label',
+							'style': 'padding:4px 6px;font-weight:normal;font-size:13px;cursor:pointer;',
+							'click': onHeaderClick
+						}, [
+							E('span', { 'class': 'modem-name-truncate', 'title': modem.modemName || _('Modem') },
+								modem.modemName || (_('Modem') + ': ' + modem.index))
+						]),
+						E('div', {
+							'class': 'ifacebox-body',
+							'style': 'padding:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;'
+						}, [
+							E('span', {'class': 'spinning', 'style': 'display:inline-block;'}),
+							E('span', {'style': 'font-size:12px;'}, _('Loading...'))
+						])
+					])
+				);
+
+				let modemDataPromise = skipModemData
+					? Promise.resolve(null)
+					: this.getModemData(modem.comm_port, modem.forced_plmn_op, modem.mbim_op, modem.modemdata);
+
+				let sleepPromise = new Promise(function(resolve) { setTimeout(resolve, 2000); });
+
+				Promise.all([
+					modemDataPromise,
+					this.getCurrentSmsCount(modem.comm_port, modem.storage),
+					sleepPromise
+				]).then(L.bind(function(results) {
+					let result = results[0];
+					let currentSmsCount = results[1];
+
+					let savedSmsCount = modem.smsCount || 0;
+					let newSmsCount = Math.max(0, currentSmsCount - savedSmsCount);
+
 					let modemInfo = {
 						operator: '-',
 						mode: '-',
 						modemName: modem.modemName || _('Modem'),
-						smsCount: modem.smsCount || 0,
+						smsCount: newSmsCount,
 						signalQuality: 0
 					};
-					
+
+					if (result) {
+						modemInfo.operator = result.operator || '-';
+						modemInfo.mode = result.mode || '-';
+						modemInfo.signalQuality = result.signalQuality || 0;
+					}
+
 					if (!window.modemDetectorCache) {
 						window.modemDetectorCache = {};
 					}
 					window.modemDetectorCache[modem.index] = modemInfo;
-					
-					container.appendChild(this.renderModemBadge(modemInfo, false, onHeaderClick));
-				} else {
-					container.appendChild(
-						E('div', { 
-							'class': 'ifacebox modem-info-box',
-							'style': 'margin:0.2em;flex:1;min-width:160px;max-width:220px;',
-							'id': badgeId
-						}, [
-							E('div', { 
-								'class': 'ifacebox-head port-label',
-								'style': 'padding:4px 6px;font-weight:normal;font-size:13px;cursor:pointer;',
-								'click': onHeaderClick
-							}, [
-								E('span', { 'class': 'modem-name-truncate', 'title': modem.modemName || _('Modem') }, 
-									modem.modemName || (_('Modem')+': ' + modem.index))
-							]),
-							E('div', { 
-								'class': 'ifacebox-body',
-								'style': 'padding:8px;text-align:center;display:block;'
-							}, [
-								E('span', {'class': 'spinning'}, _('Loading...'))
-							])
-						])
-					);
-					
-					Promise.all([
-						this.getModemData(
-							modem.comm_port,
-							modem.forced_plmn_op,
-							modem.mbim_op,
-							modem.modemdata
-						),
-						this.getCurrentSmsCount(modem.comm_port, modem.storage)
-					]).then(L.bind(function(results) {
-						let result = results[0];
-						let currentSmsCount = results[1];
-						
-						let modemInfo = {
-							operator: '-',
-							mode: '-',
-							modemName: modem.modemName,
-							smsCount: 0,
-							signalQuality: 0
-						};
-						
-						let savedSmsCount = modem.smsCount || 0;
-						let newSmsCount = 0;
-						
-						if (currentSmsCount > savedSmsCount) {
-							newSmsCount = currentSmsCount - savedSmsCount;
-						}
-						
-						modemInfo.smsCount = newSmsCount;
-						
-						if (result) {
-							modemInfo.operator = result.operator || '-';
-							modemInfo.mode = result.mode || '-';
-							modemInfo.signalQuality = result.signalQuality || 0;
-						}
-						
-						if (!window.modemDetectorCache) {
-							window.modemDetectorCache = {};
-						}
-						window.modemDetectorCache[modem.index] = modemInfo;
-						
-						let badgeElement = document.getElementById(badgeId);
-						if (badgeElement) {
-							let newBadge = this.renderModemBadge(modemInfo, hasDefmodems, onHeaderClick);
-							newBadge.id = badgeId;
-							badgeElement.parentNode.replaceChild(newBadge, badgeElement);
-						}
-					}, this));
-				}
+
+					let badgeElement = document.getElementById(badgeId);
+					if (badgeElement) {
+						let newBadge = this.renderModemBadge(modemInfo, hasDefmodems && !skipModemData, onHeaderClick);
+						newBadge.id = badgeId;
+						badgeElement.parentNode.replaceChild(newBadge, badgeElement);
+					}
+				}, this));
 			}
 		}, this));
 		

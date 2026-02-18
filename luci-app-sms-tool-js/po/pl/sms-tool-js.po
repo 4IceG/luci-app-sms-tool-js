@@ -727,7 +727,7 @@ msgid "Manage USSD codes"
 msgstr "Zarządzaj kodami USSD"
 
 msgid "Manage User USSD Codes"
-msgstr "Zarządzaj kodami USSD użytkownika"
+msgstr "Zarządzanie kodami USSD użytkownika"
 
 msgid "Each line must have the following format: 'Code description;code'. For user convenience, the file is saved to the location <code>/etc/modem/ussdcodes/</code>."
 msgstr "Każda linijka powinna mieć następujący format: 'Opis kodu;kod'. Dla wygody użytkownika plik zapisywany jest w lokalizacji <code>/etc/modem/ussdcodes/</code>."
@@ -739,7 +739,7 @@ msgid "Manage AT commands"
 msgstr "Zarządzaj poleceniami AT"
 
 msgid "Manage User AT Commands"
-msgstr "Zarządzaj poleceniami AT użytkownika"
+msgstr "Zarządzanie poleceniami AT użytkownika"
 
 msgid "-- Select file --"
 msgstr "-- Wybierz plik --"
