@@ -182,7 +182,13 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 > "SMS Info" window / Okno informacyjne o nowych wiadomościach:
 
+> [!IMPORTANT]
+> Requires the modemdata package to be installed and configured / Wymaga zainstalowanego i skonfigurowanego pakietu modemdata  
+
 ![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Overview2.png?raw=true)
+
+> [!IMPORTANT]
+> Without modemdata package / Bez pakietu modemdata
 
 ![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/SMS%20Info%20dark.png?raw=true)
 
