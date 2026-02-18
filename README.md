@@ -184,6 +184,8 @@ Scan all modes ➜ AT+QNWPREFCFG="mode_pref",AUTO;AT+QNWPREFCFG="mode_pref",AUTO
 
 ![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Overview2.png?raw=true)
 
+![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/SMS%20Info%20dark.png?raw=true)
+
 > "Received Messages" window / Okno odebranych wiadomości:
 
 ![](https://github.com/4IceG/Personal_data/blob/master/zrzuty/fresh_sms_tool/Received%20Messages.png?raw=true)
