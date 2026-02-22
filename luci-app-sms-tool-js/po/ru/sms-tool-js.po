@@ -789,3 +789,39 @@ msgstr "Новое SMS"
 
 msgid "No new SMS"
 msgstr "Нет новых SMS"
+
+msgid "Deleting files"
+msgstr "Удаление файлов"
+
+msgid "Delete all files"
+msgstr "Удалить все файлы"
+
+msgid "Load .gz archive"
+msgstr "Загрузить архив .gz"
+
+msgid "Save .gz archive"
+msgstr "Сохранить архив .gz"
+
+msgid "File uploaded and saved to"
+msgstr "Файл загружен и сохранён в"
+
+msgid "Failed to extract archive"
+msgstr "Не удалось распаковать архив"
+
+msgid "Archive extracted to"
+msgstr "Архив распакован в"
+
+msgid "Upload error"
+msgstr "Ошибка загрузки"
+
+msgid "Failed to create archive"
+msgstr "Не удалось создать архив"
+
+msgid "Failed to read archive"
+msgstr "Не удалось прочитать архив"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "Вы уверены, что хотите удалить все файлы в папке?"
+
+msgid "All files deleted successfully"
+msgstr "Все файлы успешно удалены"

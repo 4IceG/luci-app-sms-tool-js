@@ -789,3 +789,39 @@ msgstr "SMS mới"
 
 msgid "No new SMS"
 msgstr "Không có SMS mới"
+
+msgid "Deleting files"
+msgstr "Đang xóa tệp"
+
+msgid "Delete all files"
+msgstr "Xóa tất cả tệp"
+
+msgid "Load .gz archive"
+msgstr "Tải kho lưu trữ .gz"
+
+msgid "Save .gz archive"
+msgstr "Lưu kho lưu trữ .gz"
+
+msgid "File uploaded and saved to"
+msgstr "Tệp đã được tải lên và lưu vào"
+
+msgid "Failed to extract archive"
+msgstr "Không thể giải nén kho lưu trữ"
+
+msgid "Archive extracted to"
+msgstr "Kho lưu trữ đã được giải nén vào"
+
+msgid "Upload error"
+msgstr "Lỗi tải lên"
+
+msgid "Failed to create archive"
+msgstr "Không thể tạo kho lưu trữ"
+
+msgid "Failed to read archive"
+msgstr "Không thể đọc kho lưu trữ"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "Bạn có chắc chắn muốn xóa tất cả các tệp trong thư mục không?"
+
+msgid "All files deleted successfully"
+msgstr "Tất cả các tệp đã được xóa thành công"

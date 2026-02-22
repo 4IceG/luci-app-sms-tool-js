@@ -18,6 +18,17 @@ function popTimeout(a, message, timeout, severity) {
     ui.addTimeLimitedNotification(a, message, timeout, severity);
 }
 
+function getDateTimeSuffix() {
+	let now = new Date();
+	let pad = function(n) { return String(n).padStart(2, '0'); };
+	return now.getFullYear() + '-' +
+		   pad(now.getMonth() + 1) + '-' +
+		   pad(now.getDate()) + '_' +
+		   pad(now.getHours()) + '-' +
+		   pad(now.getMinutes()) + '-' +
+		   pad(now.getSeconds());
+}
+
 function update_sms_count_for_modem_sync(newValue, currentPort) {
 	return uci.load('defmodems').then(function() {
 		let defmodemSections = uci.sections('defmodems', 'defmodems');
@@ -153,55 +164,60 @@ let phonebookEditorDialog = baseclass.extend({
 						'click': ui.hideModal
 					}, _('Close'))
 				]),
-				E('div', {'style': 'display: flex; gap: 10px;'}, [
-					E('button', {
-						'class': 'cbi-button cbi-button-action important',
-						'click': ui.createHandlerFn(this, function() {
-							let input = document.createElement('input');
-							input.type = 'file';
-							input.accept = '.user';
-							input.onchange = function(e) {
-								let file = e.target.files[0];
-								if (file) {
-									let reader = new FileReader();
-									reader.onload = function(event) {
-										let content = event.target.result;
-										let targetPath = '/etc/modem/phonebook.user';
-										
-										fs.write(targetPath, content)
-											.then(function() {
-												popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
-												return fs.read(targetPath);
-											})
-											.then(function(savedContent) {
-												let textarea = document.getElementById('phonebook_modal_editor');
-												if (textarea) {
-													textarea.value = savedContent;
-												}
-											})
-											.catch(function(e) {
-												ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
-											});
+				E('div', {'style': 'display: flex; gap: 10px; align-items: center;'}, [
+					(function() {
+						var comboBtn = new ui.ComboButton('_load_user', {
+							'_load_user': _('Load .user file'),
+							'_save_user': _('Save .user file')
+						}, {
+							'click': function(ev, name) {
+								if (name === '_load_user') {
+									let input = document.createElement('input');
+									input.type = 'file';
+									input.accept = '.user';
+									input.onchange = function(e) {
+										let file = e.target.files[0];
+										if (!file) return;
+										let reader = new FileReader();
+										reader.onload = function(event) {
+											let content = event.target.result;
+											let targetPath = '/etc/modem/phonebook.user';
+											fs.write(targetPath, content)
+												.then(function() {
+													popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+													return fs.read(targetPath);
+												})
+												.then(function(savedContent) {
+													let textarea = document.getElementById('phonebook_modal_editor');
+													if (textarea) {
+														textarea.value = savedContent;
+													}
+												})
+												.catch(function(e) {
+													ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+												});
+										};
+										reader.readAsText(file);
 									};
-									reader.readAsText(file);
+									input.click();
+								} else if (name === '_save_user') {
+									let textarea = document.getElementById('phonebook_modal_editor');
+									let content = textarea ? textarea.value : '';
+									let blob = new Blob([content], { type: 'text/plain' });
+									let link = document.createElement('a');
+									link.download = 'phonebook_' + getDateTimeSuffix() + '.user';
+									link.href = URL.createObjectURL(blob);
+									link.click();
+									URL.revokeObjectURL(link.href);
 								}
-							};
-							input.click();
-						})
-					}, _('Load .user file')),
-					E('button', {
-						'class': 'btn cbi-button-action',
-						'click': ui.createHandlerFn(this, function() {
-							let textarea = document.getElementById('phonebook_modal_editor');
-							let content = textarea.value;
-							let blob = new Blob([content], { type: 'text/plain' });
-							let link = document.createElement('a');
-							link.download = 'phonebook.user';
-							link.href = URL.createObjectURL(blob);
-							link.click();
-							URL.revokeObjectURL(link.href);
-						})
-					}, _('Save .user file')),
+							},
+							'classes': {
+								'_load_user': 'cbi-button cbi-button-action important',
+								'_save_user': 'cbi-button cbi-button-neutral'
+							}
+						});
+						return comboBtn.render();
+					})(),
 					E('button', {
 						'class': 'btn cbi-button-save',
 						'click': ui.createHandlerFn(this, function() {
@@ -317,13 +333,27 @@ let ussdCodesManagerDialog = baseclass.extend({
 						])
 					]),
 					E('div', {'class': 'cbi-value'}, [
-						E('label', {'class': 'cbi-value-title'}, _('Delete selected file')),
+						E('label', {'class': 'cbi-value-title'}, _('Deleting files')),
 						E('div', {'class': 'cbi-value-field'}, [
-							E('button', {
-								'class': 'btn cbi-button-remove',
-								'id': 'ussd_delete_btn',
-								'click': ui.createHandlerFn(self, self.deleteFile)
-							}, _('Delete'))
+							(function() {
+								var delCombo = new ui.ComboButton('_delete_selected', {
+									'_delete_selected': _('Delete selected file'),
+									'_delete_all':      _('Delete all files')
+								}, {
+									'click': function(ev, name) {
+										if (name === '_delete_selected') {
+											self.deleteFile();
+										} else if (name === '_delete_all') {
+											self.deleteAllFiles();
+										}
+									},
+									'classes': {
+										'_delete_selected': 'cbi-button cbi-button-remove',
+										'_delete_all':      'cbi-button cbi-button-remove'
+									}
+								});
+								return delCombo.render();
+							})()
 						])
 					])
 				]),
@@ -343,76 +373,130 @@ let ussdCodesManagerDialog = baseclass.extend({
 							'click': ui.hideModal
 						}, _('Close'))
 					]),
-					E('div', {'style': 'display: flex; gap: 10px;'}, [
-						E('button', {
-							'class': 'cbi-button cbi-button-action important',
-							'click': ui.createHandlerFn(self, function() {
-								let input = document.createElement('input');
-								input.type = 'file';
-								input.accept = '.user';
-								input.onchange = function(e) {
-									let file = e.target.files[0];
-									if (file) {
-										let reader = new FileReader();
-										reader.onload = function(event) {
-											let content = event.target.result;
-											let fileName = file.name;
-											let targetPath = self.baseDir + '/' + fileName;
-											
-											fs.write(targetPath, content)
-												.then(function() {
-													popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
-													self.currentFile = fileName;
+					E('div', {'style': 'display: flex; gap: 10px; align-items: center;'}, [
+						(function() {
+							var comboBtn = new ui.ComboButton('_load_user', {
+								'_load_user':    _('Load .user file'),
+								'_save_user':    _('Save .user file'),
+								'_load_gz':      _('Load .gz archive'),
+								'_save_gz':      _('Save .gz archive')
+							}, {
+								'click': function(ev, name) {
+									if (name === '_load_user') {
+										let input = document.createElement('input');
+										input.type = 'file';
+										input.accept = '.user';
+										input.onchange = function(e) {
+											let file = e.target.files[0];
+											if (!file) return;
+											let reader = new FileReader();
+											reader.onload = function(event) {
+												let content = event.target.result;
+												let fileName = file.name;
+												let targetPath = self.baseDir + '/' + fileName;
+												fs.write(targetPath, content)
+													.then(function() {
+														popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+														self.currentFile = fileName;
+														return self.loadFileList();
+													})
+													.then(function(files) {
+														let select = document.getElementById('ussd_file_select');
+														if (select) {
+															while (select.options.length > 1) select.remove(1);
+															files.forEach(function(f) {
+																let opt = document.createElement('option');
+																opt.value = f;
+																opt.text = f;
+																if (f === fileName) opt.selected = true;
+																select.appendChild(opt);
+															});
+														}
+														return fs.read(targetPath);
+													})
+													.then(function(savedContent) {
+														let textarea = document.getElementById('ussd_modal_editor');
+														if (textarea) textarea.value = savedContent;
+													})
+													.catch(function(e) {
+														ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+													});
+											};
+											reader.readAsText(file);
+										};
+										input.click();
+									} else if (name === '_save_user') {
+										let textarea = document.getElementById('ussd_modal_editor');
+										let content = textarea ? textarea.value : '';
+										let baseName = (self.currentFile || 'ussdcodes.user').replace(/\.user$/, '');
+										let fileName = baseName + '_' + getDateTimeSuffix() + '.user';
+										let blob = new Blob([content], { type: 'text/plain' });
+										let link = document.createElement('a');
+										link.download = fileName;
+										link.href = URL.createObjectURL(blob);
+										link.click();
+										URL.revokeObjectURL(link.href);
+									} else if (name === '_load_gz') {
+										let tmpPath = '/tmp/ussdcodes_upload.tar.gz';
+										ui.uploadFile(tmpPath).then(function() {
+												return fs.exec('/bin/tar', ['-xzf', tmpPath, '-C', self.baseDir]);
+											}).then(function(res) {
+												if (res.code !== 0) {
+													ui.addNotification(null, E('p', {}, _('Failed to extract archive') + ': ' + (res.stderr || '')), 'error');
+													return;
+												}
+												return fs.remove(tmpPath).then(function() {
+													popTimeout(null, E('p', {}, _('Archive extracted to') + ' ' + self.baseDir), 5000, 'info');
 													return self.loadFileList();
-												})
-												.then(function(files) {
+												}).then(function(files) {
 													let select = document.getElementById('ussd_file_select');
 													if (select) {
-														while (select.options.length > 1) {
-															select.remove(1);
-														}
+														while (select.options.length > 1) select.remove(1);
 														files.forEach(function(f) {
-															let option = document.createElement('option');
-															option.value = f;
-															option.text = f;
-															if (f === fileName) {
-																option.selected = true;
-															}
-															select.appendChild(option);
+															let opt = document.createElement('option');
+															opt.value = f;
+															opt.text = f;
+															select.appendChild(opt);
 														});
 													}
-													return fs.read(targetPath);
-												})
-												.then(function(savedContent) {
-													let textarea = document.getElementById('ussd_modal_editor');
-													if (textarea) {
-														textarea.value = savedContent;
-													}
-												})
-												.catch(function(e) {
-													ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
 												});
-										};
-										reader.readAsText(file);
+											}).catch(function(e) {
+												ui.addNotification(null, E('p', {}, _('Upload error') + ': ' + e.message), 'error');
+											});
+									} else if (name === '_save_gz') {
+										let tmpGz = '/tmp/ussdcodes.tar.gz';
+										fs.exec('/bin/tar', ['-czf', tmpGz, '-C', self.baseDir, '.'])
+											.then(function(res) {
+												if (res.code !== 0) {
+													ui.addNotification(null, E('p', {}, _('Failed to create archive') + ': ' + (res.stderr || '')), 'error');
+													return;
+												}
+												return L.resolveDefault(fs.read_direct(tmpGz, 'blob'), null).then(function(blob) {
+													if (blob) {
+														let link = document.createElement('a');
+														link.download = 'ussdcodes_' + getDateTimeSuffix() + '.tar.gz';
+														link.href = URL.createObjectURL(blob);
+														link.click();
+														URL.revokeObjectURL(link.href);
+													} else {
+														ui.addNotification(null, E('p', {}, _('Failed to read archive')), 'error');
+													}
+													return fs.remove(tmpGz);
+												});
+											}).catch(function(e) {
+												ui.addNotification(null, E('p', {}, _('Error') + ': ' + e.message), 'error');
+											});
 									}
-								};
-								input.click();
-							})
-						}, _('Load .user file')),
-						E('button', {
-							'class': 'btn cbi-button-action',
-							'click': ui.createHandlerFn(self, function() {
-								let textarea = document.getElementById('ussd_modal_editor');
-								let content = textarea.value;
-								let fileName = self.currentFile || 'ussdcodes.user';
-								let blob = new Blob([content], { type: 'text/plain' });
-								let link = document.createElement('a');
-								link.download = fileName;
-								link.href = URL.createObjectURL(blob);
-								link.click();
-								URL.revokeObjectURL(link.href);
-							})
-						}, _('Save .user file')),
+								},
+								'classes': {
+									'_load_user': 'cbi-button cbi-button-action important',
+									'_save_user': 'cbi-button cbi-button-neutral',
+									'_load_gz':   'cbi-button cbi-button-action important',
+									'_save_gz':   'cbi-button cbi-button-neutral'
+								}
+							});
+							return comboBtn.render();
+						})(),
 						E('button', {
 							'class': 'btn cbi-button-save',
 							'id': 'ussd_save_btn',
@@ -522,6 +606,34 @@ let ussdCodesManagerDialog = baseclass.extend({
 			}.bind(this))
 			.catch(function(e) {
 				ui.addNotification(null, E('p', {}, _('Unable to delete file') + ': ' + e.message), 'error');
+			});
+	},
+
+	deleteAllFiles: function() {
+		if (!confirm(_('Are you sure you want to delete all files in the folder?') + '\n' + this.baseDir)) {
+			return;
+		}
+
+		let self = this;
+		fs.exec('/bin/sh', ['-c', 'rm -f ' + this.baseDir + '/*.user'])
+			.then(function() {
+				popTimeout(null, E('p', {}, _('All files deleted successfully')), 5000, 'info');
+
+				let select = document.getElementById('ussd_file_select');
+				if (select) {
+					while (select.options.length > 1) select.remove(1);
+					select.value = '';
+				}
+				self.currentFile = null;
+
+				let textarea = document.getElementById('ussd_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = _('Select or create a file to edit...');
+				}
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to delete files') + ': ' + e.message), 'error');
 			});
 	},
 
@@ -638,13 +750,27 @@ let atCommandsManagerDialog = baseclass.extend({
 						])
 					]),
 					E('div', {'class': 'cbi-value'}, [
-						E('label', {'class': 'cbi-value-title'}, _('Delete selected file')),
+						E('label', {'class': 'cbi-value-title'}, _('Deleting files')),
 						E('div', {'class': 'cbi-value-field'}, [
-							E('button', {
-								'class': 'btn cbi-button-remove',
-								'id': 'at_delete_btn',
-								'click': ui.createHandlerFn(self, self.deleteFile)
-							}, _('Delete'))
+							(function() {
+								var delCombo = new ui.ComboButton('_delete_selected', {
+									'_delete_selected': _('Delete selected file'),
+									'_delete_all':      _('Delete all files')
+								}, {
+									'click': function(ev, name) {
+										if (name === '_delete_selected') {
+											self.deleteFile();
+										} else if (name === '_delete_all') {
+											self.deleteAllFiles();
+										}
+									},
+									'classes': {
+										'_delete_selected': 'cbi-button cbi-button-remove',
+										'_delete_all':      'cbi-button cbi-button-remove'
+									}
+								});
+								return delCombo.render();
+							})()
 						])
 					])
 				]),
@@ -664,77 +790,130 @@ let atCommandsManagerDialog = baseclass.extend({
 							'click': ui.hideModal
 						}, _('Close'))
 					]),
-					E('div', {'style': 'display: flex; gap: 10px;'}, [
-						E('button', {
-							'class': 'cbi-button cbi-button-action important',
-							'click': ui.createHandlerFn(self, function() {
-								let input = document.createElement('input');
-								input.type = 'file';
-								input.accept = '.user';
-								input.onchange = function(e) {
-									let file = e.target.files[0];
-									if (file) {
-										let reader = new FileReader();
-										reader.onload = function(event) {
-											let content = event.target.result;
-											let fileName = file.name;
-											let targetPath = self.baseDir + '/' + fileName;
-											
-											fs.write(targetPath, content)
-												.then(function() {
-													popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
-													self.currentFile = fileName;
+					E('div', {'style': 'display: flex; gap: 10px; align-items: center;'}, [
+						(function() {
+							var comboBtn = new ui.ComboButton('_load_user', {
+								'_load_user':    _('Load .user file'),
+								'_save_user':    _('Save .user file'),
+								'_load_gz':      _('Load .gz archive'),
+								'_save_gz':      _('Save .gz archive')
+							}, {
+								'click': function(ev, name) {
+									if (name === '_load_user') {
+										let input = document.createElement('input');
+										input.type = 'file';
+										input.accept = '.user';
+										input.onchange = function(e) {
+											let file = e.target.files[0];
+											if (!file) return;
+											let reader = new FileReader();
+											reader.onload = function(event) {
+												let content = event.target.result;
+												let fileName = file.name;
+												let targetPath = self.baseDir + '/' + fileName;
+												fs.write(targetPath, content)
+													.then(function() {
+														popTimeout(null, E('p', {}, _('File uploaded and saved to') + ' ' + targetPath), 5000, 'info');
+														self.currentFile = fileName;
+														return self.loadFileList();
+													})
+													.then(function(files) {
+														let select = document.getElementById('at_file_select');
+														if (select) {
+															while (select.options.length > 1) select.remove(1);
+															files.forEach(function(f) {
+																let opt = document.createElement('option');
+																opt.value = f;
+																opt.text = f;
+																if (f === fileName) opt.selected = true;
+																select.appendChild(opt);
+															});
+														}
+														return fs.read(targetPath);
+													})
+													.then(function(savedContent) {
+														let textarea = document.getElementById('at_modal_editor');
+														if (textarea) textarea.value = savedContent;
+													})
+													.catch(function(e) {
+														ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
+													});
+											};
+											reader.readAsText(file);
+										};
+										input.click();
+									} else if (name === '_save_user') {
+										let textarea = document.getElementById('at_modal_editor');
+										let content = textarea ? textarea.value : '';
+										let baseName = (self.currentFile || 'atcmmds.user').replace(/\.user$/, '');
+										let fileName = baseName + '_' + getDateTimeSuffix() + '.user';
+										let blob = new Blob([content], { type: 'text/plain' });
+										let link = document.createElement('a');
+										link.download = fileName;
+										link.href = URL.createObjectURL(blob);
+										link.click();
+										URL.revokeObjectURL(link.href);
+									} else if (name === '_load_gz') {
+										let tmpPath = '/tmp/atcmmds_upload.tar.gz';
+										ui.uploadFile(tmpPath).then(function() {
+												return fs.exec('/bin/tar', ['-xzf', tmpPath, '-C', self.baseDir]);
+											}).then(function(res) {
+												if (res.code !== 0) {
+													ui.addNotification(null, E('p', {}, _('Failed to extract archive') + ': ' + (res.stderr || '')), 'error');
+													return;
+												}
+												return fs.remove(tmpPath).then(function() {
+													popTimeout(null, E('p', {}, _('Archive extracted to') + ' ' + self.baseDir), 5000, 'info');
 													return self.loadFileList();
-												})
-												.then(function(files) {
+												}).then(function(files) {
 													let select = document.getElementById('at_file_select');
 													if (select) {
-														while (select.options.length > 1) {
-															select.remove(1);
-														}
+														while (select.options.length > 1) select.remove(1);
 														files.forEach(function(f) {
-															let option = document.createElement('option');
-															option.value = f;
-															option.text = f;
-															if (f === fileName) {
-																option.selected = true;
-															}
-															select.appendChild(option);
+															let opt = document.createElement('option');
+															opt.value = f;
+															opt.text = f;
+															select.appendChild(opt);
 														});
 													}
-													
-													return fs.read(targetPath);
-												})
-												.then(function(savedContent) {
-													let textarea = document.getElementById('at_modal_editor');
-													if (textarea) {
-														textarea.value = savedContent;
-													}
-												})
-												.catch(function(e) {
-													ui.addNotification(null, E('p', {}, _('Unable to upload file') + ': ' + e.message), 'error');
 												});
-										};
-										reader.readAsText(file);
+											}).catch(function(e) {
+												ui.addNotification(null, E('p', {}, _('Upload error') + ': ' + e.message), 'error');
+											});
+									} else if (name === '_save_gz') {
+										let tmpGz = '/tmp/atcmmds.tar.gz';
+										fs.exec('/bin/tar', ['-czf', tmpGz, '-C', self.baseDir, '.'])
+											.then(function(res) {
+												if (res.code !== 0) {
+													ui.addNotification(null, E('p', {}, _('Failed to create archive') + ': ' + (res.stderr || '')), 'error');
+													return;
+												}
+												return L.resolveDefault(fs.read_direct(tmpGz, 'blob'), null).then(function(blob) {
+													if (blob) {
+														let link = document.createElement('a');
+														link.download = 'atcmmds_' + getDateTimeSuffix() + '.tar.gz';
+														link.href = URL.createObjectURL(blob);
+														link.click();
+														URL.revokeObjectURL(link.href);
+													} else {
+														ui.addNotification(null, E('p', {}, _('Failed to read archive')), 'error');
+													}
+													return fs.remove(tmpGz);
+												});
+											}).catch(function(e) {
+												ui.addNotification(null, E('p', {}, _('Error') + ': ' + e.message), 'error');
+											});
 									}
-								};
-								input.click();
-							})
-						}, _('Load .user file')),
-						E('button', {
-							'class': 'btn cbi-button-action',
-							'click': ui.createHandlerFn(self, function() {
-								let textarea = document.getElementById('at_modal_editor');
-								let content = textarea.value;
-								let fileName = self.currentFile || 'atcmmds.user';
-								let blob = new Blob([content], { type: 'text/plain' });
-								let link = document.createElement('a');
-								link.download = fileName;
-								link.href = URL.createObjectURL(blob);
-								link.click();
-								URL.revokeObjectURL(link.href);
-							})
-						}, _('Save .user file')),
+								},
+								'classes': {
+									'_load_user': 'cbi-button cbi-button-action important',
+									'_save_user': 'cbi-button cbi-button-neutral',
+									'_load_gz':   'cbi-button cbi-button-action important',
+									'_save_gz':   'cbi-button cbi-button-neutral'
+								}
+							});
+							return comboBtn.render();
+						})(),
 						E('button', {
 							'class': 'btn cbi-button-save',
 							'id': 'at_save_btn',
@@ -844,6 +1023,34 @@ let atCommandsManagerDialog = baseclass.extend({
 			}.bind(this))
 			.catch(function(e) {
 				ui.addNotification(null, E('p', {}, _('Unable to delete file') + ': ' + e.message), 'error');
+			});
+	},
+
+	deleteAllFiles: function() {
+		if (!confirm(_('Are you sure you want to delete all files in the folder?') + '\n' + this.baseDir)) {
+			return;
+		}
+
+		let self = this;
+		fs.exec('/bin/sh', ['-c', 'rm -f ' + this.baseDir + '/*.user'])
+			.then(function() {
+				popTimeout(null, E('p', {}, _('All files deleted successfully')), 5000, 'info');
+
+				let select = document.getElementById('at_file_select');
+				if (select) {
+					while (select.options.length > 1) select.remove(1);
+					select.value = '';
+				}
+				self.currentFile = null;
+
+				let textarea = document.getElementById('at_modal_editor');
+				if (textarea) {
+					textarea.value = '';
+					textarea.placeholder = _('Select or create a file to edit...');
+				}
+			})
+			.catch(function(e) {
+				ui.addNotification(null, E('p', {}, _('Unable to delete files') + ': ' + e.message), 'error');
 			});
 	},
 

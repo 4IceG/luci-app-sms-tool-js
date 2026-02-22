@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: luci-app-sms-tool-js\n"
+"Project-Id-Version: luci-app-atinout\n"
 "Language-Team: Rafał Wabik (IceG)\n"
 "Language: zh_TW\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -789,3 +789,39 @@ msgstr "新簡訊"
 
 msgid "No new SMS"
 msgstr "沒有新簡訊"
+
+msgid "Deleting files"
+msgstr "正在刪除檔案"
+
+msgid "Delete all files"
+msgstr "刪除所有檔案"
+
+msgid "Load .gz archive"
+msgstr "載入 .gz 封存檔"
+
+msgid "Save .gz archive"
+msgstr "儲存 .gz 封存檔"
+
+msgid "File uploaded and saved to"
+msgstr "檔案已上傳並儲存至"
+
+msgid "Failed to extract archive"
+msgstr "無法解壓封存檔"
+
+msgid "Archive extracted to"
+msgstr "封存檔已解壓至"
+
+msgid "Upload error"
+msgstr "上傳錯誤"
+
+msgid "Failed to create archive"
+msgstr "無法建立封存檔"
+
+msgid "Failed to read archive"
+msgstr "無法讀取封存檔"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "確定要刪除資料夾中的所有檔案嗎？"
+
+msgid "All files deleted successfully"
+msgstr "所有檔案已成功刪除"

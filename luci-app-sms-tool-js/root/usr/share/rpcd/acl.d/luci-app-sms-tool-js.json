@@ -2,7 +2,7 @@
 	"luci-app-sms-tool-js": {
 		"description": "Grant access to LuCI app sms-tool-js",
 		"read": {
-   			"cgi-io": [ "exec" ],
+			"cgi-io": [ "exec", "upload" ],
     			"file": {
     				"/sys/class/leds": [ "list" ],
     				"/dev": [ "list" ],
@@ -16,6 +16,8 @@
 				"/sbin/smstool_led.sh": [ "exec" ],
 				"/sbin/sms_led.sh": [ "exec" ],
 				"/bin/sh": [ "exec" ],
+				"/bin/tar": [ "exec" ],
+				"/bin/mkdir": [ "exec" ],
 				"/etc/crontabs/root": [ "read" ],
 				"/usr/bin/opkg list-installed": ["exec"],
 				"/usr/libexec/package-manager-call list-installed": [ "exec" ],
@@ -24,12 +26,17 @@
 				"/etc/sms_tool_js": [ "read" ],
 				"/etc/defmodems": [ "read" ],
 				"/tmp/mysms.txt": [ "read" ],
+				"/tmp/atcmmds_backup.tar.gz": [ "read" ],
+				"/tmp/atcmmds_upload.tar.gz": [ "read" ],
+				"/tmp/ussdcodes_backup.tar.gz": [ "read" ],
+				"/tmp/ussdcodes_upload.tar.gz": [ "read" ],
 				"/etc/modem/atcmmds.user": [ "read" ],
 				"/etc/modem/atcmmds": [ "list" ],
 				"/etc/modem/atcmmds/*": [ "read" ],
 				"/etc/modem/atcmmds/*.user": [ "read" ],
 				"/etc/modem/phonebook.user": [ "read" ],
 				"/etc/modem/ussdcodes": [ "list" ],
+				"/etc/modem/ussdcodes/*": [ "read" ],
 				"/etc/modem/ussdcodes/*.user": [ "read" ],
 				"/etc/modem/ussdcodes.user": [ "read" ]
 			},
@@ -40,22 +47,31 @@
 			}
 		},
 		"write": {
+			"cgi-io": [ "upload" ],
 			"file": {
 				"/etc/sms_tool_js": [ "write" ],
 				"/etc/crontabs/root": [ "write" ],
 				"/etc/init.d/cron restart": [ "exec" ],
 				"/bin/chmod": [ "exec" ],
 				"/bin/rm": [ "exec" ],
+				"/bin/tar": [ "exec" ],
+				"/bin/mkdir": [ "exec" ],
 				"/sys/class/leds/*/brightness": [ "write" ],
 				"/tmp/mysms.txt": [ "write" ],
+				"/tmp/atcmmds_backup.tar.gz": [ "write" ],
+				"/tmp/atcmmds_upload.tar.gz": [ "write" ],
+				"/tmp/ussdcodes_backup.tar.gz": [ "write" ],
+				"/tmp/ussdcodes_upload.tar.gz": [ "write" ],
 				"/etc/modem/atcmmds.user": [ "write" ],
 				"/etc/modem/atcmmds/*.user": [ "write" ],
+				"/etc/modem/atcmmds/*": [ "write" ],
 				"/etc/modem/phonebook.user": [ "write" ],
 				"/etc/modem/ussdcodes/*.user": [ "write" ],
+				"/etc/modem/ussdcodes/*": [ "write" ],
 				"/etc/modem/ussdcodes.user": [ "write" ]
 			},
 			"ubus": {
-				"file": [ "write" ]
+				"file": [ "read", "write", "remove" ]
 			},
 			"uci": [ "sms_tool_js", "luci-app-sms-tool-js" ]
 		}

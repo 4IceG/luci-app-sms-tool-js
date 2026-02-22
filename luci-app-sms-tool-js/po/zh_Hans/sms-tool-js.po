@@ -790,4 +790,38 @@ msgstr "新短信"
 msgid "No new SMS"
 msgstr "没有新短信"
 
+msgid "Deleting files"
+msgstr "正在删除文件"
 
+msgid "Delete all files"
+msgstr "删除所有文件"
+
+msgid "Load .gz archive"
+msgstr "加载 .gz 存档"
+
+msgid "Save .gz archive"
+msgstr "保存 .gz 存档"
+
+msgid "File uploaded and saved to"
+msgstr "文件已上传并保存到"
+
+msgid "Failed to extract archive"
+msgstr "解压存档失败"
+
+msgid "Archive extracted to"
+msgstr "存档已解压到"
+
+msgid "Upload error"
+msgstr "上传错误"
+
+msgid "Failed to create archive"
+msgstr "创建存档失败"
+
+msgid "Failed to read archive"
+msgstr "读取存档失败"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "确定要删除文件夹中的所有文件吗？"
+
+msgid "All files deleted successfully"
+msgstr "所有文件已成功删除"

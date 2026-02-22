@@ -693,9 +693,6 @@ msgstr "Czy na pewno chcesz usunąć ten plik?"
 msgid "File deleted successfully"
 msgstr "Plik został pomyślnie usunięty"
 
-msgid "Select or create a file to edit..."
-msgstr "Wybierz lub utwórz plik do edycji..."
-
 msgid "Unable to delete file"
 msgstr "Nie można usunąć pliku"
 
@@ -713,9 +710,6 @@ msgstr "Załaduj plik .user"
 
 msgid "Save .user file"
 msgstr "Zapisz plik .user"
-
-msgid "Please select a file to delete"
-msgstr "Proszę wybrać plik do usunięcia"
 
 msgid "Manage contacts"
 msgstr "Zarządzaj kontaktami"
@@ -797,3 +791,39 @@ msgstr "Nowy(-e) SMS(-y)"
 
 msgid "No new SMS"
 msgstr "Brak nowych SMS-ów"
+
+msgid "Deleting files"
+msgstr "Usuwanie plików"
+
+msgid "Delete all files"
+msgstr "Usuń wszystkie pliki"
+
+msgid "Load .gz archive"
+msgstr "Załaduj archiwum .gz"
+
+msgid "Save .gz archive"
+msgstr "Zapisz archiwum .gz"
+
+msgid "File uploaded and saved to"
+msgstr "Plik został przesłany i zapisany w"
+
+msgid "Failed to extract archive"
+msgstr "Nie udało się rozpakować archiwum"
+
+msgid "Archive extracted to"
+msgstr "Archiwum rozpakowano do"
+
+msgid "Upload error"
+msgstr "Błąd przesyłania"
+
+msgid "Failed to create archive"
+msgstr "Nie udało się utworzyć archiwum"
+
+msgid "Failed to read archive"
+msgstr "Nie udało się odczytać archiwum"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "Czy na pewno chcesz usunąć wszystkie pliki w folderze?"
+
+msgid "All files deleted successfully"
+msgstr "Wszystkie pliki zostały pomyślnie usunięte"

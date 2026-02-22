@@ -789,3 +789,39 @@ msgstr "Nouveau SMS"
 
 msgid "No new SMS"
 msgstr "Aucun nouveau SMS"
+
+msgid "Deleting files"
+msgstr "Suppression des fichiers"
+
+msgid "Delete all files"
+msgstr "Supprimer tous les fichiers"
+
+msgid "Load .gz archive"
+msgstr "Charger l'archive .gz"
+
+msgid "Save .gz archive"
+msgstr "Enregistrer l'archive .gz"
+
+msgid "File uploaded and saved to"
+msgstr "Fichier téléversé et enregistré dans"
+
+msgid "Failed to extract archive"
+msgstr "Échec de l'extraction de l'archive"
+
+msgid "Archive extracted to"
+msgstr "Archive extraite vers"
+
+msgid "Upload error"
+msgstr "Erreur de téléversement"
+
+msgid "Failed to create archive"
+msgstr "Impossible de créer l'archive"
+
+msgid "Failed to read archive"
+msgstr "Impossible de lire l'archive"
+
+msgid "Are you sure you want to delete all files in the folder?"
+msgstr "Êtes-vous sûr de vouloir supprimer tous les fichiers du dossier ?"
+
+msgid "All files deleted successfully"
+msgstr "Tous les fichiers ont été supprimés avec succès"
