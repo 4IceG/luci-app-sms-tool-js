@@ -1580,86 +1580,84 @@ return view.extend({
 		o.default = true;
 		o.write = function(section_id, value) {
 
-			uci.load('sms_tool_js').then(function() {
-				let storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
-				let portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
-				let dsled = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype'));
+			return uci.load('sms_tool_js').then(function() {
+				let storeL = uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage');
+				let portR  = uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport');
+				let dsled  = uci.get('sms_tool_js', '@sms_tool_js[0]', 'ledtype');
 
-		        if (!portR) {
-			        ui.addNotification(null, E('p', {}, _('Please configure SMS reading port first')), 'info');
-			        return form.Flag.prototype.write.apply(this, [section_id, value]);
-		        }
+				if (!portR) {
+					ui.addNotification(null, E('p', {}, _('Please configure SMS reading port first')), 'info');
+					return form.Flag.prototype.write.apply(this, [section_id, value]);
+				}
 
-					L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
-						.then(function(res) {
-							if (res) {
-								let total = res.substring(res.indexOf('total'));
-								let t = total.replace ( /[^\d.]/g, '' );
-								let used = res.substring(17, res.indexOf('total'));
-								let u = used.replace ( /[^\d.]/g, '' );
+				return L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', ['-s', storeL, '-d', portR, 'status']))
+					.then(function(res) {
+						if (!res) return;
 
-								let sections = uci.sections('sms_tool_js');
-								let led = sections[0].smsled;
+						let total = res.substring(res.indexOf('total'));
+						let t = total.replace(/[^\d.]/g, '');
+						let used = res.substring(17, res.indexOf('total'));
+						let u = used.replace(/[^\d.]/g, '');
 
-								if (value == '1') {
-									update_sms_count_for_modem_sync(u, portR).then(function(updatedValue) {
-										uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedValue);
-										uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "1");
-										uci.save();
-										
-							            let PTR = uci.get('sms_tool_js', '@sms_tool_js[0]', 'prestart');
-							            
-                                    fs.exec('sleep 4');
-							            
-							            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
-								            let cronEntry = '1 */' + PTR + ' * * *  /etc/init.d/my_new_sms enable && /etc/init.d/my_new_sms restart';
-								            let newCrontab = (crontab || '').trim().replace(/\r\n/g, '\n') + '\n' + cronEntry + '\n';
-								            
-								            fs.write('/etc/crontabs/root', newCrontab).then(function() {
-                                            fs.exec('sleep 2');
-									            fs.exec_direct('/etc/init.d/cron', ['restart']);
-								            });
-							            });
+						let sections = uci.sections('sms_tool_js');
+						let led = sections[0].smsled;
 
-										fs.exec_direct('/etc/init.d/my_new_sms', [ 'enable' ]);
-										fs.exec('sleep 2');
-										fs.exec_direct('/etc/init.d/my_new_sms', [ 'start' ]);
+						if (value == '1') {
+							return update_sms_count_for_modem_sync(u, portR).then(function(updatedValue) {
+								uci.set('sms_tool_js', '@sms_tool_js[0]', 'sms_count', updatedValue);
+								uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', '1');
+
+								let PTR = uci.get('sms_tool_js', '@sms_tool_js[0]', 'prestart');
+
+								return uci.save().then(function() {
+									return L.resolveDefault(fs.read('/etc/crontabs/root'), '');
+								}).then(function(crontab) {
+									let lines = (crontab || '').trim().replace(/\r\n/g, '\n').split('\n');
+									let filteredLines = lines.filter(function(line) {
+										return line.trim() !== '' && !line.includes('my_new_sms');
 									});
+									let cronEntry = '1 */' + PTR + ' * * * /etc/init.d/my_new_sms enable && /etc/init.d/my_new_sms restart';
+									filteredLines.push(cronEntry);
+									let newCrontab = filteredLines.join('\n') + '\n';
+									return fs.write('/etc/crontabs/root', newCrontab);
+								}).then(function() {
+									return fs.exec_direct('/etc/init.d/cron', ['restart']);
+								}).then(function() {
+									return fs.exec_direct('/etc/init.d/my_new_sms', ['enable']);
+								}).then(function() {
+									return fs.exec_direct('/etc/init.d/my_new_sms', ['start']);
+								});
+							});
+						}
+
+						if (value == '0') {
+							uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', '0');
+
+							return uci.save().then(function() {
+								return L.resolveDefault(fs.read('/etc/crontabs/root'), '');
+							}).then(function(crontab) {
+								let lines = (crontab || '').trim().replace(/\r\n/g, '\n').split('\n');
+								let filteredLines = lines.filter(function(line) {
+									return line.trim() !== '' && !line.includes('my_new_sms');
+								});
+								let newCrontab = filteredLines.join('\n') + '\n';
+								return fs.write('/etc/crontabs/root', newCrontab);
+							}).then(function() {
+								return fs.exec_direct('/etc/init.d/cron', ['restart']);
+							}).then(function() {
+								return fs.exec_direct('/etc/init.d/my_new_sms', ['stop']);
+							}).then(function() {
+								return fs.exec_direct('/etc/init.d/my_new_sms', ['disable']);
+							}).then(function() {
+								if (dsled == 'D') {
+									return fs.write('/sys/class/leds/' + led + '/brightness', '0');
 								}
-
-								if (value == '0') {
-									uci.set('sms_tool_js', '@sms_tool_js[0]', 'lednotify', "0");
-									uci.save();
-									
-                                    fs.exec('sleep 4');
-
-						            L.resolveDefault(fs.read('/etc/crontabs/root'), '').then(function(crontab) {
-							            let lines = (crontab || '').trim().replace(/\r\n/g, '\n').split('\n');
-							            let filteredLines = lines.filter(function(line) {
-								            return line.trim() !== '' && !line.includes('my_new_sms');
-							            });
-							            let newCrontab = filteredLines.join('\n') + '\n';
-							            
-							            fs.write('/etc/crontabs/root', newCrontab).then(function() {
-                                            fs.exec('sleep 2');
-								            fs.exec_direct('/etc/init.d/cron', ['restart']);
-							            });
-						            });
-
-									fs.exec_direct('/etc/init.d/my_new_sms', [ 'stop' ]);
-									fs.exec('sleep 2');
-									fs.exec_direct('/etc/init.d/my_new_sms', [ 'disable' ]);
-									fs.exec_direct('/etc/init.d/my_new_sms', [ 'disable' ]);
-
-									if (dsled == 'D') {
-										fs.write('/sys/class/leds/'+led+'/brightness', '0');
-									}
-								}
-							}
-					});
-			});
-			
-			return form.Flag.prototype.write.apply(this, [section_id, value]);
+							});
+						}
+					}.bind(this));
+			}.bind(this)).then(function() {
+				return form.Flag.prototype.write.apply(this, [section_id, value]);
+			}.bind(this));
 		};
 		
 		o = s.taboption('notifytab', form.Flag, 'ontopsms', _('Show notification icon'),
