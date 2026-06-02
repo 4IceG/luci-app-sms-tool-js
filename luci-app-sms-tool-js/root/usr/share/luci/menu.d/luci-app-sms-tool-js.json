@@ -45,9 +45,6 @@
 		"action": {
 			"type": "view",
 			"path": "modem/calllog"
-		},
-		"depends": {
-			"fs": { "/tmp/sms_tool_call_log.json": "file" }
 		}
 	},
 

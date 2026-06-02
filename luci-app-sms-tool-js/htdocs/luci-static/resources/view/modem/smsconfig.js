@@ -1197,8 +1197,12 @@ return view.extend({
 				});
 			}
 		};
-		
-		o = s.taboption('smstab' , form.Value, 'callport', _('Call log reading port'),
+
+		//TAB CALL LOG
+
+		s.tab('calllogtab', _('Call Log Settings'));
+
+		o = s.taboption('calllogtab' , form.Value, 'callport', _('Call log reading port'),
 			_('Select one of the available ttyUSBX ports.'));
 		devs.sort((a, b) => a.name > b.name);
 		devs.forEach(dev => o.value('/dev/' + dev.name));
@@ -1206,7 +1210,7 @@ return view.extend({
 		o.placeholder = _('Please select a port');
 		o.rmempty = false;
 		
-        o = s.taboption('smstab', form.Flag, 'calllog_enabled', _('Enable call log daemon'),
+        o = s.taboption('calllogtab', form.Flag, 'calllog_enabled', _('Enable call log daemon'),
 	        _('Background process to log incoming and missed calls.'));
         o.rmempty = false;
         o.default = '0';
