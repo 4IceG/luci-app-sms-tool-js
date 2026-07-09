@@ -1,0 +1,100 @@
+#!/bin/sh
+#
+# luci-app-sms-tool-js: auto-configure ports for known modems by USB VID:PID.
+# Fills in ONLY empty options - never overrides the user's manual choice.
+#
+# Compal RXM-G1 (custom firmware, reports itself as
+# "Tri Cascade Inc. VOS_5G", revision contains RXMG1), VID:PID 05c6:90d6.
+# The AT port (usually /dev/ttyUSB1 on the stock composition) is not
+# hardcoded but probed: the DIAG port does not answer "AT", the AT port
+# replies OK. The firmware supports the full SMS command set
+# (+CMGF/+CMGL/+CMGS/...) and +CUSD (confirmed via an AT$QCCLAC dump),
+# but the modem is managed by ModemManager over MBIM, which captures all
+# messaging - so both SMS and USSD are switched to the mmcli-based path
+# (sms_via_mm/ussd_via_mm). Can be disabled in the app settings.
+
+[ "$ACTION" = "add" ] || exit 0
+[ "$DEVTYPE" = "usb_device" ] || exit 0
+
+case "$PRODUCT" in
+	5c6/90d6/*) ;;
+	*) exit 0 ;;
+esac
+
+# Everything below runs detached: tty ports show up after the usb_device event
+(
+	# the package config must exist
+	uci -q get sms_tool_js.@sms_tool_js[0] >/dev/null || exit 0
+	command -v sms_tool >/dev/null || exit 0
+
+	# vid:pid of the usb device owning a given ttyUSBx
+	tty_vidpid() {
+		p=$(readlink -f "/sys/class/tty/$1/device" 2>/dev/null)
+		while [ -n "$p" ] && [ "$p" != "/" ]; do
+			if [ -f "$p/idVendor" ] && [ -f "$p/idProduct" ]; then
+				echo "$(cat "$p/idVendor"):$(cat "$p/idProduct")"
+				return
+			fi
+			p="${p%/*}"
+		done
+	}
+
+	ATPORT=""
+	# up to 3 attempts: the ports may take a while to appear, and during
+	# boot the AT port may be briefly held by ModemManager
+	for try in 1 2 3; do
+		sleep 5
+		for tty in /sys/class/tty/ttyUSB*; do
+			[ -e "$tty" ] || continue
+			t="${tty##*/}"
+			[ "$(tty_vidpid "$t")" = "05c6:90d6" ] || continue
+			# the DIAG port stays silent and trips the 5s sms_tool
+			# timeout, the AT port answers OK
+			if sms_tool -d "/dev/$t" at "AT" >/dev/null 2>&1; then
+				ATPORT="/dev/$t"
+				break 2
+			fi
+		done
+	done
+
+	[ -n "$ATPORT" ] || exit 0
+
+	set_if_empty() {
+		[ -z "$(uci -q get "sms_tool_js.@sms_tool_js[0].$1")" ] && \
+			uci set "sms_tool_js.@sms_tool_js[0].$1=$2"
+	}
+
+	set_if_empty readport "$ATPORT"
+	set_if_empty sendport "$ATPORT"
+	set_if_empty ussdport "$ATPORT"
+	set_if_empty atport "$ATPORT"
+
+	# SMS and USSD via ModemManager when available (see the file header)
+	if command -v mmcli >/dev/null 2>&1; then
+		set_if_empty ussd_via_mm '1'
+		set_if_empty sms_via_mm '1'
+	fi
+
+	uci commit sms_tool_js
+
+	# SMS reception: the factory WMS routes of this firmware store incoming
+	# messages in NV, where MBIM/ModemManager cannot read them - a message
+	# either hangs forever in the "receiving" state with no text, or is
+	# silently lost. Redirect classes 1-3 and none to the SIM (uim) - then
+	# ModemManager receives messages correctly (verified on real hardware).
+	# The routes survive a ModemManager restart, but we set them on every
+	# device appearance in case they reset on a modem power cycle.
+	if command -v qmicli >/dev/null 2>&1; then
+		for wdm in /dev/cdc-wdm*; do
+			[ -c "$wdm" ] || continue
+			for c in 1 2 3 none; do
+				qmicli -p -d "$wdm" \
+					--wms-set-routes="type=point,class=$c,storage=uim,receipt-action=store-and-notify" \
+					>/dev/null 2>&1
+			done
+			break
+		done
+	fi
+) >/dev/null 2>&1 &
+
+exit 0

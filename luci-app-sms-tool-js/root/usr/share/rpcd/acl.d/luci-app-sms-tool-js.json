@@ -7,6 +7,8 @@
 				"/sys/class/leds": [ "list" ],
 				"/dev": [ "list" ],
 				"/usr/bin/sms_tool": [ "exec" ],
+				"/usr/bin/mmcli": [ "exec" ],
+				"/usr/bin/sms_tool_mm": [ "exec" ],
 				"/etc/init.d/my_new_sms": [ "exec" ],
 				"/etc/init.d/sms_tool_calllogd": [ "exec" ],
 				"/etc/init.d/led": [ "exec" ],

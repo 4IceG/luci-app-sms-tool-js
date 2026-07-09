@@ -200,7 +200,7 @@ function save_count() {
 		var storeL = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'storage'));
 		var portR = (uci.get('sms_tool_js', '@sms_tool_js[0]', 'readport'));
 
-			L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+			L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 					.then(function(res) {
 							if (res) {
 								var total = res.substring(res.indexOf("total"));
@@ -216,6 +216,16 @@ function save_count() {
 							}
 			});
 	});
+}
+
+
+/* Binary used for SMS operations: on modems managed by ModemManager
+   (MBIM/QMI, e.g. Compal RXM-G1) sms_tool on the AT port never sees
+   incoming messages and cannot send - use the mmcli wrapper instead.
+   The sms_via_mm option is set by the hotplug script (by VID:PID) or
+   by the user. */
+function smsToolBin() {
+	return uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_via_mm') == '1' ? '/usr/bin/sms_tool_mm' : '/usr/bin/sms_tool';
 }
 
 return view.extend({
@@ -420,14 +430,14 @@ return view.extend({
 							var portDA = sections[0].readport;
 							var storeDA = sections[0].storage;
 
-							fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDA , 'delete' , 'all' ]);
+							fs.exec_direct(smsToolBin(), [ '-d' , portDA , 'delete' , 'all' ]);
 							document.getElementById("ch-all").checked = false;
 
 							var rowCount = smsTable.rows.length;
 							for (var i = rowCount - 1; i > 0; i--) {
             					smsTable.deleteRow(i);}
     							setTimeout(function() {
-								L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeDA , '-d' , portDA , 'status' ]))
+								L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeDA , '-d' , portDA , 'status' ]))
 									.then(function(res) {
 										if (res) {
 											var total = res.substring(res.indexOf("total"));
@@ -503,9 +513,9 @@ return view.extend({
 
 									if (!Number.isNaN(smsnr[i]))
 										{
-										fs.exec_direct('/usr/bin/sms_tool', [ '-d' , portDEL , 'delete' , smsnr[i] ]);
+										fs.exec_direct(smsToolBin(), [ '-d' , portDEL , 'delete' , smsnr[i] ]);
                 						smsdeleted++;
-										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
 											var total = res.substring(res.indexOf("total"));
@@ -519,7 +529,7 @@ return view.extend({
 										});
 				
 										}
-										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
 											var total = res.substring(res.indexOf("total"));
@@ -537,7 +547,7 @@ return view.extend({
 											var hidecount = document.getElementById('deleteinfo');
 											uci.load('sms_tool_js').then(function() {
 												var savedCount = uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_count') || '';
-												L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+												L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 												.then(function(verifyRes) {
 													if (verifyRes) {
 														var verifyUsed = verifyRes.substring(17, verifyRes.indexOf("total"));
@@ -560,7 +570,7 @@ return view.extend({
 										}
 									}, 1500 * i);
 								})(i);
-										L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+										L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 										.then(function(res) {
 										if (res) {
 											var total = res.substring(res.indexOf("total"));
@@ -651,7 +661,7 @@ return view.extend({
 					}
 			}
 
-		L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , 'status' ]))
+		L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , 'status' ]))
 				.then(function(res) {
 					if (res) {
 							var total = res.substring(res.indexOf("total"));
@@ -660,17 +670,19 @@ return view.extend({
 							var used = res.substring(17, res.indexOf("total"));
 							var u = used.replace ( /[^\d.]/g, '' );
 
-						L.resolveDefault(fs.exec_direct('/usr/bin/sms_tool', [ '-s' , storeL , '-d' , portR , '-f' , '%Y-%m-%d %H:%M' , '-j' , 'recv' , '2>/dev/null' ]))
+						L.resolveDefault(fs.exec_direct(smsToolBin(), [ '-s' , storeL , '-d' , portR , '-f' , '%Y-%m-%d %H:%M' , '-j' , 'recv' , '2>/dev/null' ]))
 							.then(function(res2) {
 								if (res2) {
 
  									var table = document.getElementById('smsTable');
 									while (table.rows.length > 1) { table.deleteRow(1); }					
 
-									var start = res2.substring(7);
-									var end = start.substring(0,start.length-2);
-
-									var json = JSON.parse(end);
+									/* Proper parsing instead of positional slicing:
+									   substring(7) relied on the exact byte format
+									   of sms_tool ({"msg":[...]}) and broke on any
+									   other valid JSON (e.g. from sms_tool_mm/jshn,
+									   which prints spaces). */
+									var json = JSON.parse(res2).msg || [];
 
 									var aidx = [];
 

@@ -1,0 +1,160 @@
+#!/bin/sh
+#
+# sms_tool-compatible wrapper around ModemManager (mmcli).
+#
+# For modems managed by ModemManager over MBIM/QMI (e.g. Compal RXM-G1 /
+# "Tri Cascade Inc. VOS_5G", 05c6:90d6): incoming SMS are captured by
+# ModemManager and never show up in the AT storages (+CMGL), so the
+# regular sms_tool reads nothing. Sending over the AT port (+CMGS) is
+# also unreliable on such firmwares. This wrapper accepts the same
+# arguments as sms_tool (subset: recv/status/send/delete, flags
+# -s/-d/-f/-j) and prints output in the same format, so
+# luci-app-sms-tool-js works with it without markup changes. The binary
+# is selected via the uci option sms_tool_js.@sms_tool_js[0].sms_via_mm
+# (set by the hotplug script or by the user).
+#
+. /usr/share/libubox/jshn.sh
+
+DATEFMT="%Y-%m-%d %H:%M"
+JSONOUT=0
+CMD=""
+A1=""
+A2=""
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-f) DATEFMT="$2"; shift 2 ;;
+		-j) JSONOUT=1; shift ;;
+		# port and storage are meaningless here - ModemManager owns the modem
+		-s|-d|-b|-c|-p|-t|-C) shift 2 ;;
+		-*) shift ;;
+		*)
+			CMD="$1"
+			A1="$2"
+			A2="$3"
+			break
+			;;
+	esac
+done
+
+[ -n "$CMD" ] || { echo "usage: sms_tool_mm [flags] recv|status|send|delete ..." >&2; exit 1; }
+
+command -v mmcli >/dev/null 2>&1 || { echo "mmcli not found" >&2; exit 1; }
+
+# SMS object path -> index
+sms_index() {
+	echo "${1##*/}"
+}
+
+# mmcli ISO timestamp (2026-07-09T22:22:55+03:00) -> DATEFMT
+fmt_ts() {
+	TS="${1%%+*}"
+	TS="${TS%%-[0-9][0-9]:[0-9][0-9]}"
+	[ -n "$TS" ] || { echo ""; return; }
+	date -D '%Y-%m-%dT%H:%M:%S' -d "$TS" +"$DATEFMT" 2>/dev/null || echo "$1"
+}
+
+list_paths() {
+	LIST=$(mmcli -m any --messaging-list-sms -J 2>/dev/null) || return 1
+	jsonfilter -s "$LIST" -e '@["modem.messaging.sms"][*]' 2>/dev/null
+}
+
+case "$CMD" in
+
+recv)
+	[ "$JSONOUT" = "1" ] && {
+		json_init
+		json_add_array msg
+	}
+	for P in $(list_paths); do
+		SJ=$(mmcli -s "$P" -J 2>/dev/null) || continue
+		TYPE=$(jsonfilter -s "$SJ" -e '@.sms.properties["pdu-type"]' 2>/dev/null)
+		[ "$TYPE" = "deliver" ] || continue
+		STATE=$(jsonfilter -s "$SJ" -e '@.sms.properties.state' 2>/dev/null)
+		[ "$STATE" = "received" ] || continue
+		NUM=$(jsonfilter -s "$SJ" -e '@.sms.content.number' 2>/dev/null)
+		TEXT=$(jsonfilter -s "$SJ" -e '@.sms.content.text' 2>/dev/null)
+		TS=$(fmt_ts "$(jsonfilter -s "$SJ" -e '@.sms.properties.timestamp' 2>/dev/null)")
+		IDX=$(sms_index "$P")
+		if [ "$JSONOUT" = "1" ]; then
+			json_add_object ""
+			json_add_int index "$IDX"
+			json_add_string sender "$NUM"
+			json_add_string timestamp "$TS"
+			json_add_string content "$TEXT"
+			json_close_object
+		else
+			printf 'MSG: %s\nFrom: %s\nDate/Time: %s\n%s\n\n' "$IDX" "$NUM" "$TS" "$TEXT"
+		fi
+	done
+	[ "$JSONOUT" = "1" ] && {
+		json_close_array
+		json_dump
+	}
+	;;
+
+status)
+	# format and prefix width matter: readsms.js extracts the used count
+	# as substring(17, indexOf("total")) - "Storage type: MT," is exactly
+	# 17 characters
+	USED=0
+	for P in $(list_paths); do
+		SJ=$(mmcli -s "$P" -J 2>/dev/null) || continue
+		TYPE=$(jsonfilter -s "$SJ" -e '@.sms.properties["pdu-type"]' 2>/dev/null)
+		STATE=$(jsonfilter -s "$SJ" -e '@.sms.properties.state' 2>/dev/null)
+		[ "$TYPE" = "deliver" ] && [ "$STATE" = "received" ] && USED=$((USED + 1))
+	done
+	printf 'Storage type: MT, used: %d, total: 255\n' "$USED"
+	;;
+
+send)
+	PHONE="$A1"
+	TEXT="$A2"
+	[ -n "$PHONE" ] && [ -n "$TEXT" ] || { echo "sms not sent, command error" >&2; exit 1; }
+
+	# mmcli key='value' syntax: a single quote inside the text breaks the
+	# parser - replace it with a typographic apostrophe
+	case "$TEXT" in
+		*"'"*) TEXT=$(printf '%s' "$TEXT" | sed "s/'/\xe2\x80\x99/g") ;;
+	esac
+
+	OUT=$(mmcli -m any --messaging-create-sms="text='$TEXT',number='$PHONE'" 2>&1)
+	P=$(printf '%s' "$OUT" | grep -o '/org/freedesktop/ModemManager1/SMS/[0-9]*' | head -1)
+	[ -n "$P" ] || { echo "sms not sent, command error" >&2; echo "$OUT" >&2; exit 1; }
+
+	if ERR=$(mmcli -s "$P" --send 2>&1); then
+		# same success line as sms_tool (incl. the 'sucessfully' typo)
+		echo "sms sent sucessfully: $(sms_index "$P")"
+		# sms_tool does not keep sent messages - clean up the MM object
+		mmcli -m any --messaging-delete-sms="$(sms_index "$P")" >/dev/null 2>&1
+	else
+		# do not accumulate drafts
+		mmcli -m any --messaging-delete-sms="$(sms_index "$P")" >/dev/null 2>&1
+		CODE=$(printf '%s' "$ERR" | sed -n 's/.*Error\.\([^:]*\):.*/\1/p' | head -1)
+		[ -n "$CODE" ] || CODE=$(printf '%s' "$ERR" | head -1)
+		echo "sms not sent, code: $CODE" >&2
+		printf '%s\n' "$ERR" >&2
+		exit 1
+	fi
+	;;
+
+delete)
+	if [ "$A1" = "all" ]; then
+		N=0
+		for P in $(list_paths); do
+			mmcli -m any --messaging-delete-sms="$(sms_index "$P")" >/dev/null 2>&1 && N=$((N + 1))
+		done
+		echo "delete msg from 0 to $N"
+	else
+		mmcli -m any --messaging-delete-sms="$A1" >/dev/null 2>&1
+		echo "delete msg from $A1 to $A1"
+	fi
+	;;
+
+*)
+	echo "sms_tool_mm: unsupported command: $CMD" >&2
+	exit 1
+	;;
+esac
+
+exit 0

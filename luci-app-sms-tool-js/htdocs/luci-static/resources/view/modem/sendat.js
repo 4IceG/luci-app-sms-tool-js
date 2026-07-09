@@ -131,7 +131,7 @@ return view.extend({
 				if (cmd.trim()) {
 					let fields = cmd.split(/;/);
 					let name = fields[0];
-					let code = fields[1] || fields[0];
+					let code = fields.slice(1).join(";") || fields[0];
 					let option = document.createElement('option');
 					option.value = code;
 					option.textContent = name;
@@ -282,7 +282,7 @@ return view.extend({
 											if (cmd.trim()) {
 												let fields = cmd.split(/;/);
 												let name = fields[0];
-												let code = fields[1] || fields[0];
+												let code = fields.slice(1).join(";") || fields[0];
 												let option = document.createElement('option');
 												option.value = code;
 												option.textContent = name;
@@ -347,7 +347,7 @@ return view.extend({
 											if (!cmd.trim()) return null;
 											let fields = cmd.split(/;/);
 											let name = fields[0];
-											let code = fields[1] || fields[0];
+											let code = fields.slice(1).join(";") || fields[0];
 											return E('option', { 'value': code }, name );
 										}).filter(function(opt) { return opt !== null; });
 									})()

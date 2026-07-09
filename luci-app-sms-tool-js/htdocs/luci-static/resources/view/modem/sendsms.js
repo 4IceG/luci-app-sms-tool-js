@@ -12,6 +12,16 @@
 	Licensed to the GNU General Public License v3.0.
 */
 
+
+/* Binary used for SMS operations: on modems managed by ModemManager
+   (MBIM/QMI, e.g. Compal RXM-G1) sms_tool on the AT port never sees
+   incoming messages and cannot send - use the mmcli wrapper instead.
+   The sms_via_mm option is set by the hotplug script (by VID:PID) or
+   by the user. */
+function smsToolBin() {
+	return uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_via_mm') == '1' ? '/usr/bin/sms_tool_mm' : '/usr/bin/sms_tool';
+}
+
 return view.extend({
 
 	isUnicode: function(text) {
@@ -327,7 +337,7 @@ return view.extend({
 						    return false;
 						}
 						else {
-						    return this.handleCommand('sms_tool', [ '-d' , port , 'send' , phn , get_smstxt ]);
+						    return this.handleCommand(smsToolBin(), [ '-d' , port , 'send' , phn , get_smstxt ]);
 						}
 					}
 		        }
@@ -364,7 +374,7 @@ return view.extend({
 									let out = document.querySelector('.smscommand-output');
 									out.style.display = '';
 
-									fs.exec_direct('/usr/bin/sms_tool', [ '-d' , port , 'send' , phone , get_smstxt ]);
+									fs.exec_direct(smsToolBin(), [ '-d' , port , 'send' , phone , get_smstxt ]);
 
 									res.stdout += (i+1)+_('/')+xs.length+' * '+_('[Bot] Message sent to number:') + ' ' + phone +'\n';
 									res.stdout = res.stdout.replace(/undefined/g, "");

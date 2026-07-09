@@ -1,2 +1,5 @@
 Signal Quality/Strength ➜ AT+CSQ;AT+CSQ
 
+Carrier Aggregation Info (Compal RXM-G1);AT+LCAINFO
+Extended Signal Quality (CESQ);AT+CESQ
+Base Station Info + Signal (Compal RXM-G1);AT+BINFO;+CESQ

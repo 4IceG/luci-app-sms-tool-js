@@ -48,6 +48,20 @@ return view.extend({
 			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 			res.stderr = res.stderr?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 
+			/* mmcli prints the network reply in single quotes inside its
+			   service text (stdout) — show only the reply itself. The
+			   capture is greedy, up to the last quote: the reply may
+			   contain apostrophes. Errors (stderr) are left untouched
+			   and shown as-is. */
+			if (exec == 'mmcli') {
+				let mm = (res.stdout || '').match(/(?:reply from network|response)[^']*'([\s\S]+)'/) ||
+					(res.stdout || '').match(/'([\s\S]+)'/);
+				if (mm && mm[1]) {
+					res.stdout = mm[1];
+					res.stderr = '';
+				}
+			}
+
 			if (res.stdout === undefined || res.stderr === undefined || res.stderr.includes('undefined') || res.stdout.includes('undefined')) {
 				return;
 			} else {
@@ -241,6 +255,19 @@ return view.extend({
 		});
 	},
 
+	/* Modem number in ModemManager (for the ussd_via_mm mode): the index
+	   is not stable — it changes after a reboot/reconnect, so ask
+	   mmcli -L every time */
+	getMMModemNumber: function() {
+		return fs.exec('mmcli', ['-L']).then(function(res) {
+			let out = ((res.stdout || '') + '\n' + (res.stderr || '')).trim();
+			let m = out.match(/\/Modem\/(\d+)/);
+			if (m && m[1])
+				return m[1];
+			return Promise.reject(_('No modems found by ModemManager (mmcli -L).'));
+		});
+	},
+
 	handleGo: function(ev) {
 		let ussd = document.getElementById('cmdvalue').value;
 		let sections = uci.sections('sms_tool_js');
@@ -248,11 +275,27 @@ return view.extend({
 		let get_ussd = sections[0].ussd;
 		let get_pdu = sections[0].pdu;
 		let get_coding = sections[0].coding;
+		let get_via_mm = sections[0].ussd_via_mm;
 		let tool_args = [];
 
 		if ( ussd.length < 1 ) {
 			ui.addNotification(null, E('p', _('Please specify the code to send')), 'info');
 			return false;
+		}
+
+		/* USSD via ModemManager — for modems whose +CUSD on the AT port
+		   does not work (or is unverified) while the modem is managed
+		   by ModemManager (e.g. Compal RXM-G1 / Tri Cascade VOS_5G).
+		   No port is needed in this mode. */
+		if (get_via_mm == '1') {
+			let self = this;
+			return this.getMMModemNumber()
+				.then(function(modemNum) {
+					return self.handleCommand('mmcli', ['-m', modemNum, '--timeout=30', '--3gpp-ussd-initiate=' + ussd]);
+				})
+				.catch(function(err) {
+					ui.addNotification(null, E('p', [ _('Failed to detect modem: ') + String(err) ]), 'danger');
+				});
 		}
 
 		if ( !port ) {

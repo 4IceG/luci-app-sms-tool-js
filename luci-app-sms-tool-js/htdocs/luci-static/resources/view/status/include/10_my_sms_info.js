@@ -13,6 +13,12 @@
 */
 
 
+
+/* See readsms.js: SMS via the mmcli wrapper for ModemManager-managed modems */
+function smsToolBin() {
+	return uci.get('sms_tool_js', '@sms_tool_js[0]', 'sms_via_mm') == '1' ? '/usr/bin/sms_tool_mm' : '/usr/bin/sms_tool';
+}
+
 return baseclass.extend({
 	title: _('Modems'),
 
@@ -202,7 +208,7 @@ return baseclass.extend({
 		let storageType = storage || 'MS';
 		
 		return L.resolveDefault(
-			fs.exec('/usr/bin/sms_tool', ['-s', storageType, '-d', comm_port, 'status']),
+			fs.exec(smsToolBin(), ['-s', storageType, '-d', comm_port, 'status']),
 			null
 		).then(function(res) {
 			if (!res || res.code !== 0) return 0;

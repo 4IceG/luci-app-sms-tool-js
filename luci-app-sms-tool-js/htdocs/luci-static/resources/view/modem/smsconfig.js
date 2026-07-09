@@ -1099,12 +1099,17 @@ return view.extend({
 		s.tab('smstab' , _('SMS Settings'));
 		s.anonymous = true;
 
-		o = s.taboption('smstab' , form.Value, 'readport', _('SMS reading port'), 
+		o = s.taboption('smstab' , form.Value, 'readport', _('SMS reading port'),
 			_('Select one of the available ttyUSBX ports.'));
 		devs.sort((a, b) => a.name > b.name);
 		devs.forEach(dev => o.value('/dev/' + dev.name));
 
 		o.placeholder = _('Please select a port');
+		o.rmempty = false;
+
+		o = s.taboption('smstab', form.Flag, 'sms_via_mm', _('Read and send SMS via ModemManager (mmcli)'),
+		_('For modems managed by ModemManager over MBIM/QMI (e.g. Compal RXM-G1 / Tri Cascade VOS_5G): incoming messages are captured by ModemManager and never appear in AT storages, so sms_tool cannot see them. In this mode port and storage settings are not used. Requires the modemmanager package.')
+		);
 		o.rmempty = false;
 
 		o = s.taboption('smstab', form.ListValue, 'storage', _('Message storage area'),
@@ -1545,6 +1550,11 @@ return view.extend({
 		o.value('0', _('7Bit'));
 		o.value('2', _('UCS2'));
 		o.default = 'auto';
+
+		o = s.taboption('ussd', form.Flag, 'ussd_via_mm', _('Send USSD via ModemManager (mmcli)'),
+		_('Use ModemManager instead of sms_tool to send USSD codes. For modems that are managed by ModemManager and do not handle +CUSD on the AT port properly (e.g. Compal RXM-G1 / Tri Cascade VOS_5G). Requires the modemmanager package. The USSD port setting is not used in this mode.')
+		);
+		o.rmempty = false;
 
 		o = s.taboption('ussd', form.Button, '_ussd_manage');
 		o.title = _('User USSD codes');
