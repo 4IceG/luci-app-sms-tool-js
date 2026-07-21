@@ -56,7 +56,7 @@ send_email() {
         *) security_opts="-starttls -auth-login" ;;
     esac
     
-    result=$(mailsend $security_opts \
+    result=$(mailsend $security_opts -ehlo \
         -smtp "$smtp" -port "$port" \
         -ct 5 -read-timeout 5 \
         -cs utf-8 \
