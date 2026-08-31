@@ -874,3 +874,15 @@ msgstr "Nastavení protokolu hovorů"
 
 msgid "Background process to log incoming and missed calls. <br /><br /><b>Important</b> <br />Option dedicated to Qualcomm modems that do not have internal call history memory and do not support the standard AT+CPBR command. Enabling this option adds a new tab. If dedicated tab does not appear, clear your browser cache and restart the router."
 msgstr "Proces na pozadí pro zaznamenávání příchozích a zmeškaných hovorů. <br /><br /><b>Důležité</b> <br />Tato volba je určena pro modemy Qualcomm, které nemají interní paměť historie hovorů a nepodporují standardní příkaz AT+CPBR. Povolení této volby přidá novou záložku. Pokud se záložka nezobrazí, vymažte mezipaměť prohlížeče a restartujte router."
+
+msgid "Force EHLO"
+msgstr "Vynutit EHLO"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "Vynutí, aby mailsend vždy používal EHLO místo automatické detekce HELO/EHLO. <br />Zapněte pouze v případě, že přeposílání selhává, protože některé servery (např. firemní brány, Microsoft 365 / Exchange Online Protection) řádně neoznamují podporu ESMTP, což narušuje STARTTLS/autentizaci."
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "Kódování Unicode (výchozí 70 znaků) podporuje přenos národních znaků a vícedílných SMS zpráv"
+
+msgid "Not applicable"
+msgstr "Nevztahuje se"

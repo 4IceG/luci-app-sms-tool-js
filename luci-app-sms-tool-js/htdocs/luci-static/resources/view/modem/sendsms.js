@@ -151,34 +151,12 @@ return view.extend({
 			unicodeRadio.checked = true;
 			let maxLength = 70;
 			let currentLength = this.getUnicodeLength(text);
-			counter.innerHTML = (maxLength - currentLength);
 			
 			if (currentLength > maxLength) {
-				let newText = '';
-				let length = 0;
-				for (let i = 0; i < text.length; i++) {
-					let charCode = text.charCodeAt(i);
-					let charLength = 1;
-					
-					if (charCode >= 0xD800 && charCode <= 0xDBFF && i + 1 < text.length) {
-						charLength = 2;
-						if (length + charLength <= maxLength) {
-							newText += text.charAt(i) + text.charAt(i + 1);
-							i++;
-						} else {
-							break;
-						}
-					} else {
-						if (length + charLength <= maxLength) {
-							newText += text.charAt(i);
-						} else {
-							break;
-						}
-					}
-					length += charLength;
-				}
-				textarea.value = newText;
-				counter.innerHTML = (maxLength - length);
+				// Multipart SMS
+				counter.innerHTML = _('Not applicable');
+			} else {
+				counter.innerHTML = (maxLength - currentLength);
 			}
 		} else {
 			gsm7Radio.checked = true;
@@ -238,32 +216,11 @@ return view.extend({
 			let currentLength = this.getUnicodeLength(textarea.value);
 			
 			if (currentLength > maxLength) {
-				let newText = '';
-				let length = 0;
-				for (let i = 0; i < textarea.value.length; i++) {
-					let charCode = textarea.value.charCodeAt(i);
-					let charLength = 1;
-					
-					if (charCode >= 0xD800 && charCode <= 0xDBFF && i + 1 < textarea.value.length) {
-						charLength = 2;
-						if (length + charLength <= maxLength) {
-							newText += textarea.value.charAt(i) + textarea.value.charAt(i + 1);
-							i++;
-						} else {
-							break;
-						}
-					} else {
-						if (length + charLength <= maxLength) {
-							newText += textarea.value.charAt(i);
-						} else {
-							break;
-						}
-					}
-					length += charLength;
-				}
-				textarea.value = newText;
+				// Multipart SMS
+				counter.innerHTML = _('Not applicable');
+			} else {
+				counter.innerHTML = (maxLength - currentLength);
 			}
-			counter.innerHTML = (maxLength - this.getUnicodeLength(textarea.value));
 		}
 		this.updateMessageCounter();
 	},
@@ -281,10 +238,10 @@ return view.extend({
 			res.stdout = res.stdout?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 			res.stderr = res.stderr?.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "") || '';
 
-	 		let cut = res.stdout;
-			cut = cut.substr(0, 20);
-			if ( cut == "sms sent sucessfully" ) {
-        		res.stdout = _('SMS sent sucessfully');
+			let match = res.stdout.match(/^sms sent suc{1,2}essfully(?:\s*:\s*(\d+))?/i);
+			if ( match ) {
+				let digit = match[1];
+				res.stdout = _('SMS sent sucessfully') + (digit ? ':' + ' ' + digit : '');
 			}
 
 			dom.content(out, [ res.stdout || '', res.stderr || '' ]);
@@ -607,7 +564,7 @@ return view.extend({
 									]),
 									' \u00a0\u00a0\u00a0 ',
 									E('label', {
-										'data-tooltip': _('Unicode encoding (70 characters), does not support sending national characters (in utf8) - only ascii')
+										'data-tooltip': _('Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages')
 									}, [
 										E('input', {
 											'type': 'radio',
@@ -694,7 +651,7 @@ return view.extend({
                 ]);
             },
 
-handleSaveApply: null,
-handleSave: null,
-handleReset: null
+    handleSaveApply: null,
+    handleSave: null,
+    handleReset: null
 });

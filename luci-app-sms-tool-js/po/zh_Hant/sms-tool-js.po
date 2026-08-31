@@ -952,4 +952,16 @@ msgstr "通話紀錄設定"
 msgid "Background process to log incoming and missed calls. <br /><br /><b>Important</b> <br />Option dedicated to Qualcomm modems that do not have internal call history memory and do not support the standard AT+CPBR command. Enabling this option adds a new tab. If dedicated tab does not appear, clear your browser cache and restart the router."
 msgstr "用於記錄來電和未接來電的背景程序。<br /><br /><b>重要</b> <br />此選項專為沒有內部通話記錄記憶體且不支援標準AT+CPBR指令的高通數據機所設計。啟用此選項將新增一個新分頁。如果專用分頁未出現，請清除瀏覽器快取並重新啟動路由器。"
 
+msgid "Force EHLO"
+msgstr "強制使用 EHLO"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "強制 mailsend 一律使用 EHLO,而不是自動偵測 HELO/EHLO。<br />僅在轉發失敗時才啟用此選項,因為某些伺服器(例如企業閘道、Microsoft 365 / Exchange Online Protection)未正確宣告支援 ESMTP,導致 STARTTLS/驗證無法正常運作。"
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "Unicode 編碼(預設70個字元)支援傳輸國家字元及多部分簡訊"
+
+msgid "Not applicable"
+msgstr "不適用"
+
 

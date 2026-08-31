@@ -951,3 +951,15 @@ msgstr "Die Diode ist nur für diese Benachrichtigungen reserviert"
 
 msgid "Select 'No' in case the router has only one LED or if the LED is multi-tasking. <br /><br /><b>Important</b> <br />This option requires LED to be defined in the system (if possible) to work properly. This requirement applies when the diode supports multiple tasks."
 msgstr "Wählen Sie 'Nein', falls der Router nur eine LED hat oder wenn die LED mehrfach belegt ist. <br /><br /><b>Wichtig</b> <br />Diese Option erfordert die Definition der LED im System (falls möglich), um ordnungsgemäß zu funktionieren. Dies gilt, wenn die Diode mehrere Aufgaben unterstützt."
+
+msgid "Force EHLO"
+msgstr "EHLO erzwingen"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "Erzwingt, dass mailsend immer EHLO verwendet, anstatt HELO/EHLO automatisch zu erkennen. <br />Nur aktivieren, wenn die Weiterleitung fehlschlägt, da manche Server (z. B. Unternehmens-Gateways, Microsoft 365 / Exchange Online Protection) die ESMTP-Unterstützung nicht korrekt ankündigen, wodurch STARTTLS/Authentifizierung nicht funktioniert."
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "Die Unicode-Kodierung (standardmäßig 70 Zeichen) unterstützt die Übertragung nationaler Sonderzeichen und mehrteiliger SMS-Nachrichten"
+
+msgid "Not applicable"
+msgstr "Nicht zutreffend"

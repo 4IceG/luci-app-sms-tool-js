@@ -327,7 +327,8 @@ return baseclass.extend({
 		}
 		
 		let signalIcon = this.getSignalIcon(signalQuality);
-		let smsIconUrl = L.resource('icons/newdelsms.png');
+		let smsIconUrl = L.resource('icons/redrawsms.svg');
+
 		
 		if (!hasFullData) {
 			return E('div', { 

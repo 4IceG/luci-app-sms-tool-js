@@ -1478,6 +1478,13 @@ return view.extend({
 		o.default   = 'tls';
 		o.modalonly = true;
 
+		o = s.taboption('email', form.Flag, 'forward_sms_mail_ehlo', _('Force EHLO'));
+		o.description = _('Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. \
+			<br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don\'t properly advertise ESMTP support, which breaks STARTTLS/authentication.');
+		o.rmempty  = false;
+		o.default  = '0';
+		o.modalonly = true;
+
 		o = s.taboption('email', form.DummyValue, '_dummy_mailsend');
 		o.rawhtml = true;
 		o.render = function() {

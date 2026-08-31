@@ -18,6 +18,7 @@ send_email() {
     local smtp=$(uci -q get sms_tool_js.@sms_tool_js[0].forward_sms_mail_smtp)
     local port=$(uci -q get sms_tool_js.@sms_tool_js[0].forward_sms_mail_smtp_port)
     local security=$(uci -q get sms_tool_js.@sms_tool_js[0].forward_sms_mail_security)
+    local ehlo=$(uci -q get sms_tool_js.@sms_tool_js[0].forward_sms_mail_ehlo)
 
     if [ -z "$to" ]; then
         echo "Recipient email address is not configured"
@@ -55,6 +56,10 @@ send_email() {
         tls) security_opts="-starttls -auth-login" ;;
         *) security_opts="-starttls -auth-login" ;;
     esac
+    
+    if [ "$ehlo" = "1" ]; then
+        security_opts="$security_opts -ehlo"
+    fi
     
     result=$(mailsend $security_opts \
         -smtp "$smtp" -port "$port" \

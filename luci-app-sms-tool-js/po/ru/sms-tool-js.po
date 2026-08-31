@@ -952,3 +952,15 @@ msgstr "Настройки журнала звонков"
 
 msgid "Background process to log incoming and missed calls. <br /><br /><b>Important</b> <br />Option dedicated to Qualcomm modems that do not have internal call history memory and do not support the standard AT+CPBR command. Enabling this option adds a new tab. If dedicated tab does not appear, clear your browser cache and restart the router."
 msgstr "Фоновый процесс для записи входящих и пропущенных звонков. <br /><br /><b>Важно</b> <br />Опция предназначена для модемов Qualcomm, у которых нет внутренней памяти истории звонков и которые не поддерживают стандартную команду AT+CPBR. Включение этой опции добавляет новую вкладку. Если вкладка не появится, очистите кеш браузера и перезапустите роутер."
+
+msgid "Force EHLO"
+msgstr "Принудительный EHLO"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "Заставляет mailsend всегда использовать EHLO вместо автоматического определения HELO/EHLO. <br />Включайте только если пересылка не работает, так как некоторые серверы (например, корпоративные шлюзы, Microsoft 365 / Exchange Online Protection) неправильно сообщают о поддержке ESMTP, из-за чего STARTTLS/аутентификация перестают работать."
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "Кодировка Unicode (по умолчанию 70 символов) поддерживает передачу национальных символов и многосоставных SMS-сообщений"
+
+msgid "Not applicable"
+msgstr "Не применимо"

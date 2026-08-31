@@ -750,7 +750,7 @@ return view.extend({
 												}, Object.create(null));
 											}
 													if (u){
-															var Lres = L.resource('icons/newdelsms.png');
+															var Lres = L.resource('icons/redrawsms.svg');
 
 															for (var i = 0; i < result.length; i++) {
             													var row = table.insertRow(-1);

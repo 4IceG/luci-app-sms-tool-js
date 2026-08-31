@@ -874,3 +874,15 @@ msgstr "Indstillinger for opkaldslog"
 
 msgid "Background process to log incoming and missed calls. <br /><br /><b>Important</b> <br />Option dedicated to Qualcomm modems that do not have internal call history memory and do not support the standard AT+CPBR command. Enabling this option adds a new tab. If dedicated tab does not appear, clear your browser cache and restart the router."
 msgstr "Baggrundsproces til registrering af indgående og mistede opkald. <br /><br /><b>Vigtigt</b> <br />Mulighed dedikeret til Qualcomm-modemer, der ikke har intern opkaldshistorikshukommelse og ikke understøtter standardkommandoen AT+CPBR. Aktivering af denne mulighed tilføjer en ny fane. Hvis den dedikerede fane ikke vises, skal du rydde din browsercache og genstarte routeren."
+
+msgid "Force EHLO"
+msgstr "Gennemtving EHLO"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "Tvinger mailsend til altid at bruge EHLO i stedet for automatisk at registrere HELO/EHLO. <br />Aktiver kun, hvis videresendelse fejler, da nogle servere (f.eks. virksomhedsgateways, Microsoft 365 / Exchange Online Protection) ikke korrekt annoncerer ESMTP-understøttelse, hvilket ødelægger STARTTLS/godkendelse."
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "Unicode-kodning (som standard 70 tegn) understøtter overførsel af nationale tegn og sms-beskeder i flere dele"
+
+msgid "Not applicable"
+msgstr "Ikke relevant"

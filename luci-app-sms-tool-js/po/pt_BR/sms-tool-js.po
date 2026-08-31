@@ -550,3 +550,15 @@ msgstr "Configurações do registro de chamadas"
 
 msgid "Background process to log incoming and missed calls. <br /><br /><b>Important</b> <br />Option dedicated to Qualcomm modems that do not have internal call history memory and do not support the standard AT+CPBR command. Enabling this option adds a new tab. If dedicated tab does not appear, clear your browser cache and restart the router."
 msgstr "Processo em segundo plano para registrar chamadas recebidas e perdidas. <br /><br /><b>Importante</b> <br />Opção dedicada a modems Qualcomm que não possuem memória interna de histórico de chamadas e não suportam o comando padrão AT+CPBR. Ativar esta opção adiciona uma nova aba. Se a aba dedicada não aparecer, limpe o cache do navegador e reinicie o roteador."
+
+msgid "Force EHLO"
+msgstr "Forçar EHLO"
+
+msgid "Forces mailsend to always use EHLO instead of auto-detecting HELO/EHLO. <br />Enable only if forwarding fails, since some servers (e.g. corporate gateways, Microsoft 365 / Exchange Online Protection) don't properly advertise ESMTP support, which breaks STARTTLS/authentication."
+msgstr "Força o mailsend a sempre usar EHLO em vez de detectar automaticamente HELO/EHLO. <br />Ative apenas se o encaminhamento falhar, já que alguns servidores (por exemplo, gateways corporativos, Microsoft 365 / Exchange Online Protection) não anunciam corretamente o suporte a ESMTP, o que impede o funcionamento do STARTTLS/autenticação."
+
+msgid "Unicode encoding (70 characters by default) supports the transmission of national characters and multipart sms messages"
+msgstr "A codificação Unicode (70 caracteres por padrão) oferece suporte à transmissão de caracteres nacionais e mensagens SMS multipartes"
+
+msgid "Not applicable"
+msgstr "Não aplicável"
