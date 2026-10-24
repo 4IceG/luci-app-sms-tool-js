@@ -130,6 +130,7 @@ return baseclass.extend({
 		style.type = 'text/css';
 		style.textContent = `
 			:root {
+				--sms-side-gap: clamp(4px, 3%, 12px);
 				--sms-badge-bg: #34c759;
 				--sms-badge-text: #ffffff;
 			}
@@ -191,6 +192,71 @@ return baseclass.extend({
 				text-overflow: ellipsis;
 				max-width: 100%;
 				display: block;
+			}
+
+			.modem-info-box .modem-info-content {
+				display: flex !important;
+				flex-direction: row !important;
+				align-items: stretch !important;
+				justify-content: center !important;
+				box-sizing: border-box !important;
+				width: 100% !important;
+				padding-left: var(--sms-side-gap) !important;
+				padding-right: var(--sms-side-gap) !important;
+			}
+			
+			.modem-info-box .modem-info-cell {
+				display: flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				box-sizing: border-box !important;
+				min-width: 0 !important;
+				padding: 2px !important;
+				text-align: center !important;
+			}
+			
+			.modem-info-box .modem-info-left {
+				flex: 2 1 0 !important;
+				flex-direction: column !important;
+			}
+			
+			.modem-info-box .modem-info-right {
+				flex: 1 1 0 !important;
+			}
+
+			.modem-info-box .modem-info-top {
+				display: flex !important;
+				flex-direction: row !important;
+				flex-wrap: nowrap !important;
+				align-items: center !important;
+				justify-content: center !important;
+				gap: 4px !important;
+				max-width: 100% !important;
+			}
+
+			.modem-info-box .modem-info-top img {
+				display: inline-block !important;
+				flex: 0 0 auto !important;
+				width: 28px !important;
+				height: 28px !important;
+				margin: 0 !important;
+				vertical-align: middle !important;
+			}
+
+			.modem-info-box .modem-info-operator {
+				font-size: 12px !important;
+				white-space: nowrap !important;
+				overflow: hidden !important;
+				text-overflow: ellipsis !important;
+				min-width: 0 !important;
+			}
+
+			.modem-info-box .modem-info-tech {
+				display: block !important;
+				width: 100% !important;
+				font-size: 10px !important;
+				text-align: center !important;
+				white-space: nowrap !important;
 			}
 		`;
 		document.head.appendChild(style);
@@ -375,49 +441,39 @@ return baseclass.extend({
 				E('span', { 'class': 'modem-name-truncate', 'title': modemName }, truncatedName)
 			]),
 			E('div', { 
-				'class': 'ifacebox-body',
-				'style': 'padding:4px 6px;display:block;'
+				'class': 'ifacebox-body modem-info-content',
+				'style': 'padding-top:8px;padding-bottom:8px;'
 			}, [
-				E('table', {
-					'style': 'width:100%;border:none;border-collapse:collapse;table-layout:fixed;margin:0;'
+				E('div', {
+					'class': 'modem-info-cell modem-info-left',
+					'style': 'text-align:center;',
+					'title': '%s: %d%%'.format(_('Signal Quality'), signalQuality)
 				}, [
-					E('tr', {}, [
-						E('td', {
-							'style': 'width:66%;border:none;padding:2px;vertical-align:middle;text-align:center;'
-						}, [
-							E('span', {
-								'title': '%s: %d%%'.format(_('Signal Quality'), signalQuality),
-								'style': 'display:inline-block;'
-							}, [
-								E('img', { 
-									'src': signalIcon,
-									'style': 'width:28px;height:28px;vertical-align:middle;'
-								}),
-								E('span', { 'style': 'vertical-align:middle;font-size:12px;' }, [
-									' ',
-									operator,
-									E('br'),
-									E('small', { 'style': 'font-size:10px;' }, technology)
-								])
-							])
-						]),
-						E('td', {
-							'style': 'width:34%;border:none;border-left:1px solid var(--border-color-medium);padding:2px;text-align:center;vertical-align:middle;'
-						}, [
-							E('span', {
-								'title': smsCount > 0 ? '%s: %d'.format(_('New SMS'), smsCount) : _('No new SMS'),
-								'style': 'position:relative;display:inline-block;',
-								'class': smsCount > 0 ? 'sms-icon-with-messages' : 'sms-icon-no-messages'
-							}, [
-								E('img', { 
-									'src': smsIconUrl,
-									'style': 'width:28px;height:28px;'
-								}),
-								smsCount > 0 ? E('span', {
-									'class': 'modem-sms-badge'
-								}, String(smsCount)) : ''
-							])
-						])
+					E('div', { 'class': 'modem-info-top' }, [
+						E('img', { 
+							'src': signalIcon,
+							'style': 'width:28px;height:28px;'
+						}),
+						E('span', { 'class': 'modem-info-operator' }, operator)
+					]),
+					E('small', { 'class': 'modem-info-tech' }, technology)
+				]),
+				E('div', {
+					'class': 'modem-info-cell modem-info-right',
+					'style': 'border-left:1px solid var(--border-color-medium);'
+				}, [
+					E('span', {
+						'title': smsCount > 0 ? '%s: %d'.format(_('New SMS'), smsCount) : _('No new SMS'),
+						'style': 'position:relative;display:inline-block;',
+						'class': smsCount > 0 ? 'sms-icon-with-messages' : 'sms-icon-no-messages'
+					}, [
+						E('img', { 
+							'src': smsIconUrl,
+							'style': 'width:28px;height:28px;'
+						}),
+						smsCount > 0 ? E('span', {
+							'class': 'modem-sms-badge'
+						}, String(smsCount)) : ''
 					])
 				])
 			])
@@ -594,7 +650,7 @@ return baseclass.extend({
 						]),
 						E('div', {
 							'class': 'ifacebox-body',
-							'style': 'padding:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;'
+							'style': 'padding:0 8px;padding-top:16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;'
 						}, [
 							E('span', {'class': 'spinning', 'style': 'display:inline-block;'}),
 							E('span', {'style': 'font-size:12px;'}, _('Loading...'))
